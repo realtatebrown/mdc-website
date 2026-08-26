@@ -43,7 +43,7 @@ export default function PartnersMap({ locations }:{ locations:PartnerLocation[] 
   const clusterMembers=activeCluster?points.filter(point=>clusterFor(point)===activeCluster):[];
   const clusterTargets:Record<string,[number,number][]>={
     dmv:[[570,190],[655,285],[745,190],[835,285],[905,190]],
-    "north-texas":[[440,390],[535,445]],
+    "north-texas":[[410,410],[570,440]],
   };
   const displayedPoint=(point:MapPoint):[number,number]=>{
     const cluster=clusterFor(point);
@@ -87,7 +87,7 @@ export default function PartnersMap({ locations }:{ locations:PartnerLocation[] 
       </svg>
       {!shapes.length&&<p className="map-loading">Loading partner map…</p>}
       {activeCluster&&<div className="cluster-map-callouts">
-        {clusterMembers.map(point=>{const [x,y]=displayedPoint(point);return <section className="cluster-location-callout" key={`${point.location.city}-${point.location.state}`} style={{left:`${x/9.6}%`,top:`${y/6}%`}}>
+        {clusterMembers.map(point=>{const [x,y]=displayedPoint(point);return <section className={`cluster-location-callout ${point.location.partners.length>6?"callout-dense":""}`} key={`${point.location.city}-${point.location.state}`} style={{left:`${x/9.6}%`,top:`${y/6}%`}}>
           <h4>{point.location.city}, {point.location.state}</h4>
           {point.location.partners.map(partner=><div className="callout-partner" key={partner}>
             <span className="callout-logo"><b>★</b>{domains[partner]&&<img src={`https://${domains[partner]}/favicon.ico`} alt={`${partner} logo`} onError={e=>{e.currentTarget.style.display="none"}}/>}</span><span>{partner}</span>

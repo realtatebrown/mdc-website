@@ -87,8 +87,10 @@ nav a:hover,.text-link:hover { color:var(--red); }
 .hover-logo b { font-size:11px; }
 .hover-logo img { position:absolute; inset:5px; width:20px; height:20px; object-fit:contain; }
 .cluster-map-callouts { position:absolute; inset:0; z-index:7; pointer-events:none; }
-.cluster-location-callout { position:absolute; width:148px; padding:8px 9px; transform:translate(-50%,calc(-100% - 14px)); background:var(--paper-light); border:2px solid var(--ink); box-shadow:3px 3px 0 rgba(16,45,82,.2); }
-.cluster-location-callout::after { content:""; position:absolute; left:50%; bottom:-16px; width:3px; height:14px; transform:translateX(-50%); background:var(--red); }
+.cluster-location-callout { position:absolute; width:136px; padding:8px 9px; transform:translate(-50%,calc(-100% - 6px)); background:var(--paper-light); border:2px solid var(--ink); box-shadow:3px 3px 0 rgba(16,45,82,.2); }
+.cluster-location-callout::after { content:""; position:absolute; left:50%; bottom:-8px; width:3px; height:8px; transform:translateX(-50%); background:var(--red); }
+.cluster-location-callout.callout-dense { width:270px; display:grid; grid-template-columns:1fr 1fr; column-gap:10px; }
+.cluster-location-callout.callout-dense h4 { grid-column:1/-1; }
 .cluster-location-callout h4 { margin:0 0 6px; padding-bottom:5px; color:var(--red); border-bottom:1px solid #b8c9d5; font-family:Georgia,serif; font-size:12px; line-height:1.1; }
 .callout-partner { display:grid; grid-template-columns:21px 1fr; gap:5px; align-items:center; margin-top:4px; font-size:9px; font-weight:800; line-height:1.12; }
 .callout-logo { position:relative; width:20px; height:20px; display:grid; place-items:center; overflow:hidden; color:var(--red); background:#e6edf3; border:1px solid #bdccd8; border-radius:50%; }
