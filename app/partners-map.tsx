@@ -25,6 +25,8 @@ export default function PartnersMap({ locations }: { locations: PartnerLocation[
       const states = topojson.feature(atlas, atlas.objects.states);
       const projection = d3.geoAlbersUsa().fitExtent([[24, 24], [width - 24, height - 24]], states);
       const path = d3.geoPath(projection);
+      const stateFips: Record<string, string> = { AZ:"04", DC:"11", FL:"12", GA:"13", ID:"16", IL:"17", IN:"18", LA:"22", MD:"24", MI:"26", MO:"29", MT:"30", NY:"36", NC:"37", OH:"39", OK:"40", PA:"42", SD:"46", TN:"47", TX:"48", UT:"49", VA:"51", WI:"55", WY:"56" };
+      const activeStates = new Set(locations.map((location) => stateFips[location.state]));
       const offsets: Record<string, [number, number]> = {
         "Washington, DC": [82, -58],
         "Fairfax, VA": [-82, 44],
@@ -43,7 +45,8 @@ export default function PartnersMap({ locations }: { locations: PartnerLocation[
       for (const feature of states.features) {
         const state = document.createElementNS("http://www.w3.org/2000/svg", "path");
         state.setAttribute("d", path(feature) || "");
-        state.setAttribute("class", "state-shape");
+        const featureId = String(feature.id).padStart(2, "0");
+        state.setAttribute("class", activeStates.has(featureId) ? "state-shape state-has-partner" : "state-shape");
         mapGroup.appendChild(state);
       }
       svg.appendChild(mapGroup);
@@ -54,20 +57,20 @@ export default function PartnersMap({ locations }: { locations: PartnerLocation[
         const key = `${location.city}, ${location.state}`;
         const offset = offsets[key] || [0, 0];
         const markerPoint: [number, number] = [point[0] + offset[0], point[1] + offset[1]];
-        if (offset[0] || offset[1]) {
-          const leader = document.createElementNS("http://www.w3.org/2000/svg", "line");
-          leader.setAttribute("x1", String(point[0]));
-          leader.setAttribute("y1", String(point[1]));
-          leader.setAttribute("x2", String(markerPoint[0]));
-          leader.setAttribute("y2", String(markerPoint[1]));
-          leader.setAttribute("class", "map-leader");
-          svg.appendChild(leader);
-        }
         const group = document.createElementNS("http://www.w3.org/2000/svg", "g");
         group.setAttribute("class", "map-pin");
         group.setAttribute("role", "button");
         group.setAttribute("aria-label", `${location.city}, ${location.state}: ${location.partners.join(", ")}`);
         group.setAttribute("transform", `translate(${markerPoint[0]},${markerPoint[1]})`);
+        if (offset[0] || offset[1]) {
+          const leader = document.createElementNS("http://www.w3.org/2000/svg", "line");
+          leader.setAttribute("x1", String(-offset[0]));
+          leader.setAttribute("y1", String(-offset[1]));
+          leader.setAttribute("x2", "0");
+          leader.setAttribute("y2", "0");
+          leader.setAttribute("class", "map-leader");
+          group.appendChild(leader);
+        }
         const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
         circle.setAttribute("r", location.partners.length > 4 ? "19" : "15");
         const label = document.createElementNS("http://www.w3.org/2000/svg", "text");
