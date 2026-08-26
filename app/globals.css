@@ -71,8 +71,15 @@ nav a:hover,.text-link:hover { color:var(--red); }
 .map-pin:hover circle { transform:scale(1.12); }
 .map-pin text { fill:white; font-family:Arial,sans-serif; font-size:12px; font-weight:900; pointer-events:none; }
 .map-leader { opacity:0; stroke:var(--red); stroke-width:2; vector-effect:non-scaling-stroke; transition:opacity .12s; }
-.map-place-label { opacity:0; fill:var(--ink)!important; font-size:10px!important; letter-spacing:.08em; paint-order:stroke; stroke:var(--paper); stroke-width:4px; stroke-linejoin:round; transition:opacity .12s; }
-.map-pin:hover .map-leader,.map-pin:hover .map-place-label { opacity:1; }
+.map-breakout-wrap { opacity:0; pointer-events:none; overflow:visible; transition:opacity .12s; }
+.map-pin:hover .map-leader,.map-pin:hover .map-breakout-wrap { opacity:1; pointer-events:auto; }
+.map-breakout { height:100%; padding:14px; color:var(--ink); background:var(--paper-light); border:2px solid var(--ink); box-shadow:5px 5px 0 rgba(16,45,82,.22); font-family:Arial,sans-serif; }
+.map-breakout>strong { display:block; margin-bottom:10px; color:var(--red); font-family:Georgia,serif; font-size:16px; }
+.map-breakout-grid { display:grid; grid-template-columns:1fr; gap:6px 12px; }
+.map-breakout-wide .map-breakout-grid { grid-template-columns:1fr 1fr; }
+.map-partner-item { min-width:0; display:grid; grid-template-columns:28px 1fr; gap:8px; align-items:center; font-size:11px; font-weight:700; line-height:1.15; }
+.map-partner-logo { width:26px; height:26px; display:grid; place-items:center; overflow:hidden; color:var(--red); background:#e8eef4; border:1px solid #bdccd8; border-radius:50%; font-size:11px; }
+.map-partner-logo img { width:20px; height:20px; object-fit:contain; }
 .map-loading { position:absolute; inset:45% 0 auto; text-align:center; font-weight:900; letter-spacing:.12em; text-transform:uppercase; }
 .map-detail { min-height:82px; display:grid; grid-template-columns:220px 1fr; gap:25px; align-items:center; padding:18px 26px; color:white; background:var(--ink); border-top:2px solid var(--paper); }
 .map-detail strong { font-family:Georgia,serif; font-size:20px; }
