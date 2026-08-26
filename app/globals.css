@@ -69,6 +69,8 @@ nav a:hover,.text-link:hover { color:var(--red); }
 .map-pin circle { fill:var(--red); stroke:var(--paper-light); stroke-width:4; vector-effect:non-scaling-stroke; transition:transform .15s; }
 .map-pin:hover circle { transform:scale(1.12); }
 .map-pin text { fill:white; font-family:Arial,sans-serif; font-size:12px; font-weight:900; pointer-events:none; }
+.map-leader { stroke:var(--red); stroke-width:2; vector-effect:non-scaling-stroke; }
+.map-place-label { fill:var(--ink)!important; font-size:10px!important; letter-spacing:.08em; paint-order:stroke; stroke:var(--paper); stroke-width:4px; stroke-linejoin:round; }
 .map-loading { position:absolute; inset:45% 0 auto; text-align:center; font-weight:900; letter-spacing:.12em; text-transform:uppercase; }
 .map-detail { min-height:82px; display:grid; grid-template-columns:220px 1fr; gap:25px; align-items:center; padding:18px 26px; color:white; background:var(--ink); border-top:2px solid var(--paper); }
 .map-detail strong { font-family:Georgia,serif; font-size:20px; }

@@ -11,7 +11,6 @@ const recommendations = ["Substantially enhance worksite enforcement", "Move emp
 const partnerLocations: PartnerLocation[] = [
   { city:"Washington", state:"DC", lat:38.9072, lon:-77.0369, partners:["American Moment","Center for the American Way of Life","Center for Migration Control","Federation for American Immigration Reform","The Heritage Foundation","Immigration Accountability Project","National Immigration Center for Enforcement","New Guard Press","Oversight Project","Pat Buchanan Society","State Leadership Initiative"] },
   { city:"Phoenix", state:"AZ", lat:33.4484, lon:-112.074, partners:["Arizona Freedom Caucus"] },
-  { city:"Fort Thomas", state:"KY", lat:39.0751, lon:-84.4472, partners:["Center for Baptist Leadership"] },
   { city:"Baton Rouge", state:"LA", lat:30.4515, lon:-91.1871, partners:["Citizens for a New Louisiana"] },
   { city:"Atlanta", state:"GA", lat:33.749, lon:-84.388, partners:["College Republicans of Georgia","Eagle Forum of Georgia","Georgia Freedom Caucus"] },
   { city:"Woodstock", state:"GA", lat:34.1015, lon:-84.5194, partners:["Tea Party Patriots Action"] },
