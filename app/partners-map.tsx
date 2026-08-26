@@ -33,6 +33,24 @@ export default function PartnersMap({ locations }:{ locations:PartnerLocation[] 
   const [shapes,setShapes] = useState<MapShape[]>([]);
   const [points,setPoints] = useState<MapPoint[]>([]);
   const [active,setActive] = useState<MapPoint|null>(null);
+  const [activeCluster,setActiveCluster] = useState<string|null>(null);
+
+  const clusterFor=(point:MapPoint)=>{
+    if(["DC","MD","VA"].includes(point.location.state))return "dmv";
+    if(["Dallas–Fort Worth","North Texas"].includes(point.location.city))return "north-texas";
+    return null;
+  };
+  const clusterMembers=activeCluster?points.filter(point=>clusterFor(point)===activeCluster):[];
+  const clusterTargets:Record<string,[number,number][]>={
+    dmv:[[720,105],[845,105],[690,190],[790,245],[875,205]],
+    "north-texas":[[430,380],[520,430]],
+  };
+  const displayedPoint=(point:MapPoint):[number,number]=>{
+    const cluster=clusterFor(point);
+    if(!cluster||cluster!==activeCluster)return[point.x,point.y];
+    const index=clusterMembers.indexOf(point);
+    return clusterTargets[cluster]?.[index]||[point.x,point.y];
+  };
 
   useEffect(() => {
     let cancelled=false;
@@ -57,21 +75,31 @@ export default function PartnersMap({ locations }:{ locations:PartnerLocation[] 
     return()=>{cancelled=true};
   },[locations]);
 
-  return <div className="map-shell" onMouseLeave={()=>setActive(null)}>
+  return <div className="map-shell" onMouseLeave={()=>{setActive(null);setActiveCluster(null)}}>
     <div className="map-stage">
       <svg className="usa-map" viewBox="0 0 960 600" role="img" aria-label="Map of United States coalition partner locations">
         {shapes.map(shape=><path key={shape.id} d={shape.d} className={shape.active?"state-shape state-has-partner":"state-shape"}/>) }
-        {active&&<line className="active-map-leader" x1={active.x} y1={active.y} x2={active.x>620?560:720} y2={110}/>} 
-        {points.map(point=><g key={`${point.location.city}-${point.location.state}`} className="map-pin" transform={`translate(${point.x},${point.y})`} onMouseEnter={()=>setActive(point)} onClick={()=>setActive(point)} role="button" aria-label={`${point.location.city}, ${point.location.state}: ${point.location.partners.join(", ")}`}>
+        {clusterMembers.map(point=>{const [x,y]=displayedPoint(point);return <line key={`line-${point.location.city}`} className="cluster-map-leader" x1={point.x} y1={point.y} x2={x} y2={y}/>})}
+        {!activeCluster&&active&&<line className="active-map-leader" x1={active.x} y1={active.y} x2={active.x>620?560:720} y2={110}/>} 
+        {points.map(point=>{const [x,y]=displayedPoint(point);return <g key={`${point.location.city}-${point.location.state}`} className={`map-pin ${activeCluster&&clusterFor(point)===activeCluster?"map-pin-expanded":""}`} transform={`translate(${x},${y})`} onMouseEnter={()=>{setActive(point);setActiveCluster(clusterFor(point))}} onClick={()=>{setActive(point);setActiveCluster(clusterFor(point))}} role="button" aria-label={`${point.location.city}, ${point.location.state}: ${point.location.partners.join(", ")}`}>
           <circle r={point.location.partners.length>4?15:11}/><text textAnchor="middle" dy=".35em">{point.location.partners.length}</text>
-        </g>)}
+        </g>})}
       </svg>
       {!shapes.length&&<p className="map-loading">Loading partner map…</p>}
-      {active&&<aside className={`partner-hover-card ${active.x>620?"card-left":"card-right"}`}>
+      {activeCluster&&<aside className={`cluster-hover-panel cluster-${activeCluster}`}>
+        <div className="hover-card-heading"><span>Regional partner cluster</span><strong>{activeCluster==="dmv"?"DC · Maryland · Virginia":"North Texas"}</strong></div>
+        <div className="cluster-location-grid">{clusterMembers.map(point=><section className="cluster-location-card" key={point.location.city}>
+          <h4>{point.location.city}, {point.location.state}</h4>
+          {point.location.partners.map(partner=><div className="hover-partner" key={partner}>
+            <span className="hover-logo"><b>★</b>{domains[partner]&&<img src={`https://${domains[partner]}/favicon.ico`} alt={`${partner} logo`} onError={e=>{e.currentTarget.style.display="none"}}/>}</span><span>{partner}</span>
+          </div>)}
+        </section>)}</div>
+      </aside>}
+      {!activeCluster&&active&&<aside className={`partner-hover-card ${active.x>620?"card-left":"card-right"}`}>
         <div className="hover-card-heading"><span>Partner location</span><strong>{active.location.city}, {active.location.state}</strong></div>
         <div className="hover-partner-grid">
           {active.location.partners.map(partner=><div className="hover-partner" key={partner}>
-            <span className="hover-logo"><b>★</b>{domains[partner]&&<img src={`https://icons.duckduckgo.com/ip3/${domains[partner]}.ico`} alt="" onError={e=>{e.currentTarget.style.display="none"}}/>}</span>
+            <span className="hover-logo"><b>★</b>{domains[partner]&&<img src={`https://${domains[partner]}/favicon.ico`} alt={`${partner} logo`} onError={e=>{e.currentTarget.style.display="none"}}/>}</span>
             <span>{partner}</span>
           </div>)}
         </div>
