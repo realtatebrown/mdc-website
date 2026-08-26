@@ -42,8 +42,8 @@ export default function PartnersMap({ locations }:{ locations:PartnerLocation[] 
   };
   const clusterMembers=activeCluster?points.filter(point=>clusterFor(point)===activeCluster):[];
   const clusterTargets:Record<string,[number,number][]>={
-    dmv:[[720,105],[845,105],[690,190],[790,245],[875,205]],
-    "north-texas":[[430,380],[520,430]],
+    dmv:[[570,190],[655,285],[745,190],[835,285],[905,190]],
+    "north-texas":[[440,390],[535,445]],
   };
   const displayedPoint=(point:MapPoint):[number,number]=>{
     const cluster=clusterFor(point);
@@ -86,15 +86,14 @@ export default function PartnersMap({ locations }:{ locations:PartnerLocation[] 
         </g>})}
       </svg>
       {!shapes.length&&<p className="map-loading">Loading partner map…</p>}
-      {activeCluster&&<aside className={`cluster-hover-panel cluster-${activeCluster}`}>
-        <div className="hover-card-heading"><span>Regional partner cluster</span><strong>{activeCluster==="dmv"?"DC · Maryland · Virginia":"North Texas"}</strong></div>
-        <div className="cluster-location-grid">{clusterMembers.map(point=><section className="cluster-location-card" key={point.location.city}>
+      {activeCluster&&<div className="cluster-map-callouts">
+        {clusterMembers.map(point=>{const [x,y]=displayedPoint(point);return <section className="cluster-location-callout" key={`${point.location.city}-${point.location.state}`} style={{left:`${x/9.6}%`,top:`${y/6}%`}}>
           <h4>{point.location.city}, {point.location.state}</h4>
-          {point.location.partners.map(partner=><div className="hover-partner" key={partner}>
-            <span className="hover-logo"><b>★</b>{domains[partner]&&<img src={`https://${domains[partner]}/favicon.ico`} alt={`${partner} logo`} onError={e=>{e.currentTarget.style.display="none"}}/>}</span><span>{partner}</span>
+          {point.location.partners.map(partner=><div className="callout-partner" key={partner}>
+            <span className="callout-logo"><b>★</b>{domains[partner]&&<img src={`https://${domains[partner]}/favicon.ico`} alt={`${partner} logo`} onError={e=>{e.currentTarget.style.display="none"}}/>}</span><span>{partner}</span>
           </div>)}
-        </section>)}</div>
-      </aside>}
+        </section>})}
+      </div>}
       {!activeCluster&&active&&<aside className={`partner-hover-card ${active.x>620?"card-left":"card-right"}`}>
         <div className="hover-card-heading"><span>Partner location</span><strong>{active.location.city}, {active.location.state}</strong></div>
         <div className="hover-partner-grid">
