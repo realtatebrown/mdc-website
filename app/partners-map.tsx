@@ -37,19 +37,33 @@ export default function PartnersMap({ locations }:{ locations:PartnerLocation[] 
 
   const clusterFor=(point:MapPoint)=>{
     if(["DC","MD","VA"].includes(point.location.state))return "dmv";
-    if(["Dallas–Fort Worth","North Texas"].includes(point.location.city))return "north-texas";
+    if(["Dallas–Fort Worth","Palo Pinto","Eastland","North Texas"].includes(point.location.city))return "north-texas";
+    if(["Atlanta","Woodstock"].includes(point.location.city))return "atlanta";
+    if(["Houston","Spring"].includes(point.location.city))return "houston";
     return null;
   };
   const clusterMembers=activeCluster?points.filter(point=>clusterFor(point)===activeCluster):[];
-  const clusterTargets:Record<string,[number,number][]>={
-    dmv:[[570,190],[655,285],[745,190],[835,285],[905,190]],
-    "north-texas":[[410,410],[570,440]],
+  const clusterNames=["dmv","north-texas","atlanta","houston"];
+  const membersFor=(cluster:string)=>points.filter(point=>clusterFor(point)===cluster);
+  const clusterCenter=(members:MapPoint[]):[number,number]=>[
+    members.reduce((sum,point)=>sum+point.x,0)/members.length,
+    members.reduce((sum,point)=>sum+point.y,0)/members.length,
+  ];
+  const clusterOffsets:Record<string,[number,number][]>={
+    dmv:[[-160,-35],[-80,50],[0,-35],[80,50],[160,-35]],
+    "north-texas":[[-150,-20],[-50,45],[50,-20],[150,45]],
+    atlanta:[[-68,0],[68,0]],
+    houston:[[-68,0],[68,0]],
   };
   const displayedPoint=(point:MapPoint):[number,number]=>{
     const cluster=clusterFor(point);
     if(!cluster||cluster!==activeCluster)return[point.x,point.y];
     const index=clusterMembers.indexOf(point);
-    return clusterTargets[cluster]?.[index]||[point.x,point.y];
+    const [rawX,rawY]=clusterCenter(clusterMembers);
+    const centerX=Math.max(190,Math.min(740,rawX));
+    const centerY=Math.max(205,Math.min(470,rawY));
+    const offset=clusterOffsets[cluster]?.[index]||[0,0];
+    return[centerX+offset[0],centerY+offset[1]];
   };
 
   useEffect(() => {
@@ -81,8 +95,11 @@ export default function PartnersMap({ locations }:{ locations:PartnerLocation[] 
         {shapes.map(shape=><path key={shape.id} d={shape.d} className={shape.active?"state-shape state-has-partner":"state-shape"}/>) }
         {clusterMembers.map(point=>{const [x,y]=displayedPoint(point);return <line key={`line-${point.location.city}`} className="cluster-map-leader" x1={point.x} y1={point.y} x2={x} y2={y}/>})}
         {!activeCluster&&active&&<line className="active-map-leader" x1={active.x} y1={active.y} x2={active.x>620?560:720} y2={110}/>} 
-        {points.map(point=>{const [x,y]=displayedPoint(point);return <g key={`${point.location.city}-${point.location.state}`} className={`map-pin ${activeCluster&&clusterFor(point)===activeCluster?"map-pin-expanded":""}`} transform={`translate(${x},${y})`} onMouseEnter={()=>{setActive(point);setActiveCluster(clusterFor(point))}} onClick={()=>{setActive(point);setActiveCluster(clusterFor(point))}} role="button" aria-label={`${point.location.city}, ${point.location.state}: ${point.location.partners.join(", ")}`}>
+        {points.filter(point=>!clusterFor(point)||clusterFor(point)===activeCluster).map(point=>{const [x,y]=displayedPoint(point);return <g key={`${point.location.city}-${point.location.state}`} className={`map-pin ${activeCluster&&clusterFor(point)===activeCluster?"map-pin-expanded":""}`} transform={`translate(${x},${y})`} onMouseEnter={()=>{setActive(point);setActiveCluster(clusterFor(point))}} onClick={()=>{setActive(point);setActiveCluster(clusterFor(point))}} role="button" aria-label={`${point.location.city}, ${point.location.state}: ${point.location.partners.join(", ")}`}>
           <circle r={point.location.partners.length>4?15:11}/><text textAnchor="middle" dy=".35em">{point.location.partners.length}</text>
+        </g>})}
+        {clusterNames.filter(cluster=>cluster!==activeCluster).map(cluster=>{const members=membersFor(cluster);if(!members.length)return null;const [x,y]=clusterCenter(members);const count=members.reduce((sum,point)=>sum+point.location.partners.length,0);return <g key={`cluster-${cluster}`} className="map-pin map-cluster-pin" transform={`translate(${x},${y})`} onMouseEnter={()=>{setActive(members[0]);setActiveCluster(cluster)}} onClick={()=>{setActive(members[0]);setActiveCluster(cluster)}} role="button" aria-label={`${count} partners across ${members.length} nearby locations`}>
+          <circle r={20}/><text textAnchor="middle" dy=".35em">{count}</text>
         </g>})}
       </svg>
       {!shapes.length&&<p className="map-loading">Loading partner map…</p>}
