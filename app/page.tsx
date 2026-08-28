@@ -48,6 +48,12 @@ const partnerLocations: PartnerLocation[] = [
   { city:"North Texas", state:"TX", lat:33.2148, lon:-97.1331, partners:["Texans for Strong Borders","Texoma Patriots","We the People — Liberty in Action","Young Conservatives of Texas","Young Republicans of Texas"] },
 ];
 
+const statePartnerLocations=Object.values(partnerLocations.reduce<Record<string,PartnerLocation>>((states,location)=>{
+  states[location.state]??={city:"",state:location.state,lat:0,lon:0,partners:[]};
+  states[location.state].partners.push(...location.partners);
+  return states;
+},{})).sort((a,b)=>a.state.localeCompare(b.state));
+
 const individuals = [
   ["Data Republican", "Independent data researcher and online profile"],
   ["Erik Prince", "Entrepreneur and former U.S. Navy SEAL officer"],
@@ -89,10 +95,10 @@ export default function Home() {
       <div className="principle-grid">{principles.map(([number, title, copy]) => <article key={number}><span className="principle-number">{number}</span><h3>{title}</h3><p>{copy}</p></article>)}</div>
     </section>
     <section className="partners-section section" id="partners">
-      <div className="partners-heading"><div><p className="eyebrow light">A coalition from across America</p><h2>Partners</h2></div><p>Organizations are plotted at the headquarters, primary office, or community location identified through their official websites and public profiles. Select a marker to see its partners.</p></div>
-      <PartnersMap locations={partnerLocations} />
+      <div className="partners-heading"><div><p className="eyebrow light">A coalition from across America</p><h2>Partners</h2></div><p>Organizations are grouped by state. Select a marker at the center of each represented state to see all coalition partners based there.</p></div>
+      <PartnersMap locations={statePartnerLocations} />
       <div className="location-index">
-        {partnerLocations.map((location) => <article key={`${location.city}-${location.state}`}><span>{location.city}, {location.state}</span><p>{location.partners.join(" · ")}</p></article>)}
+        {statePartnerLocations.map((location) => <article key={location.state}><span>{location.state}</span><p>{location.partners.join(" · ")}</p></article>)}
       </div>
       <div className="individuals">
         <div><p className="eyebrow light">Individual coalition partners</p><h3>People behind<br />the coalition.</h3></div>

@@ -29,6 +29,8 @@ const domains:Record<string,string> = {
   "Young Conservatives of Texas":"yct.org",
 };
 
+const stateNames:Record<string,string>={AZ:"Arizona",DC:"District of Columbia",FL:"Florida",GA:"Georgia",ID:"Idaho",IL:"Illinois",IN:"Indiana",LA:"Louisiana",MD:"Maryland",MI:"Michigan",MO:"Missouri",MT:"Montana",NY:"New York",NC:"North Carolina",OH:"Ohio",OK:"Oklahoma",PA:"Pennsylvania",SD:"South Dakota",TN:"Tennessee",TX:"Texas",UT:"Utah",VA:"Virginia",WI:"Wisconsin",WY:"Wyoming"};
+
 export default function PartnersMap({ locations }:{ locations:PartnerLocation[] }) {
   const [shapes,setShapes] = useState<MapShape[]>([]);
   const [points,setPoints] = useState<MapPoint[]>([]);
@@ -39,10 +41,6 @@ export default function PartnersMap({ locations }:{ locations:PartnerLocation[] 
   const closeLater=()=>{keepOpen();closeTimer.current=setTimeout(()=>{setActive(null);setActiveCluster(null)},850)};
 
   const clusterFor=(point:MapPoint)=>{
-    if(["DC","MD","VA"].includes(point.location.state))return "dmv";
-    if(["Dallas–Fort Worth","Palo Pinto","Eastland","North Texas"].includes(point.location.city))return "north-texas";
-    if(["Atlanta","Woodstock"].includes(point.location.city))return "atlanta";
-    if(["Houston","Spring"].includes(point.location.city))return "houston";
     return null;
   };
   const clusterMembers=activeCluster?points.filter(point=>clusterFor(point)===activeCluster):[];
@@ -86,7 +84,15 @@ export default function PartnersMap({ locations }:{ locations:PartnerLocation[] 
       const fips:Record<string,string>={AZ:"04",DC:"11",FL:"12",GA:"13",ID:"16",IL:"17",IN:"18",LA:"22",MD:"24",MI:"26",MO:"29",MT:"30",NY:"36",NC:"37",OH:"39",OK:"40",PA:"42",SD:"46",TN:"47",TX:"48",UT:"49",VA:"51",WI:"55",WY:"56"};
       const represented=new Set(locations.map(l=>fips[l.state]));
       setShapes(featureCollection.features.map((feature:any)=>({id:String(feature.id),d:path(feature)||"",active:represented.has(String(feature.id).padStart(2,"0"))})));
-      setPoints(locations.flatMap(location=>{const p=projection([location.lon,location.lat]);return p?[{location,x:p[0],y:p[1]}]:[];}));
+      const byState=new Map<string,string[]>();
+      locations.forEach(location=>byState.set(location.state,[...(byState.get(location.state)||[]),...location.partners]));
+      const featureByFips=new Map(featureCollection.features.map((feature:any)=>[String(feature.id).padStart(2,"0"),feature]));
+      setPoints([...byState.entries()].flatMap(([state,partners])=>{
+        const feature=featureByFips.get(fips[state]);
+        if(!feature)return[];
+        const p=path.centroid(feature as any);
+        return Number.isFinite(p[0])&&Number.isFinite(p[1])?[{location:{city:"",state,lat:0,lon:0,partners},x:p[0],y:p[1]}]:[];
+      }));
     }
     loadMap().catch(()=>{});
     return()=>{cancelled=true};
@@ -99,7 +105,7 @@ export default function PartnersMap({ locations }:{ locations:PartnerLocation[] 
       <svg className="usa-map" viewBox="0 0 960 600" role="img" aria-label="Map of United States coalition partner locations">
         {shapes.map(shape=><path key={shape.id} d={shape.d} className={shape.active?"state-shape state-has-partner":"state-shape"}/>) }
         {clusterMembers.map(point=>{const [x,y]=displayedPoint(point);return <line key={`line-${point.location.city}`} className="cluster-map-leader" x1={point.x} y1={point.y} x2={x} y2={y}/>})}
-        {points.filter(point=>!clusterFor(point)||clusterFor(point)===activeCluster).map(point=>{const [x,y]=displayedPoint(point);return <g key={`${point.location.city}-${point.location.state}`} className={`map-pin ${activeCluster&&clusterFor(point)===activeCluster?"map-pin-expanded":""}`} transform={`translate(${x},${y})`} onMouseEnter={()=>{setActive(point);setActiveCluster(clusterFor(point))}} onClick={()=>{setActive(point);setActiveCluster(clusterFor(point))}} role="button" aria-label={`${point.location.city}, ${point.location.state}: ${point.location.partners.join(", ")}`}>
+        {points.filter(point=>!clusterFor(point)||clusterFor(point)===activeCluster).map(point=>{const [x,y]=displayedPoint(point);return <g key={point.location.state} className={`map-pin ${activeCluster&&clusterFor(point)===activeCluster?"map-pin-expanded":""}`} transform={`translate(${x},${y})`} onMouseEnter={()=>{setActive(point);setActiveCluster(clusterFor(point))}} onClick={()=>{setActive(point);setActiveCluster(clusterFor(point))}} role="button" aria-label={`${stateNames[point.location.state]||point.location.state}: ${point.location.partners.join(", ")}`}>
           <circle r={point.location.partners.length>4?15:11}/><text textAnchor="middle" dy=".35em">{point.location.partners.length}</text>
         </g>})}
         {clusterNames.filter(cluster=>cluster!==activeCluster).map(cluster=>{const members=membersFor(cluster);if(!members.length)return null;const [x,y]=clusterCenter(members);const count=members.reduce((sum,point)=>sum+point.location.partners.length,0);return <g key={`cluster-${cluster}`} className="map-pin map-cluster-pin" transform={`translate(${x},${y})`} onMouseEnter={()=>{setActive(members[0]);setActiveCluster(cluster)}} onClick={()=>{setActive(members[0]);setActiveCluster(cluster)}} role="button" aria-label={`${count} partners across ${members.length} nearby locations`}>
@@ -117,7 +123,7 @@ export default function PartnersMap({ locations }:{ locations:PartnerLocation[] 
         </section>})}
       </div>}
       {!activeCluster&&active&&<aside className={`partner-hover-card ${active.x>620?"card-left":"card-right"}`} style={{left:`${active.x/9.6}%`,top:`${active.y/6}%`}}>
-        <div className="hover-card-heading"><span>Partner location</span><strong>{active.location.city}, {active.location.state}</strong></div>
+        <div className="hover-card-heading"><span>Partner state</span><strong>{stateNames[active.location.state]||active.location.state}</strong></div>
         <div className="hover-partner-grid">
           {active.location.partners.map(partner=><div className="hover-partner" key={partner}>
             <span className="hover-logo"><b>★</b>{domains[partner]&&<img src={`https://${domains[partner]}/favicon.ico`} alt={`${partner} logo`} onError={e=>{e.currentTarget.style.display="none"}}/>}</span>
@@ -127,7 +133,7 @@ export default function PartnersMap({ locations }:{ locations:PartnerLocation[] 
       </aside>}
     </div>
     <div className="map-detail" aria-live="polite">
-      {active?<><strong>{active.location.city}, {active.location.state}</strong><span>{active.location.partners.join(" · ")}</span></>:<><strong>Hover over a numbered marker</strong><span>The dot stays on its true location; its partners open in a separate panel.</span></>}
+      {active?<><strong>{stateNames[active.location.state]||active.location.state}</strong><span>{active.location.partners.join(" · ")}</span></>:<><strong>Hover over a numbered marker</strong><span>Each marker is centered in its state and shows the combined partner count.</span></>}
     </div>
   </div>;
 }
