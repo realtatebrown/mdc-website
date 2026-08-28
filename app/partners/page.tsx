@@ -46,7 +46,7 @@ export default function PartnersPage(){
   return <main className="directory-page">
     <div className="top-rule" />
     <header className="site-header">
-      <a className="wordmark" href="/" aria-label="Mass Deportation Coalition home"><img className="coalition-logo" src="/assets/mass-deportation-coalition-logo.jpeg" alt="Mass Deportation Coalition" /></a>
+      <a className="wordmark" href="/" aria-label="Mass Deportation Coalition home"><img className="coalition-logo" src="/assets/mass-deportation-coalition-logo.png" alt="Mass Deportation Coalition" /></a>
       <nav aria-label="Primary navigation"><a href="/#mission">Mission</a><a href="/#playbook">Playbook</a><a href="/#principles">Principles</a><a href="/partners" aria-current="page">Partners</a></nav>
       <a className="button button-small" href="/">← Home</a>
     </header>
@@ -67,6 +67,6 @@ export default function PartnersPage(){
       <div className="individual-list directory-people-list">{individuals.map(([name,role,image])=><article key={name}><img src={`${logoBase}${image}`} alt="" loading="lazy"/><div><h4>{name}</h4><p>{role}</p></div></article>)}</div>
     </section>
     <section className="directory-cta"><p className="eyebrow">Explore the coalition</p><h2>See the national footprint.</h2><div><a className="button" href="/#partners">Return to the map</a><a className="text-link" href="https://massdeportationcoalition.org/partners/" target="_blank" rel="noreferrer">Official directory ↗</a></div></section>
-    <footer><div className="wordmark footer-mark"><img className="coalition-logo" src="/assets/mass-deportation-coalition-logo.jpeg" alt="Mass Deportation Coalition" /></div><p>Campaign portfolio · Information adapted from the official Mass Deportation Coalition website.</p><p>© 2026 Mass Deportation Coalition</p></footer>
+    <footer><div className="wordmark footer-mark"><img className="coalition-logo" src="/assets/mass-deportation-coalition-logo.png" alt="Mass Deportation Coalition" /></div><p>Campaign portfolio · Information adapted from the official Mass Deportation Coalition website.</p><p>© 2026 Mass Deportation Coalition</p></footer>
   </main>;
 }

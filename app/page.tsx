@@ -65,7 +65,7 @@ export default function Home() {
   return <main>
     <div className="top-rule" />
     <header className="site-header">
-      <a className="wordmark" href="#top" aria-label="Mass Deportation Coalition home"><img className="coalition-logo" src="/assets/mass-deportation-coalition-logo.jpeg" alt="Mass Deportation Coalition" /></a>
+      <a className="wordmark" href="#top" aria-label="Mass Deportation Coalition home"><img className="coalition-logo" src="/assets/mass-deportation-coalition-logo.png" alt="Mass Deportation Coalition" /></a>
       <nav aria-label="Primary navigation"><a href="#mission">Mission</a><a href="#playbook">Playbook</a><a href="#principles">Principles</a><a href="/partners">Partners</a></nav>
       <a className="button button-small" href="https://massdeportationcoalition.org/" target="_blank" rel="noreferrer">Official Site ↗</a>
     </header>
@@ -104,6 +104,6 @@ export default function Home() {
       <a className="button button-paper partners-button" href="/partners">View the full partner directory →</a>
     </section>
     <section className="final-cta"><div className="cta-stars">★ ★ ★ ★ ★</div><h2>A sovereign nation.<br />A government faithful to law.</h2><p>Read the policy framework, meet the coalition, and follow the work.</p><a className="button" href="https://massdeportationcoalition.org/" target="_blank" rel="noreferrer">Visit MassDeportationCoalition.org ↗</a></section>
-    <footer><div className="wordmark footer-mark"><img className="coalition-logo" src="/assets/mass-deportation-coalition-logo.jpeg" alt="Mass Deportation Coalition" /></div><p>Campaign portfolio · Information adapted from the official Mass Deportation Coalition website.</p><p>© 2026 Mass Deportation Coalition</p></footer>
+    <footer><div className="wordmark footer-mark"><img className="coalition-logo" src="/assets/mass-deportation-coalition-logo.png" alt="Mass Deportation Coalition" /></div><p>Campaign portfolio · Information adapted from the official Mass Deportation Coalition website.</p><p>© 2026 Mass Deportation Coalition</p></footer>
   </main>;
 }
