@@ -10,6 +10,8 @@ a { color:inherit; text-decoration:none; }
 .top-rule { height:10px; background:linear-gradient(90deg,var(--red) 0 33%,var(--paper-light) 33% 66%,var(--ink) 66%); }
 .site-header { min-height:104px; padding:0 clamp(22px,5vw,76px); display:flex; align-items:center; justify-content:space-between; gap:30px; border-bottom:2px solid var(--ink); background:rgba(244,236,217,.94); position:sticky; top:0; z-index:20; }
 .wordmark { display:flex; align-items:center; gap:12px; font-weight:900; text-transform:uppercase; font-size:14px; line-height:1.05; letter-spacing:.07em; }
+.coalition-logo { display:block; width:150px; height:68px; object-fit:contain; mix-blend-mode:multiply; }
+footer .coalition-logo { padding:3px; background:white; mix-blend-mode:normal; }
 .wordmark-star { width:42px; height:42px; display:grid; place-items:center; color:var(--paper-light); background:var(--red); border-radius:50%; border:3px double var(--paper); box-shadow:0 0 0 2px var(--red); }
 nav { display:flex; gap:clamp(18px,3vw,42px); font-size:12px; font-weight:800; letter-spacing:.12em; text-transform:uppercase; }
 nav a:hover,.text-link:hover { color:var(--red); }
@@ -151,11 +153,14 @@ nav a:hover,.text-link:hover { color:var(--red); }
 .state-card-heading b { width:32px; height:32px; display:grid; place-items:center; color:white; background:var(--ink); border-radius:50%; font-size:12px; }
 .partner-logo-grid { display:grid; grid-template-columns:1fr; gap:8px; margin-top:16px; }
 .state-card-wide .partner-logo-grid { grid-template-columns:repeat(3,minmax(0,1fr)); }
-.partner-logo-tile { min-width:0; min-height:82px; display:grid; grid-template-columns:66px 1fr; gap:12px; align-items:center; padding:8px; background:var(--paper-light); border:1px solid #a8b5c2; }
+.partner-logo-tile { min-width:0; min-height:82px; display:grid; grid-template-columns:66px minmax(0,1fr) 18px; gap:12px; align-items:center; padding:8px; color:var(--ink); background:var(--paper-light); border:1px solid #a8b5c2; text-decoration:none; transition:transform .15s ease,box-shadow .15s ease,border-color .15s ease; }
+.partner-logo-tile[href]:hover { transform:translate(-2px,-2px); border-color:var(--red); box-shadow:3px 3px 0 rgba(16,45,82,.18); }
 .partner-logo-frame { width:66px; height:62px; display:grid; place-items:center; overflow:hidden; padding:6px; background:white; border:1px solid #d4dde4; }
 .partner-logo-frame img { display:block; width:100%; height:100%; object-fit:contain; }
 .partner-logo-frame span { color:var(--red); font-size:18px; }
 .partner-logo-tile p { min-width:0; margin:0; font-size:11px; font-weight:800; line-height:1.22; overflow-wrap:anywhere; }
+.partner-link-mark { color:var(--red); font-size:15px; font-weight:900; }
+.partner-logo-tile:not([href]) .partner-link-mark { visibility:hidden; }
 .directory-individuals { display:grid; grid-template-columns:1fr 1.1fr; gap:clamp(50px,9vw,130px); color:white; background:var(--red); }
 .directory-individuals .individual-list { border-top-color:rgba(255,255,255,.6); }
 .directory-people-list article { grid-template-columns:64px 1fr; min-height:116px; }
