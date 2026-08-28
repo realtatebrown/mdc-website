@@ -66,7 +66,7 @@ export default function Home() {
     <div className="top-rule" />
     <header className="site-header">
       <a className="wordmark" href="#top" aria-label="Mass Deportation Coalition home"><span className="wordmark-star">★</span><span>Mass Deportation<br />Coalition</span></a>
-      <nav aria-label="Primary navigation"><a href="#mission">Mission</a><a href="#playbook">Playbook</a><a href="#principles">Principles</a><a href="#partners">Partners</a></nav>
+      <nav aria-label="Primary navigation"><a href="#mission">Mission</a><a href="#playbook">Playbook</a><a href="#principles">Principles</a><a href="/partners">Partners</a></nav>
       <a className="button button-small" href="https://massdeportationcoalition.org/" target="_blank" rel="noreferrer">Official Site ↗</a>
     </header>
     <section className="hero" id="top">
@@ -97,14 +97,11 @@ export default function Home() {
     <section className="partners-section section" id="partners">
       <div className="partners-heading"><div><p className="eyebrow light">A coalition from across America</p><h2>Partners</h2></div><p>Organizations are grouped by state. Select a marker at the center of each represented state to see all coalition partners based there.</p></div>
       <PartnersMap locations={statePartnerLocations} />
-      <div className="location-index">
-        {statePartnerLocations.map((location) => <article key={location.state}><span>{location.state}</span><p>{location.partners.join(" · ")}</p></article>)}
-      </div>
+      <a className="button button-paper partners-button" href="/partners">View the full partner directory →</a>
       <div className="individuals">
         <div><p className="eyebrow light">Individual coalition partners</p><h3>People behind<br />the coalition.</h3></div>
         <div className="individual-list">{individuals.map(([name, role]) => <article key={name}><span>★</span><div><h4>{name}</h4><p>{role}</p></div></article>)}</div>
       </div>
-      <a className="button button-paper partners-button" href="https://massdeportationcoalition.org/partners/" target="_blank" rel="noreferrer">View the official partner directory ↗</a>
     </section>
     <section className="final-cta"><div className="cta-stars">★ ★ ★ ★ ★</div><h2>A sovereign nation.<br />A government faithful to law.</h2><p>Read the policy framework, meet the coalition, and follow the work.</p><a className="button" href="https://massdeportationcoalition.org/" target="_blank" rel="noreferrer">Visit MassDeportationCoalition.org ↗</a></section>
     <footer><div className="wordmark footer-mark"><span className="wordmark-star">★</span><span>Mass Deportation<br />Coalition</span></div><p>Campaign portfolio · Information adapted from the official Mass Deportation Coalition website.</p><p>© 2026 Mass Deportation Coalition</p></footer>
