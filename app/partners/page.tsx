@@ -26,11 +26,16 @@ const states=[
 ] as const;
 
 const individuals=[
-  ["Data Republican","Independent data researcher and online profile"],
-  ["Erik Prince","Entrepreneur and former U.S. Navy SEAL officer"],
-  ["J. Michael Waller, PhD","Senior Analyst for Strategy, Center for Security Policy"],
-  ["Mark Morgan","Former head of ICE and U.S. Customs and Border Protection"],
+  ["Data Republican","Independent data researcher and online profile","DataRepublican.jpg"],
+  ["Erik Prince","Entrepreneur and former U.S. Navy SEAL officer","erik-prince.jpg"],
+  ["J. Michael Waller, PhD","Senior Analyst for Strategy, Center for Security Policy","jmw-portrait-02.jpg"],
+  ["Mark Morgan","Former head of ICE and U.S. Customs and Border Protection","mark-morgan.jpg"],
 ];
+
+const logoBase="https://massdeportationcoalition.org/images/partners/";
+const logos:Record<string,string>={
+  "American Moment":"american-moment-lockup-copy-3.png","Arizona Freedom Caucus":"arizona-freedom-caucus.png","Camino Real Republican Women":"screenshot-2026-04-17-at-2.48.02%E2%80%AFpm.png","Capital Area Conservative Republicans":"caparearepclub-logo.png","Center for the American Way of Life":"Cawl.svg","Center for Migration Control":"cmc-logo.jpg","Citizens for a New Louisiana":"cnfl-sig.png","College Republicans of Georgia":"collegerepublicansofgeorgia.jpeg","The Conservative Caucus":"conservative-caucus-logo.png","Conservative Key Kendall County":"ckkc-logo.png","Dallas Eagle Forum":"dallas-eagle-forum.jpg","Denton County Conservative Coalition":"d3c-logo.png","Eagle Forum of Georgia":"cropped-logo-1-1.jpg","Federation for American Immigration Reform":"square-fair-logo-1.png","Fredericksburg Tea Party":"fredericksburgteaparty_logo.png","Georgia Freedom Caucus":"georgia-freedom-caucus.png","Grassroots America — We the People":"grassroots-america.png","The Heritage Foundation":"HeritageCyanBanner.png","Idaho Gang of Eight":"53ba7f60-5a99-449c-b792-8b4b0e4ee233.png","Illinois Conservative Union":"illinois-conservative-union.png","Illinois Freedom Caucus":"illinois_freedom_caucus_logob.png","Immigration Accountability Project":"Immigration-Accountability-Project.png","Irving Republican Women":"irw-logo.png","Kerr County Patriots":"kerrcountypatriots.jpg","Maryland Freedom Caucus":"maryland-freedom-caucus.png","Missouri Federation of College Republicans":"missouricollegerepublicans.jpeg","Montana Freedom Caucus":"montana_freedom_caucus_logob.png","Montgomery County Eagle Forum":"mcef-logo.png","Muckraker":"muckraker_logo_white_clean.png","National Immigration Center for Enforcement":"NICe.jpeg","New Guard Press":"22493996-59a8-473f-bb39-268f00dc6df8.png","New York Federation of College Republicans":"newyorkfederationofcollegerepublicans.jpeg","North Carolina Physicians for Freedom":"screenshot-2026-03-31-at-9.21.33%E2%80%AFam.png","Ohio College Republican Federation":"ohiocollegerepublicans.jpeg","Oklahoma Freedom Caucus":"oklahoma-freedom-caucus.png","Oversight Project":"oversightproject_logo_red.png","Palo Pinto County Conservatives":"palo-pinto-county-conservatives_logo.png","Parker County Conservatives":"parker-county-conservatives_logo.jpg","Pat Buchanan Society":"pat-buchanan-society-logo.jpg","Pennsylvania Federation of College Republicans":"pennsylvaniecollegerepublicans.jpeg","The Remembrance Project":"round-logo-no-background-2018.png","Save Heritage Indiana":"image0.jpeg","South Dakota Freedom Caucus":"south_dakota_freedom_caucus_logo.png","Stand Up Michigan":"stand-up-michigan-logo.jpeg","State Leadership Initiative":"state-leadership-initiative.png","Tea Party Patriots Action":"tpp-action-logo-cmyk.png","Tea Party Patriots of Eastland County":"tppec-logo.png","Tennessee Heritage Association":"tennessee-heritage-association.jpeg","Texas Border Rescue":"tx-border-rescue_logo.png","Texas Eagle Forum":"tx-eagleforum-logo.png","Texans for Strong Borders":"img_9730.png","Texoma Patriots":"texoma-patriots-logo.jpg","True Texas Project":"tte-logo3.jpg","Virginia College Republicans":"virginiacollegerepublicans.jpeg","We the People — Liberty in Action":"wtp-lia-logo.png","Wisconsin Federation of College Republicans":"wiscosinfederationofcollegerepublicans.jpeg","Wyoming Freedom Caucus":"screenshot-2026-03-26-at-12.22.55%E2%80%AFpm.png","Young Conservatives of Texas":"young-conservatives-of-texas.png","Young Republicans of Texas":"yrtlogo2000xtransparent.png"
+};
 
 export default function PartnersPage(){
   const organizationCount=states.reduce((total,[,partners])=>total+partners.length,0);
@@ -48,14 +53,17 @@ export default function PartnersPage(){
     </section>
     <section className="state-directory section">
       <div className="directory-intro"><p className="eyebrow">Organizational partners</p><h2>National<br />directory.</h2><p>Coalition organizations grouped by their represented state.</p></div>
-      <div className="state-directory-grid">{states.map(([state,partners],index)=><article key={state} className={state==="Texas"?"state-card state-card-wide":"state-card"}>
+      <div className="state-directory-grid">{states.map(([state,partners],index)=><article key={state} className={state==="Texas"||state==="District of Columbia"?"state-card state-card-wide":"state-card"}>
         <div className="state-card-heading"><span>{String(index+1).padStart(2,"0")}</span><h3>{state}</h3><b>{partners.length}</b></div>
-        <ul>{partners.map(partner=><li key={partner}>{partner}</li>)}</ul>
+        <div className="partner-logo-grid">{partners.map(partner=><div className="partner-logo-tile" key={partner}>
+          <div className="partner-logo-frame">{logos[partner]?<img src={`${logoBase}${logos[partner]}`} alt="" loading="lazy"/>:<span>★</span>}</div>
+          <p>{partner}</p>
+        </div>)}</div>
       </article>)}</div>
     </section>
     <section className="directory-individuals section">
-      <div><p className="eyebrow light">Individual coalition partners</p><h2>People behind<br />the coalition.</h2></div>
-      <div className="individual-list">{individuals.map(([name,role])=><article key={name}><span>★</span><div><h4>{name}</h4><p>{role}</p></div></article>)}</div>
+      <div><p className="eyebrow light">Coalition directory</p><h2>Individual<br />partners.</h2></div>
+      <div className="individual-list directory-people-list">{individuals.map(([name,role,image])=><article key={name}><img src={`${logoBase}${image}`} alt="" loading="lazy"/><div><h4>{name}</h4><p>{role}</p></div></article>)}</div>
     </section>
     <section className="directory-cta"><p className="eyebrow">Explore the coalition</p><h2>See the national footprint.</h2><div><a className="button" href="/#partners">Return to the map</a><a className="text-link" href="https://massdeportationcoalition.org/partners/" target="_blank" rel="noreferrer">Official directory ↗</a></div></section>
     <footer><div className="wordmark footer-mark"><span className="wordmark-star">★</span><span>Mass Deportation<br />Coalition</span></div><p>Campaign portfolio · Information adapted from the official Mass Deportation Coalition website.</p><p>© 2026 Mass Deportation Coalition</p></footer>

@@ -99,7 +99,7 @@ export default function Home() {
       <PartnersMap locations={statePartnerLocations} />
       <a className="button button-paper partners-button" href="/partners">View the full partner directory →</a>
       <div className="individuals">
-        <div><p className="eyebrow light">Individual coalition partners</p><h3>People behind<br />the coalition.</h3></div>
+        <div><p className="eyebrow light">Coalition directory</p><h3>Individual<br />partners.</h3></div>
         <div className="individual-list">{individuals.map(([name, role]) => <article key={name}><span>★</span><div><h4>{name}</h4><p>{role}</p></div></article>)}</div>
       </div>
     </section>

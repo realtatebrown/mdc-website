@@ -147,14 +147,19 @@ nav a:hover,.text-link:hover { color:var(--red); }
 .state-card-wide { grid-column:1/-1; }
 .state-card-heading { display:grid; grid-template-columns:32px 1fr 34px; gap:10px; align-items:center; padding-bottom:16px; border-bottom:1px solid #9aabbd; }
 .state-card-heading span { color:var(--red); font-size:11px; font-weight:900; }
-.state-card-heading h3 { margin:0; font-family:Georgia,serif; font-size:24px; }
+.state-card-heading h3 { min-width:0; margin:0; font-family:Georgia,serif; font-size:24px; line-height:1.05; overflow-wrap:anywhere; }
 .state-card-heading b { width:32px; height:32px; display:grid; place-items:center; color:white; background:var(--ink); border-radius:50%; font-size:12px; }
-.state-card ul { margin:18px 0 0; padding:0; list-style:none; columns:1; }
-.state-card-wide ul { columns:3; column-gap:28px; }
-.state-card li { break-inside:avoid; padding:7px 0 7px 15px; border-bottom:1px dotted #a8b5c2; font-size:12px; font-weight:700; line-height:1.3; position:relative; }
-.state-card li::before { content:"★"; position:absolute; left:0; color:var(--red); font-size:8px; }
+.partner-logo-grid { display:grid; grid-template-columns:1fr; gap:8px; margin-top:16px; }
+.state-card-wide .partner-logo-grid { grid-template-columns:repeat(3,minmax(0,1fr)); }
+.partner-logo-tile { min-width:0; min-height:82px; display:grid; grid-template-columns:66px 1fr; gap:12px; align-items:center; padding:8px; background:var(--paper-light); border:1px solid #a8b5c2; }
+.partner-logo-frame { width:66px; height:62px; display:grid; place-items:center; overflow:hidden; padding:6px; background:white; border:1px solid #d4dde4; }
+.partner-logo-frame img { display:block; width:100%; height:100%; object-fit:contain; }
+.partner-logo-frame span { color:var(--red); font-size:18px; }
+.partner-logo-tile p { min-width:0; margin:0; font-size:11px; font-weight:800; line-height:1.22; overflow-wrap:anywhere; }
 .directory-individuals { display:grid; grid-template-columns:1fr 1.1fr; gap:clamp(50px,9vw,130px); color:white; background:var(--red); }
 .directory-individuals .individual-list { border-top-color:rgba(255,255,255,.6); }
+.directory-people-list article { grid-template-columns:64px 1fr; min-height:116px; }
+.directory-people-list article>img { width:58px; height:76px; object-fit:cover; object-position:top; border:2px solid var(--paper); }
 .directory-cta { min-height:390px; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:70px 24px; text-align:center; }
 .directory-cta h2 { margin:12px 0 32px; font-family:Georgia,serif; font-size:clamp(48px,6vw,82px); }
 .directory-cta>div { display:flex; align-items:center; gap:28px; }
@@ -165,5 +170,5 @@ nav a:hover,.text-link:hover { color:var(--red); }
 footer { min-height:180px; padding:36px clamp(24px,6vw,90px); display:grid; grid-template-columns:1fr 1fr 1fr; align-items:center; gap:30px; color:white; background:var(--ink); font-size:11px; letter-spacing:.06em; text-transform:uppercase; }
 footer p:last-child { text-align:right; }
 @media (max-width:900px) { .site-header{min-height:86px} nav,.button-small{display:none}.hero{grid-template-columns:1fr}.hero-copy{min-height:600px}.hero-poster{min-height:650px;border-left:0;border-top:10px solid var(--red)}.mission,.playbook{grid-template-columns:1fr}.mission-copy>p:not(.display-quote){margin-left:0}.principle-grid{grid-template-columns:1fr}.principle-grid article,.principle-grid article:nth-child(4),.principle-grid article:nth-child(5){grid-column:auto;min-height:280px}.section-heading,.partners-heading{align-items:start;flex-direction:column}.location-index{grid-template-columns:repeat(2,1fr)}.individuals,.directory-individuals{grid-template-columns:1fr}.map-shell{min-height:440px}.usa-map{min-height:380px}.directory-hero{grid-template-columns:1fr}.directory-stats{max-width:500px}.state-directory{grid-template-columns:1fr}.directory-intro{position:static}.state-directory-grid{grid-template-columns:1fr}footer{grid-template-columns:1fr}footer p:last-child{text-align:left} }
-@media (max-width:560px) { .hero-copy{padding-top:70px;min-height:560px}.hero h1{font-size:52px}.poster-number{font-size:54px}.section{padding:75px 20px}.mission{gap:40px}.map-detail{grid-template-columns:1fr}.partner-hover-card{top:8px;left:8px!important;right:8px!important;width:auto;max-height:340px}.cluster-location-callout{width:112px;padding:6px}.cluster-location-callout h4{font-size:10px}.callout-partner{grid-template-columns:16px 1fr;font-size:7px}.callout-logo{width:15px;height:15px}.callout-logo img{inset:2px;width:11px;height:11px}.hover-partner-grid,.texas-card .hover-partner-grid{grid-template-columns:1fr}.location-index{grid-template-columns:1fr}.location-index article{min-height:auto}.cta-stars{letter-spacing:.5em;padding-left:.5em}.directory-hero{min-height:520px;padding:70px 20px}.directory-hero h1{font-size:54px}.directory-stats div{grid-template-columns:72px 1fr}.state-card-wide{grid-column:auto}.state-card-wide ul{columns:1}.directory-cta>div{flex-direction:column} }
+@media (max-width:560px) { .hero-copy{padding-top:70px;min-height:560px}.hero h1{font-size:52px}.poster-number{font-size:54px}.section{padding:75px 20px}.mission{gap:40px}.map-detail{grid-template-columns:1fr}.partner-hover-card{top:8px;left:8px!important;right:8px!important;width:auto;max-height:340px}.cluster-location-callout{width:112px;padding:6px}.cluster-location-callout h4{font-size:10px}.callout-partner{grid-template-columns:16px 1fr;font-size:7px}.callout-logo{width:15px;height:15px}.callout-logo img{inset:2px;width:11px;height:11px}.hover-partner-grid,.texas-card .hover-partner-grid{grid-template-columns:1fr}.location-index{grid-template-columns:1fr}.location-index article{min-height:auto}.cta-stars{letter-spacing:.5em;padding-left:.5em}.directory-hero{min-height:520px;padding:70px 20px}.directory-hero h1{font-size:54px}.directory-stats div{grid-template-columns:72px 1fr}.state-card-wide{grid-column:auto}.state-card-wide .partner-logo-grid{grid-template-columns:1fr}.directory-cta>div{flex-direction:column} }
 @media (prefers-reduced-motion:reduce) { html{scroll-behavior:auto}.button{transition:none} }
