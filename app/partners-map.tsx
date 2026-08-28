@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 
 export type PartnerLocation = { city:string; state:string; lat:number; lon:number; partners:string[] };
 type MapPoint = { location:PartnerLocation; x:number; y:number };
-type MapShape = { id:string; d:string; active:boolean };
+type MapShape = { id:string; state:string|null; d:string; active:boolean };
 
 const domains:Record<string,string> = {
   "American Moment":"americanmoment.org", "Center for the American Way of Life":"dc.claremont.org",
@@ -41,20 +41,18 @@ export default function PartnersMap({ locations }:{ locations:PartnerLocation[] 
   const closeLater=()=>{keepOpen();closeTimer.current=setTimeout(()=>{setActive(null);setActiveCluster(null)},850)};
 
   const clusterFor=(point:MapPoint)=>{
+    if(["DC","MD"].includes(point.location.state))return "dc-md";
     return null;
   };
   const clusterMembers=activeCluster?points.filter(point=>clusterFor(point)===activeCluster):[];
-  const clusterNames=["dmv","north-texas","atlanta","houston"];
+  const clusterNames=["dc-md"];
   const membersFor=(cluster:string)=>points.filter(point=>clusterFor(point)===cluster);
   const clusterCenter=(members:MapPoint[]):[number,number]=>[
     members.reduce((sum,point)=>sum+point.x,0)/members.length,
     members.reduce((sum,point)=>sum+point.y,0)/members.length,
   ];
   const clusterOffsets:Record<string,[number,number][]>={
-    dmv:[[-160,-35],[-80,50],[0,-35],[80,50],[160,-35]],
-    "north-texas":[[-150,-20],[-50,45],[50,-20],[150,45]],
-    atlanta:[[-68,0],[68,0]],
-    houston:[[-68,0],[68,0]],
+    "dc-md":[[-78,0],[78,0]],
   };
   const displayedPoint=(point:MapPoint):[number,number]=>{
     const cluster=clusterFor(point);
@@ -83,7 +81,8 @@ export default function PartnersMap({ locations }:{ locations:PartnerLocation[] 
       const path=d3.geoPath(projection);
       const fips:Record<string,string>={AZ:"04",DC:"11",FL:"12",GA:"13",ID:"16",IL:"17",IN:"18",LA:"22",MD:"24",MI:"26",MO:"29",MT:"30",NY:"36",NC:"37",OH:"39",OK:"40",PA:"42",SD:"46",TN:"47",TX:"48",UT:"49",VA:"51",WI:"55",WY:"56"};
       const represented=new Set(locations.map(l=>fips[l.state]));
-      setShapes(featureCollection.features.map((feature:any)=>({id:String(feature.id),d:path(feature)||"",active:represented.has(String(feature.id).padStart(2,"0"))})));
+      const stateByFips=Object.fromEntries(Object.entries(fips).map(([state,id])=>[id,state]));
+      setShapes(featureCollection.features.map((feature:any)=>{const id=String(feature.id).padStart(2,"0");return{id,d:path(feature)||"",state:stateByFips[id]||null,active:represented.has(id)}}));
       const byState=new Map<string,string[]>();
       locations.forEach(location=>byState.set(location.state,[...(byState.get(location.state)||[]),...location.partners]));
       const featureByFips=new Map(featureCollection.features.map((feature:any)=>[String(feature.id).padStart(2,"0"),feature]));
@@ -100,30 +99,34 @@ export default function PartnersMap({ locations }:{ locations:PartnerLocation[] 
 
   useEffect(()=>()=>keepOpen(),[]);
 
+  const activateState=(state:string|null)=>{
+    if(!state)return;
+    const point=points.find(candidate=>candidate.location.state===state);
+    if(!point)return;
+    const cluster=clusterFor(point);
+    setActive(point);
+    setActiveCluster(cluster);
+  };
+
   return <div className="map-shell" onMouseEnter={keepOpen} onMouseLeave={closeLater}>
     <div className="map-stage">
       <svg className="usa-map" viewBox="0 0 960 600" role="img" aria-label="Map of United States coalition partner locations">
-        {shapes.map(shape=><path key={shape.id} d={shape.d} className={shape.active?"state-shape state-has-partner":"state-shape"}/>) }
-        {clusterMembers.map(point=>{const [x,y]=displayedPoint(point);return <line key={`line-${point.location.city}`} className="cluster-map-leader" x1={point.x} y1={point.y} x2={x} y2={y}/>})}
-        {points.filter(point=>!clusterFor(point)||clusterFor(point)===activeCluster).map(point=>{const [x,y]=displayedPoint(point);return <g key={point.location.state} className={`map-pin ${activeCluster&&clusterFor(point)===activeCluster?"map-pin-expanded":""}`} transform={`translate(${x},${y})`} onMouseEnter={()=>{setActive(point);setActiveCluster(clusterFor(point))}} onClick={()=>{setActive(point);setActiveCluster(clusterFor(point))}} role="button" aria-label={`${stateNames[point.location.state]||point.location.state}: ${point.location.partners.join(", ")}`}>
-          <circle r={point.location.partners.length>4?15:11}/><text textAnchor="middle" dy=".35em">{point.location.partners.length}</text>
-        </g>})}
-        {clusterNames.filter(cluster=>cluster!==activeCluster).map(cluster=>{const members=membersFor(cluster);if(!members.length)return null;const [x,y]=clusterCenter(members);const count=members.reduce((sum,point)=>sum+point.location.partners.length,0);return <g key={`cluster-${cluster}`} className="map-pin map-cluster-pin" transform={`translate(${x},${y})`} onMouseEnter={()=>{setActive(members[0]);setActiveCluster(cluster)}} onClick={()=>{setActive(members[0]);setActiveCluster(cluster)}} role="button" aria-label={`${count} partners across ${members.length} nearby locations`}>
-          <circle r={20}/><text textAnchor="middle" dy=".35em">{count}</text>
+        {shapes.map(shape=><path key={shape.id} d={shape.d} className={shape.active?"state-shape state-has-partner":"state-shape"} onMouseEnter={()=>shape.active&&activateState(shape.state)} onClick={()=>shape.active&&activateState(shape.state)}/>) }
+        {points.filter(point=>point.location.state!=="DC").map(point=>{const isMaryland=point.location.state==="MD";const dc=isMaryland?points.find(candidate=>candidate.location.state==="DC"):null;const count=point.location.partners.length+(dc?.location.partners.length||0);return <g className="state-count-badge" key={`count-${point.location.state}`} transform={`translate(${point.x},${point.y})`} aria-hidden="true">
+          <rect x="-18" y="-14" width="36" height="28" rx="14"/><text textAnchor="middle" dy=".35em">{count}</text>
         </g>})}
       </svg>
       {!shapes.length&&<p className="map-loading">Loading partner map…</p>}
       {activeCluster&&<div className="cluster-map-callouts" onMouseEnter={keepOpen} onMouseLeave={closeLater}>
         {clusterMembers.map((point,index)=>{const [x,y]=displayedPoint(point);return <section className={`cluster-location-callout ${point.location.partners.length>6?"callout-dense":""}`} key={`${point.location.city}-${point.location.state}`} style={{left:`${x/9.6}%`,top:`${y/6}%`,animationDelay:`${index*45}ms`}}>
-          <i className="callout-stem" aria-hidden="true" />
-          <h4>{point.location.city}, {point.location.state}</h4>
+          <h4>{stateNames[point.location.state]||point.location.state}</h4>
           {point.location.partners.map(partner=>domains[partner]?<a className="callout-partner" href={`https://${domains[partner]}`} target="_blank" rel="noreferrer" key={partner}>
             <span className="callout-logo"><b>★</b>{domains[partner]&&<img src={`https://${domains[partner]}/favicon.ico`} alt={`${partner} logo`} onError={e=>{e.currentTarget.style.display="none"}}/>}</span><span>{partner}</span>
           </a>:<div className="callout-partner" key={partner}><span className="callout-logo"><b>★</b></span><span>{partner}</span></div>)}
         </section>})}
       </div>}
       {!activeCluster&&active&&<aside className={`partner-hover-card ${active.x>620?"card-left":"card-right"}`} style={{left:`${active.x/9.6}%`,top:`${active.y/6}%`}}>
-        <div className="hover-card-heading"><span>Partner state</span><strong>{stateNames[active.location.state]||active.location.state}</strong></div>
+        <div className="hover-card-heading"><strong>{stateNames[active.location.state]||active.location.state}</strong></div>
         <div className="hover-partner-grid">
           {active.location.partners.map(partner=><div className="hover-partner" key={partner}>
             <span className="hover-logo"><b>★</b>{domains[partner]&&<img src={`https://${domains[partner]}/favicon.ico`} alt={`${partner} logo`} onError={e=>{e.currentTarget.style.display="none"}}/>}</span>
