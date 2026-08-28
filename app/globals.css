@@ -76,7 +76,8 @@ nav a:hover,.text-link:hover { color:var(--red); }
 .map-cluster-pin text { font-size:14px; }
 .map-pin text { fill:white; font-family:Arial,sans-serif; font-size:12px; font-weight:900; pointer-events:none; }
 .active-map-leader { stroke:var(--red); stroke-width:2; vector-effect:non-scaling-stroke; }
-.cluster-map-leader { stroke:var(--red); stroke-width:3.5; vector-effect:non-scaling-stroke; }
+.cluster-map-leader { stroke:var(--red); stroke-width:3.5; vector-effect:non-scaling-stroke; stroke-dasharray:900; stroke-dashoffset:900; animation:mapLeaderIn .28s ease-out forwards; }
+@keyframes mapLeaderIn { to{stroke-dashoffset:0} }
 .partner-hover-card { position:absolute; top:18px; z-index:6; width:min(43%,430px); max-height:520px; overflow:auto; padding:20px; background:var(--paper-light); border:2px solid var(--ink); box-shadow:6px 6px 0 rgba(16,45,82,.22); }
 .partner-hover-card.card-left { left:18px; }
 .partner-hover-card.card-right { right:18px; }
@@ -89,12 +90,15 @@ nav a:hover,.text-link:hover { color:var(--red); }
 .hover-logo b { font-size:11px; }
 .hover-logo img { position:absolute; inset:5px; width:20px; height:20px; object-fit:contain; }
 .cluster-map-callouts { position:absolute; inset:0; z-index:7; pointer-events:none; }
-.cluster-location-callout { position:absolute; width:136px; padding:8px 9px; transform:translate(-50%,calc(-100% - 9px)); background:var(--paper-light); border:2px solid var(--ink); box-shadow:3px 3px 0 rgba(16,45,82,.2); }
-.cluster-location-callout::after { content:""; position:absolute; left:50%; bottom:-11px; width:4px; height:11px; transform:translateX(-50%); background:var(--red); }
+.cluster-location-callout { position:absolute; width:136px; padding:8px 9px; transform:translate(-50%,calc(-100% - 9px)); pointer-events:auto; opacity:0; background:var(--paper-light); border:2px solid var(--ink); box-shadow:3px 3px 0 rgba(16,45,82,.2); animation:mapCalloutIn .24s cubic-bezier(.2,.8,.2,1) forwards; }
+.callout-stem { position:absolute; z-index:-1; left:50%; bottom:-13px; width:4px; height:14px; transform:translateX(-50%); background:var(--red); border-bottom:2px solid var(--ink); }
+@keyframes mapCalloutIn { from{opacity:0;transform:translate(-50%,calc(-100% + 1px)) scale(.94)} to{opacity:1;transform:translate(-50%,calc(-100% - 9px)) scale(1)} }
+@media (prefers-reduced-motion:reduce) { .cluster-location-callout,.cluster-map-leader{animation:none;opacity:1;stroke-dashoffset:0}.map-pin{transition:none} }
 .cluster-location-callout.callout-dense { width:270px; display:grid; grid-template-columns:1fr 1fr; column-gap:10px; }
 .cluster-location-callout.callout-dense h4 { grid-column:1/-1; }
 .cluster-location-callout h4 { margin:0 0 6px; padding-bottom:5px; color:var(--red); border-bottom:1px solid #b8c9d5; font-family:Georgia,serif; font-size:12px; line-height:1.1; }
-.callout-partner { display:grid; grid-template-columns:21px 1fr; gap:5px; align-items:center; margin-top:4px; font-size:9px; font-weight:800; line-height:1.12; }
+.callout-partner { display:grid; grid-template-columns:21px 1fr; gap:5px; align-items:center; margin-top:4px; color:var(--ink); font-size:9px; font-weight:800; line-height:1.12; text-decoration:none; }
+.callout-partner:hover { color:var(--red); text-decoration:underline; }
 .callout-logo { position:relative; width:20px; height:20px; display:grid; place-items:center; overflow:hidden; color:var(--red); background:#e6edf3; border:1px solid #bdccd8; border-radius:50%; }
 .callout-logo b { font-size:8px; }
 .callout-logo img { position:absolute; inset:3px; width:14px; height:14px; object-fit:contain; }

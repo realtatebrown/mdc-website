@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export type PartnerLocation = { city:string; state:string; lat:number; lon:number; partners:string[] };
 type MapPoint = { location:PartnerLocation; x:number; y:number };
@@ -34,6 +34,9 @@ export default function PartnersMap({ locations }:{ locations:PartnerLocation[] 
   const [points,setPoints] = useState<MapPoint[]>([]);
   const [active,setActive] = useState<MapPoint|null>(null);
   const [activeCluster,setActiveCluster] = useState<string|null>(null);
+  const closeTimer=useRef<ReturnType<typeof setTimeout>|null>(null);
+  const keepOpen=()=>{if(closeTimer.current){clearTimeout(closeTimer.current);closeTimer.current=null;}};
+  const closeLater=()=>{keepOpen();closeTimer.current=setTimeout(()=>{setActive(null);setActiveCluster(null)},850)};
 
   const clusterFor=(point:MapPoint)=>{
     if(["DC","MD","VA"].includes(point.location.state))return "dmv";
@@ -89,7 +92,9 @@ export default function PartnersMap({ locations }:{ locations:PartnerLocation[] 
     return()=>{cancelled=true};
   },[locations]);
 
-  return <div className="map-shell" onMouseLeave={()=>{setActive(null);setActiveCluster(null)}}>
+  useEffect(()=>()=>keepOpen(),[]);
+
+  return <div className="map-shell" onMouseEnter={keepOpen} onMouseLeave={closeLater}>
     <div className="map-stage">
       <svg className="usa-map" viewBox="0 0 960 600" role="img" aria-label="Map of United States coalition partner locations">
         {shapes.map(shape=><path key={shape.id} d={shape.d} className={shape.active?"state-shape state-has-partner":"state-shape"}/>) }
@@ -103,12 +108,13 @@ export default function PartnersMap({ locations }:{ locations:PartnerLocation[] 
         </g>})}
       </svg>
       {!shapes.length&&<p className="map-loading">Loading partner map…</p>}
-      {activeCluster&&<div className="cluster-map-callouts">
-        {clusterMembers.map(point=>{const [x,y]=displayedPoint(point);return <section className={`cluster-location-callout ${point.location.partners.length>6?"callout-dense":""}`} key={`${point.location.city}-${point.location.state}`} style={{left:`${x/9.6}%`,top:`${y/6}%`}}>
+      {activeCluster&&<div className="cluster-map-callouts" onMouseEnter={keepOpen} onMouseLeave={closeLater}>
+        {clusterMembers.map((point,index)=>{const [x,y]=displayedPoint(point);return <section className={`cluster-location-callout ${point.location.partners.length>6?"callout-dense":""}`} key={`${point.location.city}-${point.location.state}`} style={{left:`${x/9.6}%`,top:`${y/6}%`,animationDelay:`${index*45}ms`}}>
+          <i className="callout-stem" aria-hidden="true" />
           <h4>{point.location.city}, {point.location.state}</h4>
-          {point.location.partners.map(partner=><div className="callout-partner" key={partner}>
+          {point.location.partners.map(partner=>domains[partner]?<a className="callout-partner" href={`https://${domains[partner]}`} target="_blank" rel="noreferrer" key={partner}>
             <span className="callout-logo"><b>★</b>{domains[partner]&&<img src={`https://${domains[partner]}/favicon.ico`} alt={`${partner} logo`} onError={e=>{e.currentTarget.style.display="none"}}/>}</span><span>{partner}</span>
-          </div>)}
+          </a>:<div className="callout-partner" key={partner}><span className="callout-logo"><b>★</b></span><span>{partner}</span></div>)}
         </section>})}
       </div>}
       {!activeCluster&&active&&<aside className={`partner-hover-card ${active.x>620?"card-left":"card-right"}`}>
