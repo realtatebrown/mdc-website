@@ -125,7 +125,7 @@ export default function PartnersMap({ locations }:{ locations:PartnerLocation[] 
           </a>:<div className="callout-partner" key={partner}><span className="callout-logo"><b>★</b></span><span>{partner}</span></div>)}
         </section>})}
       </div>}
-      {!activeCluster&&active&&<aside className={`partner-hover-card ${active.x>620?"card-left":"card-right"}`} style={{left:`${active.x/9.6}%`,top:`${active.y/6}%`}}>
+      {!activeCluster&&active&&<aside className={`partner-hover-card ${active.x>620?"card-left":"card-right"} ${active.location.state==="TX"?"texas-card":""}`} style={{left:`${active.x/9.6}%`,top:`${active.y/6}%`}}>
         <div className="hover-card-heading"><strong>{stateNames[active.location.state]||active.location.state}</strong></div>
         <div className="hover-partner-grid">
           {active.location.partners.map(partner=><div className="hover-partner" key={partner}>
