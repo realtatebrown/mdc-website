@@ -1,6 +1,5 @@
 const states=[
   ["Arizona",["Arizona Freedom Caucus"]],
-  ["District of Columbia",["American Moment","Center for the American Way of Life","Center for Migration Control","Federation for American Immigration Reform","The Heritage Foundation","Immigration Accountability Project","National Immigration Center for Enforcement","New Guard Press","Oversight Project","Pat Buchanan Society","State Leadership Initiative"]],
   ["Florida",["Muckraker"]],
   ["Georgia",["College Republicans of Georgia","Eagle Forum of Georgia","Georgia Freedom Caucus","Tea Party Patriots Action"]],
   ["Idaho",["Idaho Gang of Eight"]],
@@ -23,6 +22,7 @@ const states=[
   ["Virginia",["The Conservative Caucus","Fredericksburg Tea Party","Virginia College Republicans"]],
   ["Wisconsin",["Wisconsin Federation of College Republicans"]],
   ["Wyoming",["Wyoming Freedom Caucus"]],
+  ["District of Columbia",["American Moment","Center for the American Way of Life","Center for Migration Control","Federation for American Immigration Reform","The Heritage Foundation","Immigration Accountability Project","National Immigration Center for Enforcement","New Guard Press","Oversight Project","Pat Buchanan Society","State Leadership Initiative"]],
 ] as const;
 
 const individuals=[
