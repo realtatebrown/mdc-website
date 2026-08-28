@@ -99,7 +99,7 @@ export default function PartnersMap({ locations }:{ locations:PartnerLocation[] 
       <svg className="usa-map" viewBox="0 0 960 600" role="img" aria-label="Map of United States coalition partner locations">
         {shapes.map(shape=><path key={shape.id} d={shape.d} className={shape.active?"state-shape state-has-partner":"state-shape"}/>) }
         {clusterMembers.map(point=>{const [x,y]=displayedPoint(point);return <line key={`line-${point.location.city}`} className="cluster-map-leader" x1={point.x} y1={point.y} x2={x} y2={y}/>})}
-        {!activeCluster&&active&&<line className="active-map-leader" x1={active.x} y1={active.y} x2={active.x>620?560:720} y2={110}/>} 
+        {!activeCluster&&active&&<line className="active-map-leader" x1={active.x} y1={active.y} x2={active.x>620?431:529} y2={110}/>} 
         {points.filter(point=>!clusterFor(point)||clusterFor(point)===activeCluster).map(point=>{const [x,y]=displayedPoint(point);return <g key={`${point.location.city}-${point.location.state}`} className={`map-pin ${activeCluster&&clusterFor(point)===activeCluster?"map-pin-expanded":""}`} transform={`translate(${x},${y})`} onMouseEnter={()=>{setActive(point);setActiveCluster(clusterFor(point))}} onClick={()=>{setActive(point);setActiveCluster(clusterFor(point))}} role="button" aria-label={`${point.location.city}, ${point.location.state}: ${point.location.partners.join(", ")}`}>
           <circle r={point.location.partners.length>4?15:11}/><text textAnchor="middle" dy=".35em">{point.location.partners.length}</text>
         </g>})}
