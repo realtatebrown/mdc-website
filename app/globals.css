@@ -78,9 +78,13 @@ nav a:hover,.text-link:hover { color:var(--red); }
 .active-map-leader { stroke:var(--red); stroke-width:3.5; vector-effect:non-scaling-stroke; stroke-dasharray:900; stroke-dashoffset:900; animation:mapLeaderIn .28s ease-out forwards; }
 .cluster-map-leader { stroke:var(--red); stroke-width:3.5; vector-effect:non-scaling-stroke; stroke-dasharray:900; stroke-dashoffset:900; animation:mapLeaderIn .28s ease-out forwards; }
 @keyframes mapLeaderIn { to{stroke-dashoffset:0} }
-.partner-hover-card { position:absolute; top:3%; z-index:6; width:43%; max-height:86%; overflow:auto; padding:20px; background:var(--paper-light); border:2px solid var(--ink); box-shadow:6px 6px 0 rgba(16,45,82,.22); }
-.partner-hover-card.card-left { left:1.875%; }
-.partner-hover-card.card-right { right:1.875%; }
+.partner-hover-card { position:absolute; z-index:6; width:min(270px,36%); padding:14px; overflow:visible; background:var(--paper-light); border:2px solid var(--ink); box-shadow:4px 4px 0 rgba(16,45,82,.22); animation:singleCalloutIn .18s ease-out both; }
+.partner-hover-card::after { content:""; position:absolute; top:50%; width:14px; height:4px; transform:translateY(-50%); background:var(--red); }
+.partner-hover-card.card-left { transform:translate(calc(-100% - 12px),-50%); }
+.partner-hover-card.card-left::after { right:-14px; }
+.partner-hover-card.card-right { transform:translate(12px,-50%); }
+.partner-hover-card.card-right::after { left:-14px; }
+@keyframes singleCalloutIn { from{opacity:0} to{opacity:1} }
 .hover-card-heading { display:flex; align-items:end; justify-content:space-between; gap:15px; margin-bottom:16px; padding-bottom:12px; border-bottom:2px solid var(--ink); }
 .hover-card-heading span { color:var(--red); font-size:10px; font-weight:900; letter-spacing:.13em; text-transform:uppercase; }
 .hover-card-heading strong { font-family:Georgia,serif; font-size:20px; }
