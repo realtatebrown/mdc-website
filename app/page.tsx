@@ -1,4 +1,5 @@
 import PartnersMap, { type PartnerLocation } from "./partners-map";
+import { officialPortraitUrl } from "./official-logos";
 
 const principles = [
   ["01", "Phase II: Mass Deportations", "Move beyond a narrow “worst-of-the-worst” approach and build enforcement policy capable of producing removals at national scale."],
@@ -55,10 +56,10 @@ const statePartnerLocations=Object.values(partnerLocations.reduce<Record<string,
 },{})).sort((a,b)=>a.state.localeCompare(b.state));
 
 const individuals = [
-  ["Data Republican", "Independent data researcher and online profile"],
-  ["Erik Prince", "Entrepreneur and former U.S. Navy SEAL officer"],
-  ["J. Michael Waller, PhD", "Senior Analyst for Strategy, Center for Security Policy"],
-  ["Mark Morgan", "Former head of ICE and U.S. Customs and Border Protection"],
+  ["Data Republican", "Independent data researcher and online profile","DataRepublican.jpg"],
+  ["Erik Prince", "Entrepreneur and former U.S. Navy SEAL officer","erik-prince.jpg"],
+  ["J. Michael Waller, PhD", "Senior Analyst for Strategy, Center for Security Policy","jmw-portrait-02.jpg"],
+  ["Mark Morgan", "Former head of ICE and U.S. Customs and Border Protection","mark-morgan.jpg"],
 ];
 
 export default function Home() {
@@ -99,7 +100,7 @@ export default function Home() {
       <PartnersMap locations={statePartnerLocations} />
       <div className="individuals">
         <div><h3>Individual<br />partners.</h3></div>
-        <div className="individual-list">{individuals.map(([name, role]) => <article key={name}><span>★</span><div><h4>{name}</h4><p>{role}</p></div></article>)}</div>
+        <div className="individual-list home-people-list">{individuals.map(([name, role, image]) => <article key={name}><img src={officialPortraitUrl(image)} alt="" loading="lazy"/><div><h4>{name}</h4><p>{role}</p></div></article>)}</div>
       </div>
       <a className="button button-paper partners-button" href="/partners">View the full partner directory →</a>
     </section>

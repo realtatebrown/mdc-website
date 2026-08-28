@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { officialLogoUrl } from "./official-logos";
 
 export type PartnerLocation = { city:string; state:string; lat:number; lon:number; partners:string[] };
 type MapPoint = { location:PartnerLocation; x:number; y:number };
@@ -121,7 +122,7 @@ export default function PartnersMap({ locations }:{ locations:PartnerLocation[] 
         {clusterMembers.map((point,index)=>{const [x,y]=displayedPoint(point);return <section className={`cluster-location-callout ${point.location.partners.length>6?"callout-dense":""}`} key={`${point.location.city}-${point.location.state}`} style={{left:`${x/9.6}%`,top:`${y/6}%`,animationDelay:`${index*45}ms`}}>
           <h4>{stateNames[point.location.state]||point.location.state}</h4>
           {point.location.partners.map(partner=>domains[partner]?<a className="callout-partner" href={`https://${domains[partner]}`} target="_blank" rel="noreferrer" key={partner}>
-            <span className="callout-logo"><b>★</b>{domains[partner]&&<img src={`https://${domains[partner]}/favicon.ico`} alt={`${partner} logo`} onError={e=>{e.currentTarget.style.display="none"}}/>}</span><span>{partner}</span>
+            <span className="callout-logo"><b>★</b>{(officialLogoUrl(partner)||domains[partner])&&<img src={officialLogoUrl(partner)||`https://${domains[partner]}/favicon.ico`} alt={`${partner} logo`} onError={e=>{e.currentTarget.style.display="none"}}/>}</span><span>{partner}</span>
           </a>:<div className="callout-partner" key={partner}><span className="callout-logo"><b>★</b></span><span>{partner}</span></div>)}
         </section>})}
       </div>}
@@ -129,7 +130,7 @@ export default function PartnersMap({ locations }:{ locations:PartnerLocation[] 
         <div className="hover-card-heading"><strong>{stateNames[active.location.state]||active.location.state}</strong></div>
         <div className="hover-partner-grid">
           {active.location.partners.map(partner=><div className="hover-partner" key={partner}>
-            <span className="hover-logo"><b>★</b>{domains[partner]&&<img src={`https://${domains[partner]}/favicon.ico`} alt={`${partner} logo`} onError={e=>{e.currentTarget.style.display="none"}}/>}</span>
+            <span className="hover-logo"><b>★</b>{(officialLogoUrl(partner)||domains[partner])&&<img src={officialLogoUrl(partner)||`https://${domains[partner]}/favicon.ico`} alt={`${partner} logo`} onError={e=>{e.currentTarget.style.display="none"}}/>}</span>
             <span>{partner}</span>
           </div>)}
         </div>

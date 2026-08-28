@@ -129,6 +129,8 @@ nav a:hover,.text-link:hover { color:var(--red); }
 .individual-list article>span { color:var(--paper); }
 .individual-list h4 { margin:0 0 6px; font-family:Georgia,serif; font-size:23px; }
 .individual-list p { margin:0; color:#f6dfd5; font-size:13px; }
+.home-people-list article { grid-template-columns:64px 1fr; min-height:116px; }
+.home-people-list article>img { width:58px; height:76px; object-fit:cover; object-position:top; border:2px solid var(--paper); }
 .partners-button { margin-top:60px; }
 .directory-page { background:var(--paper); }
 .directory-hero { min-height:560px; display:grid; grid-template-columns:1.3fr 1fr; align-content:center; gap:30px 70px; padding:90px clamp(24px,7vw,110px); color:white; background:var(--ink); border-bottom:10px solid var(--red); }
