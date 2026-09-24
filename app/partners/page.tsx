@@ -42,11 +42,10 @@ import { partnerLinks } from "../partner-links";
 export default function PartnersPage(){
   const organizationCount=states.reduce((total,[,partners])=>total+partners.length,0);
   return <main className="directory-page">
-    <div className="top-rule" />
     <header className="site-header">
       <a className="wordmark" href="/" aria-label="Mass Deportation Coalition home"><img className="coalition-logo" src="/assets/mass-deportation-coalition-logo.png" alt="Mass Deportation Coalition" /></a>
-      <nav aria-label="Primary navigation"><a href="/#mission">Mission</a><a href="/#playbook">Playbook</a><a href="/#principles">Principles</a><a href="/partners" aria-current="page">Partners</a></nav>
-      <a className="button button-small" href="/">← Home</a>
+      <nav aria-label="Primary navigation"><a href="/#mission">Mission</a><a href="/#partners">Partners</a><a href="/#priorities">Priorities</a><a href="/#playbook">Playbook</a></nav>
+      <a className="header-action" href="/">← Home</a>
     </header>
     <section className="directory-hero">
       <p className="eyebrow">A coalition from across America</p>

@@ -1,13 +1,11 @@
 import PartnersMap, { type PartnerLocation } from "./partners-map";
 
-const principles = [
-  ["01", "Phase II: Mass Deportations", "Move beyond a narrow “worst-of-the-worst” approach and build enforcement policy capable of producing removals at national scale."],
-  ["02", "Worksite Enforcement", "Restore worksite enforcement as the centerpiece of a serious interior-enforcement strategy."],
-  ["03", "Whole of Government", "Align federal departments and authorities behind a unified effort that encourages self-deportation and enforces the law."],
-  ["04", "Complete Transparency", "Publish regular, complete enforcement data so the public can measure whether promises are being kept."],
-  ["05", "Meaningful Metrics", "Measure actual ICE interior removals—not turnbacks, maritime interdictions, or other unrelated departures."],
+const priorities = [
+  { number:"01", title:"Worksite enforcement", copy:"Make employment enforcement a central part of interior immigration policy." },
+  { number:"02", title:"State participation", copy:"Build the capacity for states to work with federal authorities on enforcement." },
+  { number:"03", title:"Meaningful metrics", copy:"Track ICE interior removals clearly so the public can measure progress." },
 ];
-const recommendations = ["Substantially enhance worksite enforcement", "Move employment verification online", "Dramatically expand immigration detention", "Identify and target visa overstays", "Leverage states to participate", "Track and publicize meaningful benchmarks"];
+
 const partnerLocations: PartnerLocation[] = [
   { city:"Washington", state:"DC", lat:38.9072, lon:-77.0369, partners:["American Moment","Center for the American Way of Life","Center for Migration Control","Federation for American Immigration Reform","The Heritage Foundation","Immigration Accountability Project","National Immigration Center for Enforcement","New Guard Press","Oversight Project","Pat Buchanan Society","State Leadership Initiative"] },
   { city:"Phoenix", state:"AZ", lat:33.4484, lon:-112.074, partners:["Arizona Freedom Caucus"] },
@@ -58,43 +56,44 @@ const statePartnerLocations=Object.values(partnerLocations.reduce<Record<string,
 
 export default function Home() {
   return <main>
-    <div className="top-rule" />
     <header className="site-header">
       <a className="wordmark" href="#top" aria-label="Mass Deportation Coalition home"><img className="coalition-logo" src="/assets/mass-deportation-coalition-logo.png" alt="Mass Deportation Coalition" /></a>
-      <nav aria-label="Primary navigation"><a href="#mission">Mission</a><a href="#playbook">Playbook</a><a href="#principles">Principles</a><a href="/partners">Partners</a></nav>
-      <a className="button button-small" href="https://massdeportationcoalition.org/" target="_blank" rel="noreferrer">Official Site ↗</a>
+      <nav aria-label="Primary navigation"><a href="#mission">Mission</a><a href="#partners">Partners</a><a href="#priorities">Priorities</a><a href="#playbook">Playbook</a></nav>
+      <a className="header-action" href="/partners">Partner directory <span aria-hidden="true">↗</span></a>
     </header>
-    <section className="hero" id="top">
-      <div className="hero-copy">
-        <p className="eyebrow">Formed February 2026</p>
-        <h1 className="hero-quote">“I will launch the largest deportation program of criminals in the history of America.”</h1>
+
+    <section className="hero" id="top" aria-labelledby="hero-title">
+      <div className="hero-inner">
+        <p className="hero-kicker">Mass Deportation Coalition <span aria-hidden="true">✦</span> Formed 2026</p>
+        <h1 id="hero-title">“I will launch the largest deportation program of criminals in the history of America.”</h1>
         <p className="hero-attribution">— President Donald J. Trump</p>
-        <p className="hero-lede">A permanent support base for the largest deportation operation in American history.</p>
-        <div className="hero-actions"><a className="button" href="https://massdeportationcoalition.org/playbook/" target="_blank" rel="noreferrer">Read the Playbook</a><a className="text-link" href="#mission">Discover the mission ↓</a></div>
+        <a className="hero-link" href="#mission">Explore the coalition <span aria-hidden="true">↓</span></a>
       </div>
-      <div className="hero-poster" aria-label="Campaign goal: one million ICE interior removals in 2026">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c2/United_States_Bicentennial_star_1976_%28no_text%29.svg/500px-United_States_Bicentennial_star_1976_%28no_text%29.svg.png" alt="1976 United States Bicentennial ribbon star" />
-        <p className="poster-kicker">The 2026 Objective</p><p className="poster-number">1,000,000</p><p className="poster-label">ICE Interior Removals</p><div className="poster-year"><span>★</span><b>2026</b><span>★</span></div>
-      </div>
+      <div className="hero-bottom" aria-hidden="true"><span>Mission</span><span>Partners</span><span>Policy</span></div>
     </section>
-    <section className="mission section" id="mission">
-      <div className="section-label">Our Purpose</div>
-      <div className="mission-copy"><p className="display-quote">“A permanent support base for mass deportation.”</p><p>The Mass Deportation Coalition brings together immigration law and policy experts, former senior and rank-and-file law-enforcement officials, advocates, and supporters. Its purpose is to turn a defining campaign promise into a durable operational program.</p><p>The coalition’s public framework sets a minimum target of one million ICE interior removals in 2026, creating the logistical, operational, and policy foundation needed to scale enforcement in the years ahead.</p></div>
+
+    <section className="mission section" id="mission" aria-labelledby="mission-title">
+      <div className="section-intro"><span className="section-index">01 / Purpose</span><h2 id="mission-title">A coalition built for the work ahead.</h2></div>
+      <div className="mission-body"><p>The Mass Deportation Coalition brings together immigration policy experts, former law enforcement officials, advocates, and organizations from across the country.</p><p>Its aim is to turn a campaign commitment into a durable program of interior enforcement, with clear policies and public measures of progress.</p></div>
     </section>
-    <section className="playbook section" id="playbook">
-      <div className="playbook-intro"><p className="eyebrow light">Mass Deportation Coalition · March 2026</p><h2>The Playbook</h2><p>Twenty-one executive-branch recommendations. One operational framework. A practical path from campaign promise to measurable results.</p><a className="button button-paper" href="https://massdeportationcoalition.org/playbook/" target="_blank" rel="noreferrer">Explore all 21 recommendations ↗</a></div>
-      <ol className="recommendations">{recommendations.map((item, index) => <li key={item}><span>{String(index + 1).padStart(2, "0")}</span><p>{item}</p></li>)}</ol>
-    </section>
-    <section className="principles section" id="principles">
-      <div className="section-heading"><div><p className="eyebrow">The governing standard</p><h2>Five Principles</h2></div><p>Clear rules for turning public support into transparent, effective interior enforcement.</p></div>
-      <div className="principle-grid">{principles.map(([number, title, copy]) => <article key={number}><span className="principle-number">{number}</span><h3>{title}</h3><p>{copy}</p></article>)}</div>
-    </section>
-    <section className="partners-section section" id="partners">
-      <div className="partners-heading"><div><p className="eyebrow light">A coalition from across America</p><h2>Partners</h2></div><p>Organizations are grouped by state. Select a marker at the center of each represented state to see all coalition partners based there.</p></div>
+
+    <section className="partners-section section" id="partners" aria-labelledby="partners-title">
+      <div className="partners-heading"><div><span className="section-index">02 / Coalition</span><h2 id="partners-title">Across the country.</h2></div><p>Select a state to see its coalition partners. Partner names with a website open the organization’s home page.</p></div>
       <PartnersMap locations={statePartnerLocations} />
-      <a className="button button-paper partners-button" href="/partners">View the full partner directory →</a>
+      <a className="section-link" href="/partners">Explore the full partner directory <span aria-hidden="true">↗</span></a>
     </section>
-    <section className="final-cta"><div className="cta-stars">★ ★ ★ ★ ★</div><h2>A sovereign nation.<br />A government faithful to law.</h2><p>Read the policy framework, meet the coalition, and follow the work.</p><a className="button" href="https://massdeportationcoalition.org/" target="_blank" rel="noreferrer">Visit MassDeportationCoalition.org ↗</a></section>
+
+    <section className="priorities-section section" id="priorities" aria-labelledby="priorities-title">
+      <div className="priorities-intro"><span className="section-index">03 / Focus</span><h2 id="priorities-title">Three priorities.<br />One national effort.</h2><p>The coalition’s policy framework sets out the work needed to expand interior enforcement and measure the outcome.</p></div>
+      <div className="priority-grid">{priorities.map(item=><article key={item.number}><span>{item.number}</span><h3>{item.title}</h3><p>{item.copy}</p></article>)}</div>
+    </section>
+
+    <section className="playbook-section section" id="playbook" aria-labelledby="playbook-title">
+      <div className="playbook-copy"><span className="section-index">04 / The Playbook</span><h2 id="playbook-title">The policy behind the mission.</h2><p>The coalition’s playbook lays out 21 executive-branch recommendations. Its stated 2026 target is one million ICE interior removals, counted separately from border turnbacks and other departures.</p><a className="button" href="https://massdeportationcoalition.org/playbook/" target="_blank" rel="noreferrer">Read the full playbook ↗</a></div>
+      <div className="playbook-figure"><span>2026 target</span><strong>1,000,000</strong><p>ICE interior removals</p></div>
+    </section>
+
+    <section className="closing-section section"><span className="section-index">The coalition</span><h2>See who is part of it.</h2><p>Browse the organizations and individuals behind the national effort.</p><a className="button" href="/partners">Explore coalition partners ↗</a></section>
     <footer><div className="wordmark footer-mark"><img className="coalition-logo" src="/assets/mass-deportation-coalition-logo.png" alt="Mass Deportation Coalition" /></div><p>Campaign portfolio · Information adapted from the official Mass Deportation Coalition website.</p><p>© 2026 Mass Deportation Coalition</p></footer>
   </main>;
 }
