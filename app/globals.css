@@ -2,6 +2,10 @@
 @import "tw-animate-css";
 @import "../vendor/shadcn-tailwind-4.13.0.css";
 
+@font-face { font-family:'DM Sans Variable'; src:url('/fonts/dm-sans-latin-wght-normal.woff2') format('woff2'); font-style:normal; font-weight:100 1000; font-display:swap; }
+@font-face { font-family:'Newsreader Variable'; src:url('/fonts/newsreader-latin-wght-normal.woff2') format('woff2'); font-style:normal; font-weight:200 800; font-display:swap; }
+@font-face { font-family:'Newsreader Variable'; src:url('/fonts/newsreader-latin-wght-italic.woff2') format('woff2'); font-style:italic; font-weight:200 800; font-display:swap; }
+
 :root { --ink:#102d52; --red:#c4372e; --paper:#fff; --paper-light:#fff; }
 * { box-sizing:border-box; }
 html { scroll-behavior:smooth; }
@@ -273,4 +277,47 @@ footer { min-height:160px; }
   .priority-grid article { min-height:0; padding:22px 0 25px; border-left:0; border-bottom:1px solid #b8c8d5; }
   .priority-grid h3 { margin:30px 0 10px; }
   .playbook-figure strong { font-size:55px; }
+}
+
+/* Sleeker campaign typography and artwork */
+body { font-family:'DM Sans Variable',Arial,Helvetica,sans-serif; }
+.site-header { min-height:78px; }
+.site-header nav,.header-action,.section-index,.hero-kicker,.button,.section-link { font-family:'DM Sans Variable',Arial,Helvetica,sans-serif; }
+.site-header nav { font-size:12px; font-weight:700; }
+.header-action { font-weight:700; }
+.section { padding-top:clamp(76px,7vw,108px); padding-bottom:clamp(76px,7vw,108px); }
+.section h2 { font-family:'DM Sans Variable',Arial,Helvetica,sans-serif; font-size:clamp(41px,4.8vw,67px); font-weight:700; line-height:1.06; letter-spacing:-.065em; }
+.hero { min-height:0; }
+.hero-inner { padding-top:clamp(95px,10vw,150px); padding-bottom:clamp(95px,10vw,150px); }
+.hero h1 { max-width:1020px; font-family:'Newsreader Variable',Georgia,serif; font-size:clamp(48px,5.8vw,78px); font-weight:430; line-height:1.08; letter-spacing:-.045em; }
+.hero-attribution { margin:24px 0 46px; font-weight:700; }
+.hero-kicker { margin-bottom:38px; font-size:12px; }
+.mission { padding-top:clamp(84px,8vw,125px); padding-bottom:clamp(84px,8vw,125px); }
+.mission-body p { font-family:'DM Sans Variable',Arial,Helvetica,sans-serif; font-size:clamp(18px,1.5vw,21px); line-height:1.64; }
+.partners-heading>p,.priorities-intro>p { font-family:'DM Sans Variable',Arial,Helvetica,sans-serif; }
+.priority-grid article { min-height:285px; }
+.priority-grid h3 { margin-top:60px; font-family:'DM Sans Variable',Arial,Helvetica,sans-serif; font-size:clamp(24px,2.15vw,31px); font-weight:700; line-height:1.12; letter-spacing:-.05em; }
+.priority-grid p { font-size:15px; }
+.playbook-copy>p { font-family:'DM Sans Variable',Arial,Helvetica,sans-serif; font-size:clamp(19px,1.8vw,23px); line-height:1.6; }
+.playbook-figure strong { font-family:'Newsreader Variable',Georgia,serif; font-weight:450; }
+.closing-section { max-width:none; min-height:650px; display:flex; align-items:center; margin:0; padding:72px clamp(24px,7vw,110px); text-align:left; background:#f7f5ef url('/assets/mdc-rally-illustration.png') center center / cover no-repeat; }
+.closing-card { width:min(520px,100%); padding:clamp(30px,3.5vw,54px); background:#fff; border-top:5px solid var(--red); box-shadow:0 18px 60px rgba(16,45,82,.15); }
+.closing-card .section-index { margin-bottom:18px; }
+.closing-card h2 { font-size:clamp(37px,3.8vw,54px); }
+.closing-card p { margin:22px 0 29px; color:#435c78; font-family:'DM Sans Variable',Arial,Helvetica,sans-serif; font-size:18px; line-height:1.5; }
+.directory-hero h1 { font-family:'DM Sans Variable',Arial,Helvetica,sans-serif; font-weight:750; line-height:.95; }
+.directory-hero h1 em { font-family:'Newsreader Variable',Georgia,serif; font-weight:400; }
+.directory-intro h2,.directory-individuals h2,.directory-cta h2 { font-family:'DM Sans Variable',Arial,Helvetica,sans-serif; font-weight:700; letter-spacing:-.055em; }
+.state-card-heading h3,.individual-list h4 { font-family:'DM Sans Variable',Arial,Helvetica,sans-serif; font-weight:700; letter-spacing:-.035em; }
+.state-card { background:#f8fafc; }
+@media (max-width:900px) {
+  .closing-section { min-height:600px; background-position:center bottom; }
+}
+@media (max-width:620px) {
+  .hero-inner { padding:82px 0 88px; }
+  .hero h1 { font-size:clamp(42px,10.6vw,58px); }
+  .priority-grid article { min-height:0; }
+  .priority-grid h3 { margin-top:28px; }
+  .closing-section { min-height:690px; align-items:flex-start; padding-top:38px; background-position:54% bottom; }
+  .closing-card { padding:26px; }
 }
