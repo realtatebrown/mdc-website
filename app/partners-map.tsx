@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { officialLogoUrl } from "./official-logos";
+import { partnerLinks } from "./partner-links";
 
 export type PartnerLocation = { city:string; state:string; lat:number; lon:number; partners:string[] };
 type MapPoint = { location:PartnerLocation; x:number; y:number };
@@ -121,7 +122,7 @@ export default function PartnersMap({ locations }:{ locations:PartnerLocation[] 
       {activeCluster&&<div className="cluster-map-callouts" onMouseEnter={keepOpen} onMouseLeave={closeLater}>
         {clusterMembers.map((point,index)=>{const [x,y]=displayedPoint(point);return <section className={`cluster-location-callout ${point.location.partners.length>6?"callout-dense":""}`} key={`${point.location.city}-${point.location.state}`} style={{left:`${x/9.6}%`,top:`${y/6}%`,animationDelay:`${index*45}ms`}}>
           <h4>{stateNames[point.location.state]||point.location.state}</h4>
-          {point.location.partners.map(partner=>domains[partner]?<a className="callout-partner" href={`https://${domains[partner]}`} target="_blank" rel="noreferrer" key={partner}>
+          {point.location.partners.map(partner=>partnerLinks[partner]?<a className="callout-partner" href={partnerLinks[partner]} target="_blank" rel="noreferrer" key={partner}>
             <span className="callout-logo"><b>★</b>{(officialLogoUrl(partner)||domains[partner])&&<img src={officialLogoUrl(partner)||`https://${domains[partner]}/favicon.ico`} alt={`${partner} logo`} onError={e=>{e.currentTarget.style.display="none"}}/>}</span><span>{partner}</span>
           </a>:<div className="callout-partner" key={partner}><span className="callout-logo"><b>★</b></span><span>{partner}</span></div>)}
         </section>})}
@@ -129,15 +130,13 @@ export default function PartnersMap({ locations }:{ locations:PartnerLocation[] 
       {!activeCluster&&active&&<aside className={`partner-hover-card ${active.x>620?"card-left":"card-right"} ${active.location.state==="TX"?"texas-card":""}`} style={{left:`${active.x/9.6}%`,top:`${active.y/6}%`}}>
         <div className="hover-card-heading"><strong>{stateNames[active.location.state]||active.location.state}</strong></div>
         <div className="hover-partner-grid">
-          {active.location.partners.map(partner=><div className="hover-partner" key={partner}>
+          {active.location.partners.map(partner=>partnerLinks[partner]?<a className="hover-partner" href={partnerLinks[partner]} target="_blank" rel="noreferrer" key={partner}>
             <span className="hover-logo"><b>★</b>{(officialLogoUrl(partner)||domains[partner])&&<img src={officialLogoUrl(partner)||`https://${domains[partner]}/favicon.ico`} alt={`${partner} logo`} onError={e=>{e.currentTarget.style.display="none"}}/>}</span>
             <span>{partner}</span>
-          </div>)}
+          </a>:<div className="hover-partner" key={partner}><span className="hover-logo"><b>★</b></span><span>{partner}</span></div>)}
         </div>
       </aside>}
     </div>
-    <div className="map-detail" aria-live="polite">
-      {active?<><strong>{stateNames[active.location.state]||active.location.state}</strong><span>{active.location.partners.join(" · ")}</span></>:<><strong>Hover over a numbered marker</strong><span>Each marker is centered in its state and shows the combined partner count.</span></>}
-    </div>
+
   </div>;
 }

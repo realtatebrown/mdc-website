@@ -98,6 +98,9 @@ nav a:hover,.text-link:hover { color:var(--red); }
 .partner-hover-card.texas-card { width:min(510px,55%); }
 .texas-card .hover-partner-grid { grid-template-columns:repeat(3,minmax(0,1fr)); gap:8px 12px; }
 .hover-partner { min-width:0; display:grid; grid-template-columns:34px 1fr; gap:9px; align-items:center; font-size:11px; font-weight:700; line-height:1.2; }
+.hover-partner:is(a) { color:var(--ink); text-decoration:none; }
+.hover-partner:is(a):hover,.hover-partner:is(a):focus-visible { color:var(--red); text-decoration:underline; }
+.callout-partner:focus-visible { outline:2px solid var(--red); outline-offset:2px; }
 .hover-logo { position:relative; width:32px; height:32px; display:grid; place-items:center; overflow:hidden; color:var(--red); background:#e6edf3; border:1px solid #bdccd8; border-radius:50%; }
 .hover-logo b { font-size:11px; }
 .hover-logo img { position:absolute; inset:5px; width:20px; height:20px; object-fit:contain; }

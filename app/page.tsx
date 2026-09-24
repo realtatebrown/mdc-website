@@ -1,5 +1,4 @@
 import PartnersMap, { type PartnerLocation } from "./partners-map";
-import { officialPortraitUrl } from "./official-logos";
 
 const principles = [
   ["01", "Phase II: Mass Deportations", "Move beyond a narrow “worst-of-the-worst” approach and build enforcement policy capable of producing removals at national scale."],
@@ -55,12 +54,7 @@ const statePartnerLocations=Object.values(partnerLocations.reduce<Record<string,
   return states;
 },{})).sort((a,b)=>a.state.localeCompare(b.state));
 
-const individuals = [
-  ["Data Republican", "Independent data researcher and online profile","DataRepublican.jpg"],
-  ["Erik Prince", "Entrepreneur and former U.S. Navy SEAL officer","erik-prince.jpg"],
-  ["J. Michael Waller, PhD", "Senior Analyst for Strategy, Center for Security Policy","jmw-portrait-02.jpg"],
-  ["Mark Morgan", "Former head of ICE and U.S. Customs and Border Protection","mark-morgan.jpg"],
-];
+
 
 export default function Home() {
   return <main>
@@ -72,7 +66,7 @@ export default function Home() {
     </header>
     <section className="hero" id="top">
       <div className="hero-copy">
-        <p className="eyebrow">Formed February 2026 · United States of America</p>
+        <p className="eyebrow">Formed February 2026</p>
         <h1>Promises made.<br /><em>Promises kept.</em></h1>
         <p className="hero-lede">A permanent support base for the largest deportation operation in American history.</p>
         <div className="hero-actions"><a className="button" href="https://massdeportationcoalition.org/playbook/" target="_blank" rel="noreferrer">Read the Playbook</a><a className="text-link" href="#mission">Discover the mission ↓</a></div>
@@ -82,7 +76,6 @@ export default function Home() {
         <p className="poster-kicker">The 2026 Objective</p><p className="poster-number">1,000,000</p><p className="poster-label">ICE Interior Removals</p><div className="poster-year"><span>★</span><b>2026</b><span>★</span></div>
       </div>
     </section>
-    <div className="ticker" aria-hidden="true"><span>Law &amp; Order ★ National Sovereignty ★ Government Accountability ★ The American Worker ★</span></div>
     <section className="mission section" id="mission">
       <div className="section-label">Our Purpose</div>
       <div className="mission-copy"><p className="display-quote">“A permanent support base for mass deportation.”</p><p>The Mass Deportation Coalition brings together immigration law and policy experts, former senior and rank-and-file law-enforcement officials, advocates, and supporters. Its purpose is to turn a defining campaign promise into a durable operational program.</p><p>The coalition’s public framework sets a minimum target of one million ICE interior removals in 2026, creating the logistical, operational, and policy foundation needed to scale enforcement in the years ahead.</p></div>
@@ -98,10 +91,6 @@ export default function Home() {
     <section className="partners-section section" id="partners">
       <div className="partners-heading"><div><p className="eyebrow light">A coalition from across America</p><h2>Partners</h2></div><p>Organizations are grouped by state. Select a marker at the center of each represented state to see all coalition partners based there.</p></div>
       <PartnersMap locations={statePartnerLocations} />
-      <div className="individuals">
-        <div><h3>Individual<br />partners.</h3></div>
-        <div className="individual-list home-people-list">{individuals.map(([name, role, image]) => <article key={name}><img src={officialPortraitUrl(image)} alt="" loading="lazy"/><div><h4>{name}</h4><p>{role}</p></div></article>)}</div>
-      </div>
       <a className="button button-paper partners-button" href="/partners">View the full partner directory →</a>
     </section>
     <section className="final-cta"><div className="cta-stars">★ ★ ★ ★ ★</div><h2>A sovereign nation.<br />A government faithful to law.</h2><p>Read the policy framework, meet the coalition, and follow the work.</p><a className="button" href="https://massdeportationcoalition.org/" target="_blank" rel="noreferrer">Visit MassDeportationCoalition.org ↗</a></section>
