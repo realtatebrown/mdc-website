@@ -67,7 +67,8 @@ export default function Home() {
     <section className="hero" id="top">
       <div className="hero-copy">
         <p className="eyebrow">Formed February 2026</p>
-        <h1>Promises made.<br /><em>Promises kept.</em></h1>
+        <h1 className="hero-quote">“I will launch the largest deportation program of criminals in the history of America.”</h1>
+        <p className="hero-attribution">— President Donald J. Trump</p>
         <p className="hero-lede">A permanent support base for the largest deportation operation in American history.</p>
         <div className="hero-actions"><a className="button" href="https://massdeportationcoalition.org/playbook/" target="_blank" rel="noreferrer">Read the Playbook</a><a className="text-link" href="#mission">Discover the mission ↓</a></div>
       </div>
