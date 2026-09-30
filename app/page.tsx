@@ -58,8 +58,8 @@ export default function Home() {
   return <main>
     <header className="site-header">
       <a className="wordmark" href="#top" aria-label="Mass Deportation Coalition home"><img className="coalition-logo" src="/assets/mdc-seal-transparent.png" alt="" /><span className="brand-name">Mass Deportation<span>Coalition</span></span></a>
-      <nav aria-label="Primary navigation"><a href="#mission">Mission</a><a href="#partners">Partners</a><a href="#priorities">Priorities</a><a href="#playbook">Playbook</a></nav>
-      <a className="header-action" href="/partners">Partner directory</a>
+      <nav aria-label="Primary navigation"><a href="#mission">Mission</a><a href="#partners">Partners</a><a href="#priorities">Priorities</a><a href="/playbook">Playbook</a></nav>
+      <a className="header-action" href="/playbook">Read the Playbook</a>
     </header>
 
     <section className="hero" id="top" aria-labelledby="hero-title">
@@ -67,7 +67,7 @@ export default function Home() {
         <p className="hero-kicker">Mass Deportation Coalition</p>
         <h1 id="hero-title">“I will launch the largest deportation program of criminals in the history of America.”</h1>
         <p className="hero-attribution">— President Donald J. Trump</p>
-        <a className="hero-link" href="#mission">Explore the coalition</a>
+        <div className="hero-primary-actions"><a className="button" href="/playbook">Read the Playbook</a><a className="hero-link" href="#mission">Explore the coalition</a></div>
       </div><div className="hero-seal"><img src="/assets/mdc-seal-transparent.png" alt="Mass Deportation Coalition seal" /><span>Formed 2026</span></div></div>
     </section>
 
@@ -88,7 +88,7 @@ export default function Home() {
     </section>
 
     <section className="playbook-section section" id="playbook" aria-labelledby="playbook-title">
-      <div className="playbook-copy"><span className="section-index">04 / The Playbook</span><h2 id="playbook-title">The policy behind the mission.</h2><p>The coalition’s playbook lays out 21 executive-branch recommendations. Its stated 2026 target is one million ICE interior removals, counted separately from border turnbacks and other departures.</p><a className="button" href="https://massdeportationcoalition.org/playbook/" target="_blank" rel="noreferrer">Read the full playbook</a></div>
+      <div className="playbook-copy"><span className="section-index">04 / The Playbook</span><h2 id="playbook-title">The policy behind the mission.</h2><p>The coalition’s playbook lays out 21 executive-branch recommendations. Its stated 2026 target is one million ICE interior removals, counted separately from border turnbacks and other departures.</p><a className="button" href="/playbook">Read the full playbook</a></div>
       <div className="playbook-figure"><span>2026 target</span><strong>1,000,000</strong><p>ICE interior removals</p></div>
     </section>
 

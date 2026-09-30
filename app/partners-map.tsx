@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { officialLogoUrl } from "./official-logos";
 import { partnerLinks } from "./partner-links";
 
@@ -8,65 +8,13 @@ export type PartnerLocation = { city:string; state:string; lat:number; lon:numbe
 type MapPoint = { location:PartnerLocation; x:number; y:number };
 type MapShape = { id:string; state:string|null; d:string; active:boolean };
 
-const domains:Record<string,string> = {
-  "American Moment":"americanmoment.org", "Center for the American Way of Life":"dc.claremont.org",
-  "Federation for American Immigration Reform":"fairus.org", "The Heritage Foundation":"heritage.org",
-  "Immigration Accountability Project":"iaproject.org", "National Immigration Center for Enforcement":"immigrationcenterforenforcement.org",
-  "New Guard Press":"newguardpress.com", "Oversight Project":"itsyourgov.org", "State Leadership Initiative":"stateleadership.org",
-  "Citizens for a New Louisiana":"newlouisiana.org", "The Conservative Caucus":"theconservativecaucus.com",
-  "Fredericksburg Tea Party":"fredericksburgteaparty.org", "Eagle Forum of Georgia":"eagleforumofgeorgia.org",
-  "Tea Party Patriots Action":"teapartypatriots.org", "Illinois Freedom Caucus":"illinoisfreedomcaucus.org",
-  "Maryland Freedom Caucus":"mdfreedom.org", "Muckraker":"muckraker.com",
-  "North Carolina Physicians for Freedom":"ncphysiciansforfreedom.com", "Ohio College Republican Federation":"ohiocr.com",
-  "Pennsylvania Federation of College Republicans":"pafcr.org", "Save Heritage Indiana":"saveheritageindiana.org",
-  "South Dakota Freedom Caucus":"sdfreedomcaucus.com", "Stand Up Michigan":"standupmichigan.com",
-  "Tennessee Heritage Association":"tnheritage.org", "Utah Federation of College Republicans":"ufcr.gop",
-  "Virginia College Republicans":"vacollegegop.com", "Wisconsin Federation of College Republicans":"wicrs.gop",
-  "Capital Area Conservative Republicans":"capitalareaconservativerepublicans.com", "Dallas Eagle Forum":"dallaseagleforum.com",
-  "Denton County Conservative Coalition":"dentoncountyconservativecoalition.com", "Irving Republican Women":"irvingrepublicanwomen.com",
-  "Grassroots America — We the People":"gawtp.com", "Montgomery County Eagle Forum":"mceagleforum.org",
-  "Kerr County Patriots":"kerrcountypatriots.com", "The Remembrance Project":"trp-usa.org",
-  "Texas Eagle Forum":"texaseagleforum.com", "Texans for Strong Borders":"strongborders.org",
-  "True Texas Project":"truetexasproject.com", "We the People — Liberty in Action":"libertyinactiontexas.com",
-  "Young Conservatives of Texas":"yct.org",
-};
-
 const stateNames:Record<string,string>={AZ:"Arizona",DC:"District of Columbia",FL:"Florida",GA:"Georgia",ID:"Idaho",IL:"Illinois",IN:"Indiana",LA:"Louisiana",MD:"Maryland",MI:"Michigan",MO:"Missouri",MT:"Montana",NY:"New York",NC:"North Carolina",OH:"Ohio",OK:"Oklahoma",PA:"Pennsylvania",SD:"South Dakota",TN:"Tennessee",TX:"Texas",UT:"Utah",VA:"Virginia",WI:"Wisconsin",WY:"Wyoming"};
 
 export default function PartnersMap({ locations }:{ locations:PartnerLocation[] }) {
   const [shapes,setShapes] = useState<MapShape[]>([]);
   const [points,setPoints] = useState<MapPoint[]>([]);
   const [active,setActive] = useState<MapPoint|null>(null);
-  const [activeCluster,setActiveCluster] = useState<string|null>(null);
-  const closeTimer=useRef<ReturnType<typeof setTimeout>|null>(null);
-  const keepOpen=()=>{if(closeTimer.current){clearTimeout(closeTimer.current);closeTimer.current=null;}};
-  const closeLater=()=>{keepOpen();closeTimer.current=setTimeout(()=>{setActive(null);setActiveCluster(null)},850)};
-
-  const clusterFor=(point:MapPoint)=>{
-    if(["DC","MD"].includes(point.location.state))return "dc-md";
-    return null;
-  };
-  const clusterMembers=activeCluster?points.filter(point=>clusterFor(point)===activeCluster):[];
-  const clusterNames=["dc-md"];
-  const membersFor=(cluster:string)=>points.filter(point=>clusterFor(point)===cluster);
-  const clusterCenter=(members:MapPoint[]):[number,number]=>[
-    members.reduce((sum,point)=>sum+point.x,0)/members.length,
-    members.reduce((sum,point)=>sum+point.y,0)/members.length,
-  ];
-  const clusterOffsets:Record<string,[number,number][]>={
-    "dc-md":[[-78,0],[78,0]],
-  };
-  const displayedPoint=(point:MapPoint):[number,number]=>{
-    const cluster=clusterFor(point);
-    if(!cluster||cluster!==activeCluster)return[point.x,point.y];
-    const index=clusterMembers.indexOf(point);
-    const [rawX,rawY]=clusterCenter(clusterMembers);
-    const centerX=Math.max(190,Math.min(740,rawX));
-    const centerY=Math.max(205,Math.min(470,rawY));
-    const offset=clusterOffsets[cluster]?.[index]||[0,0];
-    return[centerX+offset[0],centerY+offset[1]];
-  };
-
+  const [failed,setFailed] = useState(false);
   useEffect(() => {
     let cancelled=false;
     async function loadMap(){
@@ -95,48 +43,28 @@ export default function PartnersMap({ locations }:{ locations:PartnerLocation[] 
         return Number.isFinite(p[0])&&Number.isFinite(p[1])?[{location:{city:"",state,lat:0,lon:0,partners},x:p[0],y:p[1]}]:[];
       }));
     }
-    loadMap().catch(()=>{});
+    loadMap().catch(()=>setFailed(true));
     return()=>{cancelled=true};
   },[locations]);
 
-  useEffect(()=>()=>keepOpen(),[]);
-
-  const activateState=(state:string|null)=>{
-    if(!state)return;
-    const point=points.find(candidate=>candidate.location.state===state);
-    if(!point)return;
-    const cluster=clusterFor(point);
-    setActive(point);
-    setActiveCluster(cluster);
-  };
-
-  return <div className="map-shell" onMouseEnter={keepOpen} onMouseLeave={closeLater}>
+  const activateState=(state:string)=>setActive(points.find(point=>point.location.state===state)||null);
+  const combined=active&&["MD","DC"].includes(active.location.state);
+  const selected=active?(combined?locations.filter(point=>["MD","DC"].includes(point.state)):locations.filter(point=>point.state===active.location.state)):[];
+  const title=combined?"Maryland & Washington, DC":active?stateNames[active.location.state]:"";
+  return <div className="map-shell responsive-partner-map">
+    <div className="map-controls"><label htmlFor="partner-state">Explore partners by state</label><select id="partner-state" value={active?.location.state||""} onChange={e=>{const state=e.target.value;setActive(points.find(p=>p.location.state===state)|| (state?{location:locations.find(p=>p.state===state)!,x:0,y:0}:null));}}><option value="">Select a state</option>{locations.filter(p=>p.state!=="DC").map(p=><option key={p.state} value={p.state}>{p.state==="MD"?"Maryland & Washington, DC":stateNames[p.state]}</option>)}</select></div>
     <div className="map-stage">
-      <svg className="usa-map" viewBox="0 0 960 600" role="img" aria-label="Map of United States coalition partner locations">
-        {shapes.map(shape=><path key={shape.id} d={shape.d} className={shape.active?"state-shape state-has-partner":"state-shape"} onMouseEnter={()=>shape.active&&activateState(shape.state)} onClick={()=>shape.active&&activateState(shape.state)}/>) }
-        {points.filter(point=>point.location.state!=="DC").map(point=>{const isMaryland=point.location.state==="MD";const dc=isMaryland?points.find(candidate=>candidate.location.state==="DC"):null;const count=point.location.partners.length+(dc?.location.partners.length||0);return <g className="state-count-badge" key={`count-${point.location.state}`} transform={`translate(${point.x},${point.y})`} aria-hidden="true">
-          <rect x="-18" y="-14" width="36" height="28" rx="14"/><text textAnchor="middle" dy=".35em">{count}</text>
-        </g>})}
+      <svg className="usa-map" viewBox="0 0 960 600" role="group" aria-label="Coalition partners by state">
+        {shapes.map(shape=><path key={shape.id} d={shape.d} className={`state-shape ${shape.active?"state-has-partner":""}`} role={shape.active?"button":undefined} tabIndex={shape.active?0:undefined} aria-label={shape.active?`Show ${stateNames[shape.state!]} partners`:undefined} onMouseEnter={()=>{if(shape.active&&window.matchMedia("(hover: hover) and (min-width: 761px)").matches)activateState(shape.state!);}} onClick={()=>shape.active&&activateState(shape.state!)} onKeyDown={e=>{if(shape.active&&(e.key==="Enter"||e.key===" ")){e.preventDefault();activateState(shape.state!);}}}/>)}
+        {points.filter(point=>point.location.state!=="DC").map(point=>{const dc=point.location.state==="MD"?locations.find(p=>p.state==="DC"):null;return <g className="state-count-badge" key={point.location.state} transform={`translate(${point.x},${point.y})`} aria-hidden="true"><rect x="-18" y="-14" width="36" height="28" rx="14"/><text textAnchor="middle" dy=".35em">{point.location.partners.length+(dc?.partners.length||0)}</text></g>})}
       </svg>
-      {!shapes.length&&<p className="map-loading">Loading partner map…</p>}
-      {activeCluster&&<div className="cluster-map-callouts" onMouseEnter={keepOpen} onMouseLeave={closeLater}>
-        {clusterMembers.map((point,index)=>{const [x,y]=displayedPoint(point);return <section className={`cluster-location-callout ${point.location.partners.length>6?"callout-dense":""}`} key={`${point.location.city}-${point.location.state}`} style={{left:`${x/9.6}%`,top:`${y/6}%`,animationDelay:`${index*45}ms`}}>
-          <h4>{stateNames[point.location.state]||point.location.state}</h4>
-          {point.location.partners.map(partner=>partnerLinks[partner]?<a className="callout-partner" href={partnerLinks[partner]} target="_blank" rel="noreferrer" key={partner}>
-            <span className="callout-logo"><b>★</b>{(officialLogoUrl(partner)||domains[partner])&&<img src={officialLogoUrl(partner)||`https://${domains[partner]}/favicon.ico`} alt={`${partner} logo`} onError={e=>{e.currentTarget.style.display="none"}}/>}</span><span>{partner}</span>
-          </a>:<div className="callout-partner" key={partner}><span className="callout-logo"><b>★</b></span><span>{partner}</span></div>)}
-        </section>})}
-      </div>}
-      {!activeCluster&&active&&<aside className={`partner-hover-card ${active.x>620?"card-left":"card-right"} ${active.location.state==="TX"?"texas-card":""}`} style={{left:`${active.x/9.6}%`,top:`${active.y/6}%`}}>
-        <div className="hover-card-heading"><strong>{stateNames[active.location.state]||active.location.state}</strong></div>
-        <div className="hover-partner-grid">
-          {active.location.partners.map(partner=>partnerLinks[partner]?<a className="hover-partner" href={partnerLinks[partner]} target="_blank" rel="noreferrer" key={partner}>
-            <span className="hover-logo"><b>★</b>{(officialLogoUrl(partner)||domains[partner])&&<img src={officialLogoUrl(partner)||`https://${domains[partner]}/favicon.ico`} alt={`${partner} logo`} onError={e=>{e.currentTarget.style.display="none"}}/>}</span>
-            <span>{partner}</span>
-          </a>:<div className="hover-partner" key={partner}><span className="hover-logo"><b>★</b></span><span>{partner}</span></div>)}
+      {!shapes.length&&<p className="map-loading">{failed?"Map unavailable. Use the state selector above.":"Loading partner map…"}</p>}
+      {active&&<aside className="map-partner-panel" aria-label={`${title} partners`} onKeyDown={e=>{if(e.key==="Escape")setActive(null);}}>
+        <div className="map-panel-heading"><h3>{title}</h3><button type="button" onClick={()=>setActive(null)} aria-label="Close partner panel">×</button></div>
+        <div className={`map-panel-links ${active.location.state==="TX"?"map-panel-texas":""}`}>
+          {selected.flatMap(p=>p.partners).map(partner=>{const logo=officialLogoUrl(partner);const content=<><span className="hover-logo">{logo?<img src={logo} alt="" onError={e=>{e.currentTarget.style.display="none"}}/>:<b>★</b>}</span><span>{partner}</span></>;return partnerLinks[partner]?<a className="hover-partner" key={partner} href={partnerLinks[partner]} target="_blank" rel="noreferrer">{content}</a>:<div className="hover-partner" key={partner}>{content}</div>;})}
         </div>
       </aside>}
     </div>
-
   </div>;
 }
