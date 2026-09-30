@@ -43,9 +43,9 @@ export default function PartnersPage(){
   const organizationCount=states.reduce((total,[,partners])=>total+partners.length,0);
   return <main className="directory-page">
     <header className="site-header">
-      <a className="wordmark" href="/" aria-label="Mass Deportation Coalition home"><img className="coalition-logo" src="/assets/mass-deportation-coalition-logo.png" alt="Mass Deportation Coalition" /></a>
+      <a className="wordmark" href="/" aria-label="Mass Deportation Coalition home"><img className="coalition-logo" src="/assets/mdc-seal-transparent.png" alt="" /><span className="brand-name">Mass Deportation<span>Coalition</span></span></a>
       <nav aria-label="Primary navigation"><a href="/#mission">Mission</a><a href="/#partners">Partners</a><a href="/#priorities">Priorities</a><a href="/#playbook">Playbook</a></nav>
-      <a className="header-action" href="/">← Home</a>
+      <a className="header-action" href="/">Home</a>
     </header>
     <section className="directory-hero">
       <p className="eyebrow">A coalition from across America</p>
@@ -63,7 +63,7 @@ export default function PartnersPage(){
       <div><p className="eyebrow light">Coalition directory</p><h2>Individual<br />partners.</h2></div>
       <div className="individual-list directory-people-list">{individuals.map(([name,role,image])=><article key={name}><img src={`${logoBase}${image}`} alt="" loading="lazy"/><div><h4>{name}</h4><p>{role}</p></div></article>)}</div>
     </section>
-    <section className="directory-cta"><p className="eyebrow">Explore the coalition</p><h2>See the national footprint.</h2><div><a className="button" href="/#partners">Return to the map</a><a className="text-link" href="https://massdeportationcoalition.org/partners/" target="_blank" rel="noreferrer">Official directory ↗</a></div></section>
-    <footer><div className="wordmark footer-mark"><img className="coalition-logo" src="/assets/mass-deportation-coalition-logo.png" alt="Mass Deportation Coalition" /></div><p>Campaign portfolio · Information adapted from the official Mass Deportation Coalition website.</p><p>© 2026 Mass Deportation Coalition</p></footer>
+    <section className="directory-cta"><p className="eyebrow">Explore the coalition</p><h2>See the national footprint.</h2><div><a className="button" href="/#partners">Return to the map</a><a className="text-link" href="https://massdeportationcoalition.org/partners/" target="_blank" rel="noreferrer">Official directory</a></div></section>
+    <footer><div className="wordmark footer-mark"><img className="coalition-logo" src="/assets/mdc-seal-transparent.png" alt="Mass Deportation Coalition" /></div><p>Campaign portfolio · Information adapted from the official Mass Deportation Coalition website.</p><p>© 2026 Mass Deportation Coalition</p></footer>
   </main>;
 }

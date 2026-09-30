@@ -57,18 +57,18 @@ const statePartnerLocations=Object.values(partnerLocations.reduce<Record<string,
 export default function Home() {
   return <main>
     <header className="site-header">
-      <a className="wordmark" href="#top" aria-label="Mass Deportation Coalition home"><img className="coalition-logo" src="/assets/mass-deportation-coalition-logo.png" alt="Mass Deportation Coalition" /></a>
+      <a className="wordmark" href="#top" aria-label="Mass Deportation Coalition home"><img className="coalition-logo" src="/assets/mdc-seal-transparent.png" alt="" /><span className="brand-name">Mass Deportation<span>Coalition</span></span></a>
       <nav aria-label="Primary navigation"><a href="#mission">Mission</a><a href="#partners">Partners</a><a href="#priorities">Priorities</a><a href="#playbook">Playbook</a></nav>
-      <a className="header-action" href="/partners">Partner directory <span aria-hidden="true">↗</span></a>
+      <a className="header-action" href="/partners">Partner directory</a>
     </header>
 
     <section className="hero" id="top" aria-labelledby="hero-title">
-      <div className="hero-inner">
-        <p className="hero-kicker">Mass Deportation Coalition <span aria-hidden="true">✦</span> Formed 2026</p>
+      <div className="hero-inner"><div className="hero-statement">
+        <p className="hero-kicker">Mass Deportation Coalition</p>
         <h1 id="hero-title">“I will launch the largest deportation program of criminals in the history of America.”</h1>
         <p className="hero-attribution">— President Donald J. Trump</p>
-        <a className="hero-link" href="#mission">Explore the coalition <span aria-hidden="true">↓</span></a>
-      </div>
+        <a className="hero-link" href="#mission">Explore the coalition</a>
+      </div><div className="hero-seal"><img src="/assets/mdc-seal-transparent.png" alt="Mass Deportation Coalition seal" /><span>Formed 2026</span></div></div>
     </section>
 
     <section className="mission section" id="mission" aria-labelledby="mission-title">
@@ -79,7 +79,7 @@ export default function Home() {
     <section className="partners-section section" id="partners" aria-labelledby="partners-title">
       <div className="partners-heading"><div><span className="section-index">02 / Coalition</span><h2 id="partners-title">Across the country.</h2></div><p>Select a state to see its coalition partners. Partner names with a website open the organization’s home page.</p></div>
       <PartnersMap locations={statePartnerLocations} />
-      <a className="section-link" href="/partners">Explore the full partner directory <span aria-hidden="true">↗</span></a>
+      <a className="section-link" href="/partners">Explore the full partner directory</a>
     </section>
 
     <section className="priorities-section section" id="priorities" aria-labelledby="priorities-title">
@@ -88,11 +88,11 @@ export default function Home() {
     </section>
 
     <section className="playbook-section section" id="playbook" aria-labelledby="playbook-title">
-      <div className="playbook-copy"><span className="section-index">04 / The Playbook</span><h2 id="playbook-title">The policy behind the mission.</h2><p>The coalition’s playbook lays out 21 executive-branch recommendations. Its stated 2026 target is one million ICE interior removals, counted separately from border turnbacks and other departures.</p><a className="button" href="https://massdeportationcoalition.org/playbook/" target="_blank" rel="noreferrer">Read the full playbook ↗</a></div>
+      <div className="playbook-copy"><span className="section-index">04 / The Playbook</span><h2 id="playbook-title">The policy behind the mission.</h2><p>The coalition’s playbook lays out 21 executive-branch recommendations. Its stated 2026 target is one million ICE interior removals, counted separately from border turnbacks and other departures.</p><a className="button" href="https://massdeportationcoalition.org/playbook/" target="_blank" rel="noreferrer">Read the full playbook</a></div>
       <div className="playbook-figure"><span>2026 target</span><strong>1,000,000</strong><p>ICE interior removals</p></div>
     </section>
 
-    <section className="closing-section section" aria-labelledby="closing-title"><div className="closing-card"><span className="section-index">The coalition</span><h2 id="closing-title">See who is part of it.</h2><p>Browse the organizations and individuals behind the national effort.</p><a className="button" href="/partners">Explore coalition partners ↗</a></div></section>
-    <footer><div className="wordmark footer-mark"><img className="coalition-logo" src="/assets/mass-deportation-coalition-logo.png" alt="Mass Deportation Coalition" /></div><p>Campaign portfolio · Information adapted from the official Mass Deportation Coalition website.</p><p>© 2026 Mass Deportation Coalition</p></footer>
+    <section className="closing-section section" aria-labelledby="closing-title"><div className="closing-card"><span className="section-index">The coalition</span><h2 id="closing-title">See who is part of it.</h2><p>Browse the organizations and individuals behind the national effort.</p><a className="button" href="/partners">Explore coalition partners</a></div></section>
+    <footer><div className="wordmark footer-mark"><img className="coalition-logo" src="/assets/mdc-seal-transparent.png" alt="Mass Deportation Coalition" /></div><p>Campaign portfolio · Information adapted from the official Mass Deportation Coalition website.</p><p>© 2026 Mass Deportation Coalition</p></footer>
   </main>;
 }
