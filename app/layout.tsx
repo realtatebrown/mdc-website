@@ -3,7 +3,7 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: "Mass Deportation Coalition — Campaign Portfolio",
-  icons: { icon: "/assets/mdc-seal-transparent.png" },
+  icons: { icon: "/assets/mdc-interlocking-seal.png" },
   description: "The mission, principles, policy playbook, and national coalition supporting mass deportation.",
 };
 

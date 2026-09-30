@@ -431,3 +431,78 @@ a:focus-visible { outline:3px solid #e88c9c; outline-offset:5px; }
  .playbook-document h2 { font-size:32px; }
 }
 @media(max-width:440px) { .map-panel-links,.map-panel-texas { grid-template-columns:1fr; } }
+
+
+/* Interlocking monogram: navy, ivory, and restrained brass detailing. */
+:root { --ink:#031e36; --red:#79602e; --ivory:#fff7df; --brass:#baa16b; }
+.site-header { border-radius:0; border-bottom:3px double var(--brass); background:var(--ink); box-shadow:0 5px 22px #031e3614; }
+.site-header .coalition-logo,footer .coalition-logo { filter:none; }
+.coalition-logo { width:70px; height:70px; }
+.brand-name { color:var(--ivory); font-size:22px; font-weight:650; letter-spacing:.01em; }
+.brand-name>span { color:var(--ivory); letter-spacing:.26em; }
+.site-header nav a:hover,.site-header nav a:focus-visible,.header-action:hover { color:var(--ivory); }
+.header-action { background:var(--ivory); border-color:var(--ivory); color:var(--ink); font-weight:750; border-radius:0; }
+.header-action:hover { color:var(--ink); background:#efdfb9; border-color:#efdfb9; }
+.hero-inner { grid-template-columns:minmax(250px,.85fr) minmax(0,1.3fr); gap:clamp(45px,7vw,110px); padding-top:76px; padding-bottom:90px; }
+.hero-seal { grid-column:1; grid-row:1; }
+.hero-statement { grid-column:2; grid-row:1; }
+.hero-seal img { max-width:480px; }
+.hero-seal>span { color:#5a6670; letter-spacing:.22em; }
+.hero-kicker { color:var(--ink); font-size:12px; letter-spacing:.17em; padding-top:20px; border-top:3px double var(--brass); }
+.hero h1 { font-weight:600; font-size:clamp(40px,4.2vw,65px); line-height:1.08; letter-spacing:-.03em; }
+.hero-attribution { font-size:13px; color:#53616f; letter-spacing:.045em; }
+.hero-link { border-color:var(--brass); }
+.button { background:var(--ink); border-color:var(--ink); border-radius:0; color:var(--ivory); }
+.button:hover { background:#183f5c; border-color:#183f5c; }
+.section h2 { font-weight:650; letter-spacing:-.035em; }
+.section-index { color:#715925; font-weight:700; letter-spacing:.17em; }
+.mission-body { border-top:3px double var(--brass); }
+.mission-body p { font-size:clamp(18px,1.5vw,21px); }
+.partners-section { border-top:3px double #d5c8a8; }
+.map-shell { border-top:1px solid var(--ink); }
+.state-shape { fill:#f1f2f1; }
+.state-has-partner { fill:#c1ced5; }
+.state-has-partner:hover { fill:#9badbb; }
+.state-count-badge rect { fill:var(--ink); }
+.map-partner-panel { border:1px solid var(--ink); border-top:4px double var(--brass); }
+.map-panel-heading { border-bottom-color:#d5c8a8; }
+.priority-grid { border-top:3px double var(--brass); }
+.priority-grid article>span { border:3px double var(--brass); color:var(--ink); width:44px; height:44px; background:var(--ivory); }
+.priority-grid h3 { font-weight:650; }
+.playbook-section { border-top:5px double var(--brass); color:var(--ivory); }
+.playbook-section .section-index,.playbook-figure p,.playbook-figure strong { color:var(--ivory); }
+.playbook-copy>p { color:#e1e5e8; }
+.playbook-section .button { background:var(--ivory); border-color:var(--ivory); color:var(--ink); }
+.playbook-section .button:hover { background:#efdfb9; border-color:#efdfb9; }
+.playbook-figure { border-top:3px double var(--brass); border-bottom:3px double var(--brass); }
+.playbook-figure strong { font-weight:600; }
+.closing-card { background:var(--ivory); border-top:5px double var(--ink); }
+footer { color:var(--ivory); border-top:3px double var(--brass); }
+footer .coalition-logo { width:120px; height:120px; }
+.directory-hero { border-bottom:3px double var(--brass); }
+.directory-hero h1,.directory-hero h1 em { font-weight:650; }
+.directory-stats strong { color:var(--ink); }
+.directory-individuals { color:var(--ivory); border-top:3px double var(--brass); }
+.playbook-document .book-cover { padding-top:20px; padding-bottom:45px; border-bottom:3px double var(--brass); }
+.playbook-document .book-subtitle,.playbook-document .book-rec-number { color:#715925; }
+a:focus-visible,button:focus-visible,select:focus-visible { outline:3px solid var(--brass); outline-offset:4px; }
+@media(max-width:900px) {
+ .hero-inner { grid-template-columns:1fr; gap:35px; padding:48px 0 65px; }
+ .hero-seal { grid-column:1; grid-row:1; }
+ .hero-seal img { max-width:240px; }
+ .hero-statement { grid-column:1; grid-row:2; }
+ .hero h1 { font-size:clamp(39px,6.2vw,56px); }
+ .hero-kicker { display:block; }
+}
+@media(max-width:560px) {
+ .coalition-logo { width:50px; height:50px; }
+ .brand-name { font-size:16px; }
+ .brand-name>span { font-size:10px; }
+ .site-header .wordmark { gap:8px; }
+ .header-action { padding:10px; font-size:12px; }
+ .hero-seal img { max-width:195px; }
+ .hero h1 { font-size:39px; }
+ .hero-kicker { font-size:11px; }
+ .hero-primary-actions { gap:22px; }
+}
+@media(max-width:380px) { .site-header .brand-name { display:none; } }

@@ -57,7 +57,7 @@ const statePartnerLocations=Object.values(partnerLocations.reduce<Record<string,
 export default function Home() {
   return <main>
     <header className="site-header">
-      <a className="wordmark" href="#top" aria-label="Mass Deportation Coalition home"><img className="coalition-logo" src="/assets/mdc-seal-transparent.png" alt="" /><span className="brand-name">Mass Deportation<span>Coalition</span></span></a>
+      <a className="wordmark" href="#top" aria-label="Mass Deportation Coalition home"><img className="coalition-logo" src="/assets/mdc-interlocking-seal.png" alt="" /><span className="brand-name">Mass Deportation<span>Coalition</span></span></a>
       <nav aria-label="Primary navigation"><a href="#mission">Mission</a><a href="#partners">Partners</a><a href="#priorities">Priorities</a><a href="/playbook">Playbook</a></nav>
       <a className="header-action" href="/playbook">Read the Playbook</a>
     </header>
@@ -68,7 +68,7 @@ export default function Home() {
         <h1 id="hero-title">“I will launch the largest deportation program of criminals in the history of America.”</h1>
         <p className="hero-attribution">— President Donald J. Trump</p>
         <div className="hero-primary-actions"><a className="button" href="/playbook">Read the Playbook</a><a className="hero-link" href="#mission">Explore the coalition</a></div>
-      </div><div className="hero-seal"><img src="/assets/mdc-seal-transparent.png" alt="Mass Deportation Coalition seal" /><span>Formed 2026</span></div></div>
+      </div><div className="hero-seal"><img src="/assets/mdc-interlocking-seal.png" alt="Mass Deportation Coalition seal" /><span>Formed 2026</span></div></div>
     </section>
 
     <section className="mission section" id="mission" aria-labelledby="mission-title">
@@ -93,6 +93,6 @@ export default function Home() {
     </section>
 
     <section className="closing-section section" aria-labelledby="closing-title"><div className="closing-card"><span className="section-index">The coalition</span><h2 id="closing-title">See who is part of it.</h2><p>Browse the organizations and individuals behind the national effort.</p><a className="button" href="/partners">Explore coalition partners</a></div></section>
-    <footer><div className="wordmark footer-mark"><img className="coalition-logo" src="/assets/mdc-seal-transparent.png" alt="Mass Deportation Coalition" /></div><p>Campaign portfolio · Information adapted from the official Mass Deportation Coalition website.</p><p>© 2026 Mass Deportation Coalition</p></footer>
+    <footer><div className="wordmark footer-mark"><img className="coalition-logo" src="/assets/mdc-interlocking-seal.png" alt="Mass Deportation Coalition" /></div><p>Campaign portfolio · Information adapted from the official Mass Deportation Coalition website.</p><p>© 2026 Mass Deportation Coalition</p></footer>
   </main>;
 }
