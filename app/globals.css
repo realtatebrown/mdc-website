@@ -420,7 +420,7 @@ a:focus-visible { outline:3px solid #e88c9c; outline-offset:5px; }
 
 
 /* Interlocking monogram: navy, ivory, and restrained brass detailing. */
-:root { --ink:#031e36; --red:#79602e; --ivory:#fff7df; --brass:#baa16b; }
+:root { --ink:#031e36; --red:#79602e; --ivory:#ffffff; --brass:#baa16b; }
 .site-header { border-radius:0; border-bottom:3px double var(--brass); background:var(--ink); box-shadow:0 5px 22px #031e3614; }
 .site-header .coalition-logo,footer .coalition-logo { filter:none; }
 .coalition-logo { width:70px; height:70px; }
@@ -428,7 +428,7 @@ a:focus-visible { outline:3px solid #e88c9c; outline-offset:5px; }
 .brand-name>span { color:var(--ivory); letter-spacing:.26em; }
 .site-header nav a:hover,.site-header nav a:focus-visible,.header-action:hover { color:var(--ivory); }
 .header-action { background:var(--ivory); border-color:var(--ivory); color:var(--ink); font-weight:750; border-radius:0; }
-.header-action:hover { color:var(--ink); background:#efdfb9; border-color:#efdfb9; }
+.header-action:hover { color:var(--ink); background:#eef2f5; border-color:#eef2f5; }
 .hero-inner { grid-template-columns:minmax(250px,.85fr) minmax(0,1.3fr); gap:clamp(45px,7vw,110px); padding-top:76px; padding-bottom:90px; }
 .hero-seal { grid-column:1; grid-row:1; }
 .hero-statement { grid-column:2; grid-row:1; }
@@ -459,7 +459,7 @@ a:focus-visible { outline:3px solid #e88c9c; outline-offset:5px; }
 .playbook-section .section-index,.playbook-figure p,.playbook-figure strong { color:var(--ivory); }
 .playbook-copy>p { color:#e1e5e8; }
 .playbook-section .button { background:var(--ivory); border-color:var(--ivory); color:var(--ink); }
-.playbook-section .button:hover { background:#efdfb9; border-color:#efdfb9; }
+.playbook-section .button:hover { background:#eef2f5; border-color:#eef2f5; }
 .playbook-figure { border-top:3px double var(--brass); border-bottom:3px double var(--brass); }
 .playbook-figure strong { font-weight:600; }
 footer { color:var(--ivory); border-top:3px double var(--brass); }
@@ -694,3 +694,6 @@ a:focus-visible,button:focus-visible,select:focus-visible { outline:3px solid va
 .playbook-contents nav a { display:block; }
 .playbook-document .book-rec-section { padding:36px 0; scroll-margin-top:150px; }
 @media(max-width:760px) { .playbook-document [id] { scroll-margin-top:calc(var(--reader-header-height,125px) + 145px); } }
+
+/* Crop the supplied badge to its outer ring without altering the artwork. */
+img[src="/assets/mdc-architectural-badge.png"] { clip-path:ellipse(44.1% 43% at 50% 49.2%); }

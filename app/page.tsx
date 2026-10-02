@@ -61,7 +61,7 @@ const statePartnerLocations=Object.values(partnerLocations.reduce<Record<string,
 export default function Home() {
   return <main>
     <header className="site-header">
-      <a className="wordmark" href="#top" aria-label="Mass Deportation Coalition home"><img className="coalition-logo" src="/assets/mdc-interlocking-seal.png" alt="" /><span className="brand-name">Mass Deportation<span>Coalition</span></span></a>
+      <a className="wordmark" href="#top" aria-label="Mass Deportation Coalition home"><img className="coalition-logo" src="/assets/mdc-architectural-badge.png" alt="" /><span className="brand-name">Mass Deportation<span>Coalition</span></span></a>
       <nav aria-label="Primary navigation"><a href="#mission">Mission</a><a href="#priorities">Priorities</a><a href="/playbook">Playbook</a><a href="/partners">Partners</a><a href="/news">News</a></nav>
       <a className="header-action" href="/playbook">Read the Playbook</a>
     </header>
@@ -71,7 +71,7 @@ export default function Home() {
         <h1 id="hero-title">“I will launch the largest deportation program of criminals in the history of America.”</h1>
         <p className="hero-attribution">— President Donald J. Trump</p>
         <div className="hero-primary-actions"><a className="button" href="/playbook">Read the Playbook</a><a className="hero-link" href="#mission">Explore the coalition</a></div>
-      </div><div className="hero-seal"><img src="/assets/mdc-interlocking-seal.png" alt="Mass Deportation Coalition seal" /><span>Formed 2026</span></div></div>
+      </div><div className="hero-seal"><img src="/assets/mdc-architectural-badge.png" alt="Mass Deportation Coalition seal" /><span>Formed 2026</span></div></div>
     </section>
 
     <section className="mission section" id="mission" aria-labelledby="mission-title">
@@ -92,7 +92,7 @@ export default function Home() {
 
     <section className="playbook-section section" id="playbook" aria-labelledby="playbook-title">
       <div className="playbook-copy"><span className="section-index">03 / The Playbook</span><h2 id="playbook-title">The Playbook</h2><p>Read the coalition’s executive-branch recommendations on worksite enforcement, detention capacity, interagency coordination, and public accountability.</p><a className="button" href="/playbook">Read the full playbook</a></div>
-      <a className="publication-cover" href="/playbook" aria-label="Open the Mass Deportation Coalition Playbook"><span className="cover-publisher">Mass Deportation Coalition</span><img src="/assets/mdc-interlocking-seal.png" alt="" loading="lazy" /><strong>Mass Deportation<br />Coalition Playbook</strong><span className="cover-date">March 30, 2026</span><span className="cover-edition">21 executive-branch recommendations</span></a>
+      <a className="publication-cover" href="/playbook" aria-label="Open the Mass Deportation Coalition Playbook"><span className="cover-publisher">Mass Deportation Coalition</span><img src="/assets/mdc-architectural-badge.png" alt="" loading="lazy" /><strong>Mass Deportation<br />Coalition Playbook</strong><span className="cover-date">March 30, 2026</span><span className="cover-edition">21 executive-branch recommendations</span></a>
     </section>
 
     <section className="partners-section section" id="partners" aria-labelledby="partners-title">
