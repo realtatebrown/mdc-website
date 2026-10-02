@@ -537,3 +537,25 @@ a:focus-visible,button:focus-visible,select:focus-visible { outline:3px solid va
 @media(max-width:760px) {
  .map-partner-panel,.map-partner-panel.map-panel-wide { left:auto!important; top:auto!important; right:auto; }
 }
+
+/* Refined map cards with brisk entrance and exit. */
+.map-partner-panel {
+ border:1px solid rgba(3,30,54,.14); border-top:1px solid rgba(3,30,54,.14);
+ border-radius:12px; padding:14px;
+ background:rgba(255,255,255,.98);
+ box-shadow:0 12px 36px rgba(3,30,54,.16),0 2px 6px rgba(3,30,54,.07);
+ animation:map-panel-in 160ms ease-out both;
+ scrollbar-color:#b7bfc5 transparent;
+}
+.map-partner-panel.is-closing { animation:map-panel-out 140ms ease-in forwards; }
+.map-panel-heading { border-bottom:1px solid #031e3612; padding-bottom:10px; margin-bottom:8px; }
+.map-panel-heading h3 { font-family:'Newsreader Variable',Georgia,serif; font-size:22px; font-weight:650; letter-spacing:-.02em; }
+.map-panel-heading button { border:0; border-radius:50%; background:#f0f3f5; color:#607080; transition:background 120ms,color 120ms; }
+.map-panel-heading button:hover { background:var(--ink); color:white; }
+.map-panel-links { gap:3px 8px; }
+.map-panel-links .hover-partner { padding:6px; border-radius:6px; transition:background 120ms,color 120ms; }
+.map-panel-links a.hover-partner:hover { background:#f0f3f5; color:var(--ink); text-decoration:none; }
+.map-panel-links .hover-logo { background:white; border-color:#031e3610; border-radius:5px; }
+@keyframes map-panel-in { from {opacity:0;transform:translateY(4px)} to {opacity:1;transform:translateY(0)} }
+@keyframes map-panel-out { from {opacity:1;transform:translateY(0)} to {opacity:0;transform:translateY(3px)} }
+@media(prefers-reduced-motion:reduce) { .map-partner-panel,.map-partner-panel.is-closing { animation:none; } .map-partner-panel.is-closing { opacity:0; } }

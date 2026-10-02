@@ -20,18 +20,25 @@ export default function PartnersMap({ locations }:{ locations:PartnerLocation[] 
   const closeTimer=useRef<ReturnType<typeof setTimeout>|null>(null);
   const switchTimer=useRef<ReturnType<typeof setTimeout>|null>(null);
   const pinned=useRef(false);
+  const exitTimer=useRef<ReturnType<typeof setTimeout>|null>(null);
+  const [closing,setClosing]=useState(false);
   const [panelPosition,setPanelPosition]=useState({left:12,top:12});
   const keepOpen=()=>{
     if(closeTimer.current)clearTimeout(closeTimer.current);
     if(switchTimer.current)clearTimeout(switchTimer.current);
+    if(exitTimer.current)clearTimeout(exitTimer.current);
+    setClosing(false);
   };
-  const closePanel=()=>{keepOpen();pinned.current=false;setActive(null);};
+  const closePanel=()=>{
+    keepOpen();pinned.current=false;setClosing(true);
+    exitTimer.current=setTimeout(()=>{setActive(null);setClosing(false);},140);
+  };
   const closeLater=()=>{
     if(switchTimer.current)clearTimeout(switchTimer.current);
     if(closeTimer.current)clearTimeout(closeTimer.current);
-    if(!pinned.current)closeTimer.current=setTimeout(()=>setActive(null),1800);
+    if(!pinned.current)closeTimer.current=setTimeout(closePanel,450);
   };
-  useEffect(()=>()=>keepOpen(),[]);
+  useEffect(()=>()=>{[closeTimer,switchTimer,exitTimer].forEach(timer=>{if(timer.current)clearTimeout(timer.current);});},[]);
   useEffect(()=>{
     if(!active||!stageRef.current||!panelRef.current)return;
     const position=()=>{
@@ -90,7 +97,7 @@ export default function PartnersMap({ locations }:{ locations:PartnerLocation[] 
     if(pinned.current)return;
     keepOpen();
     if(!active||active.location.state===state)activateState(state,false);
-    else switchTimer.current=setTimeout(()=>activateState(state,false),650);
+    else switchTimer.current=setTimeout(()=>activateState(state,false),220);
   };
   const combined=active&&["MD","DC"].includes(active.location.state);
   const selected=active?(combined?locations.filter(point=>["MD","DC"].includes(point.state)):locations.filter(point=>point.state===active.location.state)):[];
@@ -103,7 +110,7 @@ export default function PartnersMap({ locations }:{ locations:PartnerLocation[] 
         {points.filter(point=>point.location.state!=="DC").map(point=>{const dc=point.location.state==="MD"?locations.find(p=>p.state==="DC"):null;return <g className="state-count-badge" key={point.location.state} transform={`translate(${point.x},${point.y})`} aria-hidden="true"><rect x="-18" y="-14" width="36" height="28" rx="14"/><text textAnchor="middle" dy=".35em">{point.location.partners.length+(dc?.partners.length||0)}</text></g>})}
       </svg>
       {!shapes.length&&<p className="map-loading">{failed?"Map unavailable. Use the state selector above.":"Loading partner map…"}</p>}
-      {active&&<aside className={`map-partner-panel ${active.location.state==="TX"?"map-panel-wide":""}`} ref={panelRef} style={panelPosition} onMouseEnter={keepOpen} onMouseLeave={closeLater} onFocus={keepOpen} onBlur={e=>{if(!e.currentTarget.contains(e.relatedTarget))closeLater();}} aria-label={`${title} partners`} onKeyDown={e=>{if(e.key==="Escape")closePanel();}}>
+      {active&&<aside key={active.location.state} className={`map-partner-panel ${active.location.state==="TX"?"map-panel-wide":""} ${closing?"is-closing":""}`} ref={panelRef} style={panelPosition} onMouseEnter={keepOpen} onMouseLeave={closeLater} onFocus={keepOpen} onBlur={e=>{if(!e.currentTarget.contains(e.relatedTarget))closeLater();}} aria-label={`${title} partners`} onKeyDown={e=>{if(e.key==="Escape")closePanel();}}>
         <div className="map-panel-heading"><h3>{title}</h3><button type="button" onClick={closePanel} aria-label="Close partner panel">×</button></div>
         <div className={`map-panel-links ${active.location.state==="TX"?"map-panel-texas":""}`}>
           {selected.flatMap(p=>p.partners).map(partner=>{const logo=officialLogoUrl(partner);const content=<><span className="hover-logo">{logo?<img src={logo} alt="" onError={e=>{e.currentTarget.style.display="none"}}/>:<b>★</b>}</span><span>{partner}</span></>;return partnerLinks[partner]?<a className="hover-partner" key={partner} href={partnerLinks[partner]} target="_blank" rel="noreferrer">{content}</a>:<div className="hover-partner" key={partner}>{content}</div>;})}
