@@ -697,3 +697,32 @@ a:focus-visible,button:focus-visible,select:focus-visible { outline:3px solid va
 
 /* Crop the supplied badge to its outer ring without altering the artwork. */
 img[src="/assets/mdc-architectural-badge.png"] { clip-path:ellipse(44.1% 43% at 50% 49.2%); }
+
+/* Full-width photographic opening: speaker left, quotation right. */
+.hero.hero-photo { position:relative; isolation:isolate; overflow:hidden; max-width:none; width:100%; display:block; background:var(--ink); color:white; border-bottom:0; }
+.hero-photo .hero-backdrop { position:absolute; inset:0; z-index:-2; width:100%; height:100%; object-fit:cover; object-position:50% 20%; }
+.hero-photo::before { content:""; position:absolute; inset:0; z-index:-1; background:linear-gradient(90deg,rgba(3,20,37,.08) 0%,rgba(3,20,37,.2) 30%,rgba(3,20,37,.88) 55%,rgba(3,20,37,.95) 100%); }
+.hero-photo .hero-inner { width:100%; min-height:610px; margin:auto; padding:76px 0; grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr); gap:clamp(32px,5vw,72px); }
+.hero-photo .hero-statement { grid-column:2; grid-row:1; max-width:690px; }
+.hero-photo h1 { color:white; font-size:clamp(38px,3.7vw,61px); text-shadow:0 2px 18px #0003; }
+.hero-photo .hero-attribution { color:white; margin:26px 0 34px; }
+.hero-photo .button { background:white; border-color:white; color:var(--ink); box-shadow:none; }
+.hero-photo .button:hover { background:#e9eef3; border-color:#e9eef3; }
+.hero-photo .hero-link { color:white; border-color:#ffffff80; }
+.hero-photo .hero-link:hover { border-color:white; }
+@media(max-width:900px) and (min-width:641px) {
+ .hero-photo .hero-inner { min-height:600px; grid-template-columns:minmax(0,.65fr) minmax(0,1.35fr); gap:24px; }
+ .hero-photo h1 { font-size:clamp(36px,4.6vw,46px); }
+}
+@media(max-width:640px) {
+ .hero-photo .hero-backdrop { height:420px; object-position:28% 35%; }
+ .hero-photo::before { background:linear-gradient(180deg,rgba(3,20,37,.05) 0,rgba(3,20,37,.08) 180px,rgba(3,30,54,.88) 340px,var(--ink) 425px); }
+ .hero-photo .hero-inner { display:block; min-height:0; padding:310px 0 44px; }
+ .hero-photo .hero-statement { max-width:none; }
+ .hero-photo h1 { font-size:clamp(34px,8.5vw,46px); line-height:1.1; }
+ .hero-photo .hero-attribution { font-size:12px; line-height:1.5; margin:22px 0 28px; }
+ .hero-photo .hero-primary-actions { gap:22px; }
+}
+
+.hero-photo-credit { position:absolute; left:24px; bottom:12px; color:#ffffffd9; font-size:11px; line-height:1.4; text-shadow:0 1px 3px #000; }
+@media(max-width:640px) { .hero-photo-credit { position:relative; display:block; left:auto; bottom:auto; margin:0 0 14px; font-size:10px; } }

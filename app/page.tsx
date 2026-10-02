@@ -66,12 +66,14 @@ export default function Home() {
       <a className="header-action" href="/playbook">Read the Playbook</a>
     </header>
 
-    <section className="hero" id="top" aria-labelledby="hero-title">
+    <section className="hero hero-photo" id="top" aria-labelledby="hero-title">
+      <img className="hero-backdrop" src="/assets/trump-speech-hero.jpg" alt="" fetchPriority="high" />
       <div className="hero-inner"><div className="hero-statement">
         <h1 id="hero-title">“I will launch the largest deportation program of criminals in the history of America.”</h1>
         <p className="hero-attribution">— President Donald J. Trump</p>
         <div className="hero-primary-actions"><a className="button" href="/playbook">Read the Playbook</a><a className="hero-link" href="#mission">Explore the coalition</a></div>
-      </div><div className="hero-seal"><img src="/assets/mdc-architectural-badge.png" alt="Mass Deportation Coalition seal" /><span>Formed 2026</span></div></div>
+      </div></div>
+      <a className="hero-photo-credit" href="https://www.flickr.com/photos/usdol/35151084394" target="_blank" rel="noopener noreferrer">Photo: U.S. Department of Labor / Shawn T. Moore</a>
     </section>
 
     <section className="mission section" id="mission" aria-labelledby="mission-title">
