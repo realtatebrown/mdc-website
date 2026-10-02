@@ -77,25 +77,25 @@ export default function Home() {
       <div className="mission-body"><p>The Mass Deportation Coalition unites immigration law and policy specialists, former law enforcement leaders and officers, advocates, and organizations around a shared purpose: helping deliver President Trump’s commitment to a historic deportation program.</p><p>The coalition calls for a second phase of enforcement that extends beyond the most serious criminal cases. Its priorities include worksite enforcement, people with final removal orders, and visa overstays, supported by coordinated action across the federal government.</p><p>The goal is at least one million ICE interior removals in 2026, with the policy, staffing, and logistical capacity to expand in 2027 and 2028. The coalition also calls for regular public reporting and consistent measures of progress—counting interior removals separately from border turnbacks and voluntary departures.</p></div>
     </section>
 
-    <section className="home-news section" aria-labelledby="news-heading">
-      <div className="home-news-intro"><span className="section-index">Latest / News</span><h2 id="news-heading">From the coalition.</h2><a className="button" href="/news">View all news</a></div>
-      <NewsStory />
-    </section>
-
-    <section className="partners-section section" id="partners" aria-labelledby="partners-title">
-      <div className="partners-heading"><div><span className="section-index">02 / Coalition</span><h2 id="partners-title">Across the country.</h2></div><p>Select a state to see its coalition partners. Partner names with a website open the organization’s home page.</p></div>
-      <PartnersMap locations={statePartnerLocations} />
-      <a className="button partner-directory-button" href="/partners">Explore the full partner directory</a>
-    </section>
-
     <section className="priorities-section section" id="priorities" aria-labelledby="priorities-title">
-      <div className="priorities-intro"><span className="section-index">03 / Focus</span><h2 id="priorities-title">Three priorities.<br />One national effort.</h2><p>The coalition’s policy framework sets out the work needed to expand interior enforcement and measure the outcome.</p></div>
+      <div className="priorities-intro"><span className="section-index">02 / Focus</span><h2 id="priorities-title">Three priorities.<br />One national effort.</h2><p>The coalition’s policy framework sets out the work needed to expand interior enforcement and measure the outcome.</p></div>
       <div className="priority-grid">{priorities.map(item=><article key={item.number}><span>{item.number}</span><h3>{item.title}</h3><p>{item.copy}</p></article>)}</div>
     </section>
 
     <section className="playbook-section section" id="playbook" aria-labelledby="playbook-title">
-      <div className="playbook-copy"><span className="section-index">04 / The Playbook</span><h2 id="playbook-title">The policy behind the mission.</h2><p>The coalition’s playbook lays out 21 executive-branch recommendations. Its stated 2026 target is one million ICE interior removals, counted separately from border turnbacks and other departures.</p><a className="button" href="/playbook">Read the full playbook</a></div>
+      <div className="playbook-copy"><span className="section-index">03 / The Playbook</span><h2 id="playbook-title">The policy behind the mission.</h2><p>The coalition’s playbook lays out 21 executive-branch recommendations. Its stated 2026 target is one million ICE interior removals, counted separately from border turnbacks and other departures.</p><a className="button" href="/playbook">Read the full playbook</a></div>
       <div className="playbook-figure"><span>2026 target</span><strong>1,000,000</strong><p>ICE interior removals</p></div>
+    </section>
+
+    <section className="partners-section section" id="partners" aria-labelledby="partners-title">
+      <div className="partners-heading"><div><span className="section-index">04 / Coalition</span><h2 id="partners-title">Across the country.</h2></div><p>Select a state to see its coalition partners. Partner names with a website open the organization’s home page.</p></div>
+      <PartnersMap locations={statePartnerLocations} />
+      <a className="button partner-directory-button" href="/partners">Explore the full partner directory</a>
+    </section>
+
+    <section className="home-news section" aria-labelledby="news-heading">
+      <div className="home-news-intro"><span className="section-index">Latest / News</span><h2 id="news-heading">From the coalition.</h2><a className="button" href="/news">View all news</a></div>
+      <NewsStory />
     </section>
 
     <footer><div className="wordmark footer-mark"><img className="coalition-logo" src="/assets/mdc-interlocking-seal.png" alt="Mass Deportation Coalition" /></div><p>Mass Deportation Coalition</p><p>© 2026 Mass Deportation Coalition</p></footer>
