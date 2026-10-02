@@ -1,3 +1,4 @@
+import SignupBlock from "./signup-block";
 import SiteHeader from "./site-header";
 import SiteFooter from "./site-footer";
 import { officialLogoUrl } from "./official-logos";
@@ -105,6 +106,7 @@ export default function Home() {
       <NewsGrid />
     </section>
 
+    <SignupBlock />
     <SiteFooter />
   </main>;
 }

@@ -833,3 +833,25 @@ img[src="/assets/mdc-architectural-badge.png"] { clip-path:ellipse(44.1% 43% at 
  .coverage-meta>span:first-child { flex-basis:100%; }
  .coverage-copy h4 { font-size:25px; }
 }
+
+/* Email signup and social links. */
+.signup-section { background:#08243d; color:#fff; }
+.signup-inner { max-width:1300px; margin:auto; padding:clamp(48px,6vw,80px) clamp(24px,7vw,100px); display:grid; grid-template-columns:minmax(0,1.6fr) minmax(0,1fr); gap:clamp(32px,6vw,80px); }
+.signup-section .section-index { color:#c3cfdb; }
+.signup-main h2 { font:600 clamp(40px,4.5vw,62px)/1.08 'Newsreader Variable',Georgia,serif; letter-spacing:-.035em; margin:16px 0; }
+.signup-main>p,.signup-social>p { color:#d4dee7; font-size:17px; line-height:1.6; margin:0 0 28px; }
+.signup-form label { display:flex; flex-direction:column; gap:9px; font-size:14px; font-weight:500; min-width:0; }
+.signup-names { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:16px; margin-bottom:18px; }
+.signup-form input { width:100%; min-width:0; min-height:50px; border:1px solid #8092a3; border-radius:3px; background:#ffffff08; padding:12px 14px; color:white; font:inherit; font-size:16px; }
+.signup-form input:focus-visible,.signup-social a:focus-visible { outline:2px solid white; outline-offset:4px; }
+.signup-email-row { display:grid; grid-template-columns:minmax(0,1fr) auto; gap:16px; align-items:end; }
+.signup-email-row button { min-height:50px; padding:12px 27px; background:white; color:#08243d; border:0; border-radius:3px; font:600 16px/1.4 'DM Sans Variable',Arial,sans-serif; }
+.signup-email-row button:disabled { cursor:not-allowed; opacity:.7; }
+.signup-form .signup-note { font-size:14px; line-height:1.6; color:#c3cfdb; margin:16px 0 0; }
+.signup-social { border-left:1px solid #ffffff30; padding-left:clamp(28px,4vw,52px); align-self:stretch; display:flex; flex-direction:column; justify-content:center; }
+.signup-social h3 { font:600 30px/1.2 'Newsreader Variable',Georgia,serif; margin:0 0 16px; }
+.signup-social a { display:flex; gap:14px; align-items:center; min-height:54px; border:1px solid #8395a7; border-radius:3px; padding:14px 18px; margin-bottom:12px; font-size:16px; font-weight:500; transition:background .18s,border-color .18s; }
+.signup-social a:hover { background:#ffffff12; border-color:white; }
+.signup-social svg { width:21px; height:21px; flex-shrink:0; }
+@media(max-width:800px) { .signup-inner { grid-template-columns:1fr; } .signup-social { border-left:0; border-top:1px solid #ffffff30; padding:32px 0 0; } }
+@media(max-width:480px) { .signup-names,.signup-email-row { grid-template-columns:1fr; } .signup-email-row button { width:100%; } }
