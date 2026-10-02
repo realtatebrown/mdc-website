@@ -879,3 +879,23 @@ img[src="/assets/mdc-architectural-badge.png"] { clip-path:ellipse(44.1% 43% at 
 .quote-pair { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:44px; grid-column:1/-1; margin-top:12px; }
 .principles-text .editorial-quote { margin-top:30px; }
 @media(max-width:700px) { .quote-pair { grid-template-columns:1fr; gap:0; } .mission-quote { margin-top:12px; } .quote-interlude { padding-block:36px 48px; } }
+
+/* Keep the Purpose introduction and its supporting quote in one composition. */
+.mission.section { grid-template-columns:minmax(0,1.15fr) minmax(0,1fr); column-gap:clamp(32px,5vw,72px); row-gap:36px; padding-top:clamp(56px,6vw,88px); padding-bottom:clamp(56px,6vw,88px); }
+.mission>.section-intro { grid-column:1/-1; }
+.mission>.section-intro h2 { margin-bottom:0; font-size:clamp(42px,4.5vw,64px); }
+.mission>.mission-body { grid-column:1; border:0; padding-top:0; align-self:center; }
+.mission>.mission-body p { font-size:clamp(18px,1.45vw,21px); line-height:1.7; }
+.mission>.mission-quote { grid-column:2; max-width:none; margin:0; padding:clamp(26px,3vw,42px); background:#08243d; align-self:stretch; display:flex; align-items:center; }
+.mission-quote .editorial-quote { color:#fff; border-top:0; padding:0; }
+.mission-quote .editorial-quote::before { content:''; display:block; width:40px; height:3px; background:#c65065; margin-bottom:24px; }
+.mission-quote .editorial-quote blockquote p { font-size:clamp(25px,2.35vw,33px); line-height:1.35; }
+.mission-quote .editorial-quote figcaption { display:block; margin-top:24px; }
+.mission-quote .editorial-quote figcaption span { display:block; color:#c5d2df; margin-top:4px; }
+.mission>.purpose-facts { margin-top:8px; }
+@media(max-width:800px) {
+ .mission.section { grid-template-columns:1fr; row-gap:28px; }
+ .mission>.mission-body,.mission>.mission-quote { grid-column:1/-1; }
+ .mission>.mission-quote { padding:28px; }
+ .mission-quote .editorial-quote blockquote p { font-size:28px; }
+}
