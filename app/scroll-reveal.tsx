@@ -9,7 +9,7 @@ export default function ScrollReveal() {
     const motion = window.matchMedia("(prefers-reduced-motion: reduce)");
     if (motion.matches || !("IntersectionObserver" in window)) return;
     const selector = [
-      ".hero-statement", ".hero-seal", ".section-intro", ".mission-body",
+      ".home-news-intro", ".news-story", ".news-page-intro > *", ".hero-statement", ".hero-seal", ".section-intro", ".mission-body",
       ".partners-heading", ".map-shell", ".section-link", ".partner-directory-button", ".priorities-intro",
       ".priority-grid article", ".playbook-copy", ".playbook-figure",
       ".directory-hero > *", ".directory-intro", ".state-card",

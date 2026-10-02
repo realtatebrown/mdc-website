@@ -548,3 +548,23 @@ a:focus-visible,button:focus-visible,select:focus-visible { outline:3px solid va
 .partner-directory-button { display:flex; width:fit-content; max-width:100%; min-height:58px; margin:32px auto 0; padding:16px 30px; font-size:16px; font-weight:750; text-align:center; box-shadow:0 5px 14px #031e3617; }
 .partner-directory-button:hover { box-shadow:0 7px 20px #031e3628; }
 @media(max-width:560px) { .partner-directory-button { width:100%; padding:15px 20px; } }
+
+/* News: an editorial feature and a dedicated reading index. */
+.home-news { display:grid; grid-template-columns:minmax(220px,.8fr) minmax(0,1.4fr); gap:clamp(40px,7vw,110px); border-top:1px solid #031e3620; background:#f5f7f8; }
+.home-news-intro .button { margin-top:30px; }
+.news-story { min-width:0; border-top:3px double var(--brass); padding-top:25px; }
+.news-story-meta { display:flex; flex-wrap:wrap; gap:18px; color:#53616f; font-size:13px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; }
+.news-story-meta>span:first-child { color:#715925; }
+.news-story h2,.home-news .news-story h2 { font-family:'Newsreader Variable',Georgia,serif; font-size:clamp(32px,3.4vw,48px); line-height:1.12; letter-spacing:-.025em; font-weight:650; margin:22px 0 14px; }
+.news-story h2 a:hover { text-decoration:underline; text-decoration-thickness:1px; text-underline-offset:5px; }
+.news-story-author { font-size:14px; color:#53616f; margin:0 0 20px; }
+.news-story-summary { max-width:720px; font-size:18px; line-height:1.65; margin:0 0 24px; color:#41566a; }
+.news-read-link { display:inline-block; border-bottom:2px solid var(--brass); padding-bottom:7px; font-size:15px; font-weight:750; }
+.news-read-link:hover { color:#715925; }
+.news-page-intro { max-width:1300px; margin:auto; padding:80px clamp(24px,7vw,100px) 50px; }
+.news-page-intro h1 { font-family:'Newsreader Variable',Georgia,serif; font-size:clamp(48px,6vw,82px); line-height:1.05; letter-spacing:-.04em; font-weight:650; margin:0 0 24px; }
+.news-page-intro>p { font-size:18px; color:#53616f; line-height:1.6; }
+.news-page-stories { max-width:1300px; margin:auto; padding:0 clamp(24px,7vw,100px) 100px; }
+.news-page-stories .news-story { max-width:900px; }
+@media(max-width:760px) { .home-news { grid-template-columns:1fr; gap:38px; } .home-news-intro .button { margin-top:24px; } .news-page-intro { padding-top:55px; } }
+@media(max-width:560px) { .site-header nav { gap:8px; font-size:12px; } }

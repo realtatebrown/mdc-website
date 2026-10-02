@@ -1,3 +1,4 @@
+import { NewsStory } from "./news-story";
 import PartnersMap, { type PartnerLocation } from "./partners-map";
 
 const priorities = [
@@ -58,7 +59,7 @@ export default function Home() {
   return <main>
     <header className="site-header">
       <a className="wordmark" href="#top" aria-label="Mass Deportation Coalition home"><img className="coalition-logo" src="/assets/mdc-interlocking-seal.png" alt="" /><span className="brand-name">Mass Deportation<span>Coalition</span></span></a>
-      <nav aria-label="Primary navigation"><a href="#mission">Mission</a><a href="#partners">Partners</a><a href="#priorities">Priorities</a><a href="/playbook">Playbook</a></nav>
+      <nav aria-label="Primary navigation"><a href="#mission">Mission</a><a href="/news">News</a><a href="#partners">Partners</a><a href="#priorities">Priorities</a><a href="/playbook">Playbook</a></nav>
       <a className="header-action" href="/playbook">Read the Playbook</a>
     </header>
 
@@ -74,6 +75,11 @@ export default function Home() {
     <section className="mission section" id="mission" aria-labelledby="mission-title">
       <div className="section-intro"><span className="section-index">01 / Purpose</span><h2 id="mission-title">A coalition built for the work ahead.</h2></div>
       <div className="mission-body"><p>The Mass Deportation Coalition unites immigration law and policy specialists, former law enforcement leaders and officers, advocates, and organizations around a shared purpose: helping deliver President Trump’s commitment to a historic deportation program.</p><p>The coalition calls for a second phase of enforcement that extends beyond the most serious criminal cases. Its priorities include worksite enforcement, people with final removal orders, and visa overstays, supported by coordinated action across the federal government.</p><p>The goal is at least one million ICE interior removals in 2026, with the policy, staffing, and logistical capacity to expand in 2027 and 2028. The coalition also calls for regular public reporting and consistent measures of progress—counting interior removals separately from border turnbacks and voluntary departures.</p></div>
+    </section>
+
+    <section className="home-news section" aria-labelledby="news-heading">
+      <div className="home-news-intro"><span className="section-index">Latest / News</span><h2 id="news-heading">From the coalition.</h2><a className="button" href="/news">View all news</a></div>
+      <NewsStory />
     </section>
 
     <section className="partners-section section" id="partners" aria-labelledby="partners-title">
