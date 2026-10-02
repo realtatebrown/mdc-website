@@ -629,3 +629,7 @@ a:focus-visible,button:focus-visible,select:focus-visible { outline:3px solid va
  .site-footer { grid-template-columns:repeat(2,minmax(0,1fr)); }
  .footer-bottom { flex-direction:column; gap:8px; }
 }
+
+.news-story-image { margin:0 0 26px; }
+.news-story-image img { width:100%; height:auto; display:block; aspect-ratio:2/1; object-fit:cover; }
+.news-story-image figcaption { margin-top:8px; font-size:12px; line-height:1.5; color:#65727d; }

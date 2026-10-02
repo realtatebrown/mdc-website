@@ -8,6 +8,7 @@ export const featuredStory = {
 
 export function NewsStory() {
  return <article className="news-story">
+  <figure className="news-story-image"><a href={featuredStory.url} target="_blank" rel="noopener noreferrer" aria-label={featuredStory.title}><img src="/assets/news-feature.jpg" alt="Rally attendees holding Mass Deportation Now signs" loading="lazy" width="1200" height="600" /></a><figcaption>Al Drago / Bloomberg / Getty Images · via Blaze Media</figcaption></figure>
   <div className="news-story-meta"><span>Opinion</span><span>{featuredStory.publisher}</span><time dateTime="2026-09-30">September 30, 2026</time></div>
   <h2><a href={featuredStory.url} target="_blank" rel="noopener noreferrer">{featuredStory.title}</a></h2>
   <p className="news-story-author">By {featuredStory.author}</p>
