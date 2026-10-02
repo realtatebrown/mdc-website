@@ -1,3 +1,4 @@
+import EditorialQuote from "./editorial-quote";
 import SignupBlock from "./signup-block";
 import SiteHeader from "./site-header";
 import SiteFooter from "./site-footer";
@@ -77,6 +78,7 @@ export default function Home() {
     <section className="mission section" id="mission" aria-labelledby="mission-title">
       <div className="section-intro"><span className="section-index">01 / Purpose</span><h2 id="mission-title">Our Purpose</h2></div>
       <div className="mission-body"><p>President Trump can fulfill his signature campaign promise to “conduct the largest mass deportation operation in American history.” Last year’s efforts by the Department of Homeland Security to highlight the ‘Worst of the Worst’ raised the public profile of immigration enforcement.</p><p>Now it is time to move to the second phase: removing large numbers of deportable aliens from the country expeditiously.</p></div>
+      <div className="mission-quote"><EditorialQuote id="platform" /></div>
       <div className="purpose-facts">
         <article><span>Our coalition</span><h3>The Coalition</h3><p>Law and policy specialists, former officers, and advocates working across federal and state policy.</p></article>
         <article><span>Our 2026 goal</span><h3>1 million interior removals.</h3><p>The coalition’s target for ICE removals, reported separately from border turnbacks and voluntary departures.</p></article>
@@ -86,12 +88,12 @@ export default function Home() {
     </section>
 
     <section className="priorities-section section" id="priorities" aria-labelledby="priorities-title">
-      <div className="priorities-intro"><span className="section-index">02 / Focus</span><h2 id="priorities-title">Our Priorities</h2><p>The coalition’s policy framework sets out the work needed to expand interior enforcement and measure the outcome.</p><a className="priority-source" href="/principles">The five principles behind our work</a></div>
+      <div className="priorities-intro"><span className="section-index">02 / Focus</span><h2 id="priorities-title">Our Priorities</h2><p>The coalition’s policy framework sets out the work needed to expand interior enforcement and measure the outcome.</p><a className="priority-source" href="/principles">The five principles behind our work</a><EditorialQuote id="funding" compact /></div>
       <div className="priority-grid">{priorities.map(item=><article key={item.number}><span>{item.number}</span><h3>{item.title}</h3><p>{item.copy}</p><a className="priority-source" href={item.href}>Read the recommendation</a></article>)}</div>
     </section>
 
     <section className="playbook-section section" id="playbook" aria-labelledby="playbook-title">
-      <div className="playbook-copy"><span className="section-index">03 / The Playbook</span><h2 id="playbook-title">The Playbook</h2><p>Read the coalition’s executive-branch recommendations on worksite enforcement, detention capacity, interagency coordination, and public accountability.</p><a className="button" href="/playbook">Read the full playbook</a></div>
+      <div className="playbook-copy"><span className="section-index">03 / The Playbook</span><h2 id="playbook-title">The Playbook</h2><p>Read the coalition’s executive-branch recommendations on worksite enforcement, detention capacity, interagency coordination, and public accountability.</p><a className="button" href="/playbook">Read the full playbook</a><EditorialQuote id="eisenhower" compact /></div>
       <a className="publication-cover publication-cover-image" href="/playbook" aria-label="Open the Mass Deportation Coalition Playbook"><img src="/assets/playbook-cover.png" alt="Mass Deportation Coalition Playbook cover featuring the White House" width="1024" height="1305" loading="lazy" /></a>
     </section>
 
@@ -101,9 +103,12 @@ export default function Home() {
       <a className="button partner-directory-button" href="/partners">Explore the full partner directory</a>
     </section>
 
+    <div className="quote-interlude"><EditorialQuote id="promise" /></div>
+
     <section className="home-news section" aria-labelledby="news-heading">
       <div className="home-news-intro"><span className="section-index">Latest / News</span><h2 id="news-heading">News & Commentary</h2><a className="button" href="/news">View all news</a></div>
       <NewsGrid />
+      <div className="quote-pair"><EditorialQuote id="orders" compact /><EditorialQuote id="choice" compact /></div>
     </section>
 
     <SignupBlock />

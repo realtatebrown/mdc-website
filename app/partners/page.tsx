@@ -1,3 +1,4 @@
+import EditorialQuote from "../editorial-quote";
 import SiteHeader from "../site-header";
 import SiteFooter from "../site-footer";
 import PartnerDirectory from "./partner-directory";
@@ -13,6 +14,7 @@ export default function PartnersPage(){
     </section>
     <PartnerDirectory states={states} individuals={individuals} />
     <section className="directory-cta"><p className="eyebrow">Explore the coalition</p><h2>Explore the partner map.</h2><div><a className="button" href="/#partners">Return to the map</a></div></section>
+    <div className="quote-interlude"><EditorialQuote id="table" /></div>
     <SiteFooter />
   </main>;
 }

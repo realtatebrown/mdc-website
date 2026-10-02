@@ -858,3 +858,24 @@ img[src="/assets/mdc-architectural-badge.png"] { clip-path:ellipse(44.1% 43% at 
 .publication-cover.publication-cover-image { padding:0; min-height:0; background:transparent; border:0; }
 .publication-cover.publication-cover-image img { display:block; width:100%; height:auto; margin:0; }
 .playbook-document .playbook-cover-art { display:block; width:100%; max-width:620px; height:auto; margin:32px auto 0; }
+
+/* Editorial quotes: draft placements from the supplied Playbook sheet. */
+.editorial-quote { margin:0; padding:26px 0 4px; position:relative; border-top:2px solid #b3233c; color:var(--ink); }
+.editorial-quote blockquote { margin:0; padding:0; border:0; }
+.editorial-quote blockquote p { font:500 clamp(27px,3vw,40px)/1.28 'Newsreader Variable',Georgia,serif; letter-spacing:-.02em; margin:0; color:inherit; }
+.editorial-quote figcaption { display:flex; flex-wrap:wrap; align-items:baseline; gap:6px 16px; margin-top:20px; font:400 14px/1.6 'DM Sans Variable',Arial,sans-serif; letter-spacing:0; }
+.editorial-quote figcaption strong { font-weight:600; }
+.editorial-quote figcaption span { color:#617182; }
+.editorial-quote-compact { margin-top:32px; padding-top:22px; }
+.editorial-quote-compact blockquote p { font-size:clamp(23px,2.2vw,29px); line-height:1.38; }
+.editorial-quote-compact figcaption { display:block; margin-top:16px; }
+.editorial-quote-compact figcaption span { display:block; margin-top:3px; }
+.mission-quote { grid-column:1/-1; max-width:880px; margin:28px 0 12px auto; }
+.quote-interlude { max-width:1060px; margin:0 auto; padding:48px clamp(24px,7vw,100px) 64px; }
+.quote-interlude .editorial-quote { text-align:center; padding-top:30px; }
+.quote-interlude figcaption { justify-content:center; }
+.playbook-copy .editorial-quote { color:white; border-color:#c66a7a; }
+.playbook-copy .editorial-quote figcaption span { color:#c5d2df; }
+.quote-pair { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:44px; grid-column:1/-1; margin-top:12px; }
+.principles-text .editorial-quote { margin-top:30px; }
+@media(max-width:700px) { .quote-pair { grid-template-columns:1fr; gap:0; } .mission-quote { margin-top:12px; } .quote-interlude { padding-block:36px 48px; } }
