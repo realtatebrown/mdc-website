@@ -854,3 +854,7 @@ img[src="/assets/mdc-architectural-badge.png"] { clip-path:ellipse(44.1% 43% at 
 .signup-social svg { width:21px; height:21px; flex-shrink:0; }
 @media(max-width:800px) { .signup-inner { grid-template-columns:1fr; } .signup-social { border-left:0; border-top:1px solid #ffffff30; padding:32px 0 0; } }
 @media(max-width:480px) { .signup-names,.signup-email-row { grid-template-columns:1fr; } .signup-email-row button { width:100%; } }
+
+.publication-cover.publication-cover-image { padding:0; min-height:0; background:transparent; border:0; }
+.publication-cover.publication-cover-image img { display:block; width:100%; height:auto; margin:0; }
+.playbook-document .playbook-cover-art { display:block; width:100%; max-width:620px; height:auto; margin:32px auto 0; }

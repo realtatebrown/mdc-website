@@ -92,7 +92,7 @@ export default function Home() {
 
     <section className="playbook-section section" id="playbook" aria-labelledby="playbook-title">
       <div className="playbook-copy"><span className="section-index">03 / The Playbook</span><h2 id="playbook-title">The Playbook</h2><p>Read the coalition’s executive-branch recommendations on worksite enforcement, detention capacity, interagency coordination, and public accountability.</p><a className="button" href="/playbook">Read the full playbook</a></div>
-      <a className="publication-cover" href="/playbook" aria-label="Open the Mass Deportation Coalition Playbook"><span className="cover-publisher">Mass Deportation Coalition</span><img src="/assets/mdc-architectural-badge.png" alt="" loading="lazy" /><strong>Mass Deportation<br />Coalition Playbook</strong><span className="cover-date">March 30, 2026</span><span className="cover-edition">21 executive-branch recommendations</span></a>
+      <a className="publication-cover publication-cover-image" href="/playbook" aria-label="Open the Mass Deportation Coalition Playbook"><img src="/assets/playbook-cover.png" alt="Mass Deportation Coalition Playbook cover featuring the White House" width="1024" height="1305" loading="lazy" /></a>
     </section>
 
     <section className="partners-section section" id="partners" aria-labelledby="partners-title">
