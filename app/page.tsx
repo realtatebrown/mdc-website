@@ -1,7 +1,7 @@
 import SiteFooter from "./site-footer";
 import { officialLogoUrl } from "./official-logos";
 import { partnerLinks } from "./partner-links";
-import { NewsStory } from "./news-story";
+import { NewsGrid } from "./news-story";
 import PartnersMap, { type PartnerLocation } from "./partners-map";
 
 const priorities = [
@@ -75,35 +75,35 @@ export default function Home() {
     </section>
 
     <section className="mission section" id="mission" aria-labelledby="mission-title">
-      <div className="section-intro"><span className="section-index">01 / Purpose</span><h2 id="mission-title">A coalition built for the work ahead.</h2></div>
+      <div className="section-intro"><span className="section-index">01 / Purpose</span><h2 id="mission-title">Our Purpose</h2></div>
       <div className="mission-body"><p>President Trump can fulfill his signature campaign promise to “conduct the largest mass deportation operation in American history.” Last year’s efforts by the Department of Homeland Security to highlight the ‘Worst of the Worst’ raised the public profile of immigration enforcement. Now it is time to move to the second phase: removing large numbers of deportable aliens from the country expeditiously.</p></div>
       <div className="purpose-facts">
-        <article><span>Our coalition</span><h3>Expertise into action.</h3><p>Law and policy specialists, former officers, and advocates working across federal and state policy.</p></article>
+        <article><span>Our coalition</span><h3>The Coalition</h3><p>Law and policy specialists, former officers, and advocates working across federal and state policy.</p></article>
         <article><span>Our 2026 goal</span><h3>1 million interior removals.</h3><p>The coalition’s target for ICE removals, reported separately from border turnbacks and voluntary departures.</p></article>
-        <article><span>Our framework</span><h3>21 recommendations.</h3><p>An executive-branch playbook covering enforcement, government coordination, and operational capacity.</p><a href="/playbook">Explore the Playbook</a></article>
+        <article><span>Our approach</span><h3>Federal and state action.</h3><p>Coordinated enforcement, expanded operational capacity, and regular public reporting.</p><a href="/playbook">Explore the Playbook</a></article>
       </div>
       <div className="partner-strip"><div className="partner-strip-heading"><span>Coalition partners</span><a href="/partners">Meet the full coalition</a></div><div className="partner-strip-logos">{["American Moment","The Heritage Foundation","Federation for American Immigration Reform","Immigration Accountability Project","Oversight Project","Tea Party Patriots Action"].map(name=><a key={name} href={partnerLinks[name]} target="_blank" rel="noopener noreferrer" title={name}><img src={officialLogoUrl(name)!} alt={name} loading="lazy" /></a>)}</div></div>
     </section>
 
     <section className="priorities-section section" id="priorities" aria-labelledby="priorities-title">
-      <div className="priorities-intro"><span className="section-index">02 / Focus</span><h2 id="priorities-title">Three priorities.<br />One national effort.</h2><p>The coalition’s policy framework sets out the work needed to expand interior enforcement and measure the outcome.</p></div>
+      <div className="priorities-intro"><span className="section-index">02 / Focus</span><h2 id="priorities-title">Our Priorities</h2><p>The coalition’s policy framework sets out the work needed to expand interior enforcement and measure the outcome.</p></div>
       <div className="priority-grid">{priorities.map(item=><article key={item.number}><span>{item.number}</span><h3>{item.title}</h3><p>{item.copy}</p></article>)}</div>
     </section>
 
     <section className="playbook-section section" id="playbook" aria-labelledby="playbook-title">
-      <div className="playbook-copy"><span className="section-index">03 / The Playbook</span><h2 id="playbook-title">The policy behind the mission.</h2><p>The coalition’s playbook lays out 21 executive-branch recommendations. Its stated 2026 target is one million ICE interior removals, counted separately from border turnbacks and other departures.</p><a className="button" href="/playbook">Read the full playbook</a></div>
+      <div className="playbook-copy"><span className="section-index">03 / The Playbook</span><h2 id="playbook-title">The Playbook</h2><p>Read the coalition’s executive-branch recommendations on worksite enforcement, detention capacity, interagency coordination, and public accountability.</p><a className="button" href="/playbook">Read the full playbook</a></div>
       <a className="publication-cover" href="/playbook" aria-label="Open the Mass Deportation Coalition Playbook"><span className="cover-publisher">Mass Deportation Coalition</span><img src="/assets/mdc-interlocking-seal.png" alt="" loading="lazy" /><strong>Mass Deportation<br />Coalition Playbook</strong><span className="cover-date">March 30, 2026</span><span className="cover-edition">21 executive-branch recommendations</span></a>
     </section>
 
     <section className="partners-section section" id="partners" aria-labelledby="partners-title">
-      <div className="partners-heading"><div><span className="section-index">04 / Coalition</span><h2 id="partners-title">Across the country.</h2></div><p>Select a state to see its coalition partners. Partner names with a website open the organization’s home page.</p></div>
+      <div className="partners-heading"><div><span className="section-index">04 / Coalition</span><h2 id="partners-title">Coalition Partners</h2></div><p>Select a state to see its coalition partners. Partner names with a website open the organization’s home page.</p></div>
       <PartnersMap locations={statePartnerLocations} />
       <a className="button partner-directory-button" href="/partners">Explore the full partner directory</a>
     </section>
 
     <section className="home-news section" aria-labelledby="news-heading">
-      <div className="home-news-intro"><span className="section-index">Latest / News</span><h2 id="news-heading">From the coalition.</h2><a className="button" href="/news">View all news</a></div>
-      <NewsStory />
+      <div className="home-news-intro"><span className="section-index">Latest / News</span><h2 id="news-heading">News & Commentary</h2><a className="button" href="/news">View all news</a></div>
+      <NewsGrid />
     </section>
 
     <SiteFooter />

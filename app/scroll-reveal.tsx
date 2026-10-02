@@ -14,7 +14,7 @@ export default function ScrollReveal() {
       ".priority-grid article", ".playbook-copy", ".playbook-figure", ".publication-cover", ".purpose-facts article", ".partner-strip",
       ".directory-hero > *", ".directory-intro", ".state-card",
       ".directory-individuals > *", ".directory-cta > *", "footer > *",
-      ".playbook-document .book-section > *"
+      ".playbook-document .book-section > *", ".playbook-document .book-rec-section > *"
     ].join(",");
     const elements = Array.from(document.querySelectorAll<HTMLElement>(selector));
     const reveal = (element: HTMLElement) => {
