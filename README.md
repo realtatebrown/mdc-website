@@ -13,7 +13,30 @@ Drizzle support.
 
 The Sites lifecycle CLI runs the locked dependency install before returning this checkout. Edit the source under `app/`, then checkpoint when a coherent milestone is ready to inspect or share. The remote Sites builder runs `npm run build` against the pushed commit. Do not repeat install or build as a normal pre-checkpoint step.
 
-This starter does not use `wrangler.jsonc`.
+## Publish to Cloudflare from GitHub
+
+Connect `realtatebrown/mdc-website` to Cloudflare Workers Builds, using:
+
+- Worker name: `mdc-website`
+- Production branch: `main`
+- Root directory: repository root
+- Build command: `npm run build:cloudflare`
+- Deploy command: `npm run deploy:cloudflare`
+- Node.js: 22.13.0 or newer
+
+Cloudflare installs dependencies from `package-lock.json`. Authorize the GitHub
+integration for this repository. Successful builds on `main` deploy to the
+Worker's `workers.dev` address; a custom domain can be connected afterward.
+
+`wrangler.jsonc` configures the Worker. The Vite build produces the deployment
+configuration in `dist/server/wrangler.json`; deploy that generated file rather
+than the TypeScript entry point directly. The site currently needs no database,
+R2 bucket, or application secrets. Authentication for deployments belongs in
+Cloudflare's connected build settings, never in this repository.
+
+For local command-line publishing, authenticate with `npx wrangler login`, then
+run the two Cloudflare commands above. The current ChatGPT-hosted site remains
+separate from this Cloudflare deployment.
 
 `install:ci` is intentionally a single, non-retrying `npm ci`. It refuses a concurrent install for the same project, consumes a matching image-seeded npm cache with `--prefer-offline` while retaining registry fallback for a missing cache object, otherwise downloads and verifies the complete vinext tarball recorded in `package-lock.json`, limits npm to one socket, and terminates a stalled install. `build` applies a short timeout. These helpers target Linux and use GNU `timeout`; they are not native macOS scripts.
 
