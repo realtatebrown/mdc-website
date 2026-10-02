@@ -76,7 +76,7 @@ export default function Home() {
 
     <section className="mission section" id="mission" aria-labelledby="mission-title">
       <div className="section-intro"><span className="section-index">01 / Purpose</span><h2 id="mission-title">A coalition built for the work ahead.</h2></div>
-      <div className="mission-body"><p>The coalition brings together immigration policy specialists, former enforcement leaders, and organizations working to deliver President Trump’s deportation commitment.</p></div>
+      <div className="mission-body"><p>President Trump can fulfill his signature campaign promise to “conduct the largest mass deportation operation in American history.” Last year’s efforts by the Department of Homeland Security to highlight the ‘Worst of the Worst’ raised the public profile of immigration enforcement. Now it is time to move to the second phase: removing large numbers of deportable aliens from the country expeditiously.</p></div>
       <div className="purpose-facts">
         <article><span>Our coalition</span><h3>Expertise into action.</h3><p>Law and policy specialists, former officers, and advocates working across federal and state policy.</p></article>
         <article><span>Our 2026 goal</span><h3>1 million interior removals.</h3><p>The coalition’s target for ICE removals, reported separately from border turnbacks and voluntary departures.</p></article>
