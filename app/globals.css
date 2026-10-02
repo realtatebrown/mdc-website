@@ -696,7 +696,6 @@ a:focus-visible,button:focus-visible,select:focus-visible { outline:3px solid va
 @media(max-width:760px) { .playbook-document [id] { scroll-margin-top:calc(var(--reader-header-height,125px) + 145px); } }
 
 /* Crop the supplied badge to its outer ring without altering the artwork. */
-img[src="/assets/mdc-architectural-badge.png"] { clip-path:ellipse(44.1% 43% at 50% 49.2%); }
 
 /* Full-width photographic opening: speaker left, quotation right. */
 .hero.hero-photo { position:relative; isolation:isolate; overflow:hidden; max-width:none; width:100%; display:block; background:var(--ink); color:white; border-bottom:0; }
@@ -899,3 +898,11 @@ img[src="/assets/mdc-architectural-badge.png"] { clip-path:ellipse(44.1% 43% at 
  .mission>.mission-quote { padding:28px; }
  .mission-quote .editorial-quote blockquote p { font-size:28px; }
 }
+
+.hero-quote-context { display:block; margin-top:8px; font-size:14px; font-weight:400; letter-spacing:0; line-height:1.5; text-transform:none; color:#d3dde7; }
+
+/* Original map logo uses its full rectangular proportions. */
+.refined-header .coalition-logo { width:132px; height:88px; object-fit:contain; filter:none; }
+.site-footer .coalition-logo { width:165px; height:110px; object-fit:contain; filter:none; }
+@media(max-width:1000px) { .refined-header .coalition-logo { width:102px; height:68px; } }
+@media(max-width:560px) { .refined-header .coalition-logo { width:84px; height:56px; } }

@@ -69,8 +69,8 @@ export default function Home() {
     <section className="hero hero-photo" id="top" aria-labelledby="hero-title">
       <img className="hero-backdrop" src="/assets/trump-speech-hero.jpg" alt="" fetchPriority="high" />
       <div className="hero-inner"><div className="hero-statement">
-        <h1 id="hero-title">“I will launch the largest deportation program of criminals in the history of America.”</h1>
-        <p className="hero-attribution">— President Donald J. Trump</p>
+        <h1 id="hero-title">“Following the Eisenhower model, we will carry out the largest domestic deportation operation in American history.”</h1>
+        <p className="hero-attribution">President Donald J. Trump<span className="hero-quote-context">Iowa and other rallies · 2023–2024</span></p>
         <div className="hero-primary-actions"><a className="button" href="/playbook">Read the Playbook</a><a className="hero-link" href="#mission">Explore the coalition</a></div>
       </div></div>
     </section>
@@ -93,7 +93,7 @@ export default function Home() {
     </section>
 
     <section className="playbook-section section" id="playbook" aria-labelledby="playbook-title">
-      <div className="playbook-copy"><span className="section-index">03 / The Playbook</span><h2 id="playbook-title">The Playbook</h2><p>Read the coalition’s executive-branch recommendations on worksite enforcement, detention capacity, interagency coordination, and public accountability.</p><a className="button" href="/playbook">Read the full playbook</a><EditorialQuote id="eisenhower" compact /></div>
+      <div className="playbook-copy"><span className="section-index">03 / The Playbook</span><h2 id="playbook-title">The Playbook</h2><p>Read the coalition’s executive-branch recommendations on worksite enforcement, detention capacity, interagency coordination, and public accountability.</p><a className="button" href="/playbook">Read the full playbook</a><EditorialQuote id="promise" compact /></div>
       <a className="publication-cover publication-cover-image" href="/playbook" aria-label="Open the Mass Deportation Coalition Playbook"><img src="/assets/playbook-cover.png" alt="Mass Deportation Coalition Playbook cover featuring the White House" width="1024" height="1305" loading="lazy" /></a>
     </section>
 
@@ -102,8 +102,6 @@ export default function Home() {
       <PartnersMap locations={statePartnerLocations} />
       <a className="button partner-directory-button" href="/partners">Explore the full partner directory</a>
     </section>
-
-    <div className="quote-interlude"><EditorialQuote id="promise" /></div>
 
     <section className="home-news section" aria-labelledby="news-heading">
       <div className="home-news-intro"><span className="section-index">Latest / News</span><h2 id="news-heading">News & Commentary</h2><a className="button" href="/news">View all news</a></div>

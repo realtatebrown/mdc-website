@@ -1,6 +1,7 @@
 // Draft excerpts and attributions transcribed from the supplied quote sheet.
 // Original sources must be checked before approving this draft for public release.
 const quotes = {
+  transparency: { text: "We got to be transparent. I just had a meeting this morning with Secretary Mullin, is committed to putting stats on a more regular basis, which wasn’t being done prior to. I know the stats, because I read them every morning. Every morning on the way to work, I sit in the back seat and read 22 pages of data every day. There’s no reason we shouldn’t be sharing that with American people, and I think Markwayne Mullin’s working on that, along with the White House.", speaker: "Tom Homan", context: "" },
   platform: { text: "The Republican platform promises to launch the largest deportation operation in the history of the country.", speaker: "President Donald J. Trump", context: "Republican National Convention · July 2024" },
   eisenhower: { text: "Following the Eisenhower model, we will carry out the largest domestic deportation operation in American history.", speaker: "President Donald J. Trump", context: "Iowa and other rallies · 2023–2024" },
   promise: { text: "President Trump made a promise of Mass Deportations and that’s what this country’s gonna get.", speaker: "Tom Homan", context: "February 12, 2026" },
@@ -20,6 +21,6 @@ export default function EditorialQuote({id, compact=false}: {id:QuoteId; compact
   const quote=quotes[id];
   return <figure className={`editorial-quote${compact ? ' editorial-quote-compact' : ''}`}>
     <blockquote><p>{'dialogue' in quote ? quote.text : `“${quote.text}”`}</p></blockquote>
-    <figcaption><strong>{quote.speaker}</strong><span>{quote.context}</span></figcaption>
+    <figcaption><strong>{quote.speaker}</strong>{quote.context && <span>{quote.context}</span>}</figcaption>
   </figure>;
 }
