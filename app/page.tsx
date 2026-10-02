@@ -73,7 +73,6 @@ export default function Home() {
         <p className="hero-attribution">— President Donald J. Trump</p>
         <div className="hero-primary-actions"><a className="button" href="/playbook">Read the Playbook</a><a className="hero-link" href="#mission">Explore the coalition</a></div>
       </div></div>
-      <a className="hero-photo-credit" href="https://www.flickr.com/photos/usdol/35151084394" target="_blank" rel="noopener noreferrer">Photo: U.S. Department of Labor / Shawn T. Moore</a>
     </section>
 
     <section className="mission section" id="mission" aria-labelledby="mission-title">

@@ -700,7 +700,7 @@ img[src="/assets/mdc-architectural-badge.png"] { clip-path:ellipse(44.1% 43% at 
 
 /* Full-width photographic opening: speaker left, quotation right. */
 .hero.hero-photo { position:relative; isolation:isolate; overflow:hidden; max-width:none; width:100%; display:block; background:var(--ink); color:white; border-bottom:0; }
-.hero-photo .hero-backdrop { position:absolute; inset:0; z-index:-2; width:100%; height:100%; object-fit:cover; object-position:50% 20%; }
+.hero-photo .hero-backdrop { position:absolute; inset:0 auto 0 -4%; z-index:-2; width:104%; height:100%; object-fit:cover; object-position:50% 28%; }
 .hero-photo::before { content:""; position:absolute; inset:0; z-index:-1; background:linear-gradient(90deg,rgba(3,20,37,.08) 0%,rgba(3,20,37,.2) 30%,rgba(3,20,37,.88) 55%,rgba(3,20,37,.95) 100%); }
 .hero-photo .hero-inner { width:100%; min-height:610px; margin:auto; padding:76px 0; grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr); gap:clamp(32px,5vw,72px); }
 .hero-photo .hero-statement { grid-column:2; grid-row:1; max-width:690px; }
@@ -715,7 +715,7 @@ img[src="/assets/mdc-architectural-badge.png"] { clip-path:ellipse(44.1% 43% at 
  .hero-photo h1 { font-size:clamp(36px,4.6vw,46px); }
 }
 @media(max-width:640px) {
- .hero-photo .hero-backdrop { height:420px; object-position:28% 35%; }
+ .hero-photo .hero-backdrop { top:-14px; left:0; width:100%; height:434px; object-position:42% 35%; }
  .hero-photo::before { background:linear-gradient(180deg,rgba(3,20,37,.05) 0,rgba(3,20,37,.08) 180px,rgba(3,30,54,.88) 340px,var(--ink) 425px); }
  .hero-photo .hero-inner { display:block; min-height:0; padding:310px 0 44px; }
  .hero-photo .hero-statement { max-width:none; }
@@ -724,5 +724,5 @@ img[src="/assets/mdc-architectural-badge.png"] { clip-path:ellipse(44.1% 43% at 
  .hero-photo .hero-primary-actions { gap:22px; }
 }
 
-.hero-photo-credit { position:absolute; left:24px; bottom:12px; color:#ffffffd9; font-size:11px; line-height:1.4; text-shadow:0 1px 3px #000; }
-@media(max-width:640px) { .hero-photo-credit { position:relative; display:block; left:auto; bottom:auto; margin:0 0 14px; font-size:10px; } }
+.footer-bottom { flex-wrap:wrap; }
+.footer-photo-credit:hover { text-decoration:underline; text-underline-offset:3px; }
