@@ -45,7 +45,7 @@ export default function PartnersPage(){
   return <main className="directory-page">
     <header className="site-header">
       <a className="wordmark" href="/" aria-label="Mass Deportation Coalition home"><img className="coalition-logo" src="/assets/mdc-interlocking-seal.png" alt="" /><span className="brand-name">Mass Deportation<span>Coalition</span></span></a>
-      <nav aria-label="Primary navigation"><a href="/#mission">Mission</a><a href="/#priorities">Priorities</a><a href="/playbook">Playbook</a><a href="/#partners">Partners</a><a href="/news">News</a></nav>
+      <nav aria-label="Primary navigation"><a href="/#mission">Mission</a><a href="/#priorities">Priorities</a><a href="/playbook">Playbook</a><a href="/partners">Partners</a><a href="/news">News</a></nav>
       <a className="header-action" href="/">Home</a>
     </header>
     <section className="directory-hero">

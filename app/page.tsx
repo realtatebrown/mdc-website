@@ -62,13 +62,12 @@ export default function Home() {
   return <main>
     <header className="site-header">
       <a className="wordmark" href="#top" aria-label="Mass Deportation Coalition home"><img className="coalition-logo" src="/assets/mdc-interlocking-seal.png" alt="" /><span className="brand-name">Mass Deportation<span>Coalition</span></span></a>
-      <nav aria-label="Primary navigation"><a href="#mission">Mission</a><a href="#priorities">Priorities</a><a href="/playbook">Playbook</a><a href="#partners">Partners</a><a href="/news">News</a></nav>
+      <nav aria-label="Primary navigation"><a href="#mission">Mission</a><a href="#priorities">Priorities</a><a href="/playbook">Playbook</a><a href="/partners">Partners</a><a href="/news">News</a></nav>
       <a className="header-action" href="/playbook">Read the Playbook</a>
     </header>
 
     <section className="hero" id="top" aria-labelledby="hero-title">
       <div className="hero-inner"><div className="hero-statement">
-        <p className="hero-kicker">Mass Deportation Coalition</p>
         <h1 id="hero-title">“I will launch the largest deportation program of criminals in the history of America.”</h1>
         <p className="hero-attribution">— President Donald J. Trump</p>
         <div className="hero-primary-actions"><a className="button" href="/playbook">Read the Playbook</a><a className="hero-link" href="#mission">Explore the coalition</a></div>
