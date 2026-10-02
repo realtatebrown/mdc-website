@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { officialLogoUrl } from "./official-logos";
 import { partnerLinks } from "./partner-links";
 
@@ -15,6 +15,41 @@ export default function PartnersMap({ locations }:{ locations:PartnerLocation[] 
   const [points,setPoints] = useState<MapPoint[]>([]);
   const [active,setActive] = useState<MapPoint|null>(null);
   const [failed,setFailed] = useState(false);
+  const stageRef=useRef<HTMLDivElement>(null);
+  const panelRef=useRef<HTMLElement>(null);
+  const closeTimer=useRef<ReturnType<typeof setTimeout>|null>(null);
+  const switchTimer=useRef<ReturnType<typeof setTimeout>|null>(null);
+  const pinned=useRef(false);
+  const [panelPosition,setPanelPosition]=useState({left:12,top:12});
+  const keepOpen=()=>{
+    if(closeTimer.current)clearTimeout(closeTimer.current);
+    if(switchTimer.current)clearTimeout(switchTimer.current);
+  };
+  const closePanel=()=>{keepOpen();pinned.current=false;setActive(null);};
+  const closeLater=()=>{
+    if(switchTimer.current)clearTimeout(switchTimer.current);
+    if(closeTimer.current)clearTimeout(closeTimer.current);
+    if(!pinned.current)closeTimer.current=setTimeout(()=>setActive(null),1800);
+  };
+  useEffect(()=>()=>keepOpen(),[]);
+  useEffect(()=>{
+    if(!active||!stageRef.current||!panelRef.current)return;
+    const position=()=>{
+      const stage=stageRef.current!,panel=panelRef.current!;
+      const width=stage.clientWidth,height=width*600/960;
+      const x=active.x/960*width,y=active.y/600*height;
+      const panelWidth=panel.offsetWidth,panelHeight=panel.offsetHeight;
+      const rightFits=x+24+panelWidth<=width-12;
+      const leftFits=x-panelWidth-24>=12;
+      const preferred=rightFits?x+24:leftFits?x-panelWidth-24:x-panelWidth/2;
+      const preferredTop=rightFits||leftFits?y-panelHeight/2:y-panelHeight-24>=12?y-panelHeight-24:y+24;
+      setPanelPosition({left:Math.max(12,Math.min(width-panelWidth-12,preferred)),top:Math.max(12,Math.min(height-panelHeight-12,preferredTop))});
+    };
+    position();
+    const observer=new ResizeObserver(position);
+    observer.observe(stageRef.current);observer.observe(panelRef.current);
+    return()=>observer.disconnect();
+  },[active]);
   useEffect(() => {
     let cancelled=false;
     async function loadMap(){
@@ -47,20 +82,29 @@ export default function PartnersMap({ locations }:{ locations:PartnerLocation[] 
     return()=>{cancelled=true};
   },[locations]);
 
-  const activateState=(state:string)=>setActive(points.find(point=>point.location.state===state)||null);
+  const activateState=(state:string,lock=true)=>{
+    keepOpen();pinned.current=lock;
+    setActive(points.find(point=>point.location.state===state)||null);
+  };
+  const hoverState=(state:string)=>{
+    if(pinned.current)return;
+    keepOpen();
+    if(!active||active.location.state===state)activateState(state,false);
+    else switchTimer.current=setTimeout(()=>activateState(state,false),650);
+  };
   const combined=active&&["MD","DC"].includes(active.location.state);
   const selected=active?(combined?locations.filter(point=>["MD","DC"].includes(point.state)):locations.filter(point=>point.state===active.location.state)):[];
   const title=combined?"Maryland & Washington, DC":active?stateNames[active.location.state]:"";
   return <div className="map-shell responsive-partner-map">
-    <div className="map-controls"><label htmlFor="partner-state">Explore partners by state</label><select id="partner-state" value={active?.location.state||""} onChange={e=>{const state=e.target.value;setActive(points.find(p=>p.location.state===state)|| (state?{location:locations.find(p=>p.state===state)!,x:0,y:0}:null));}}><option value="">Select a state</option>{locations.filter(p=>p.state!=="DC").map(p=><option key={p.state} value={p.state}>{p.state==="MD"?"Maryland & Washington, DC":stateNames[p.state]}</option>)}</select></div>
-    <div className="map-stage">
+    <div className="map-controls"><label htmlFor="partner-state">Explore partners by state</label><select id="partner-state" value={active?.location.state||""} onChange={e=>{keepOpen();pinned.current=true;const state=e.target.value;setActive(points.find(p=>p.location.state===state)|| (state?{location:locations.find(p=>p.state===state)!,x:0,y:0}:null));}}><option value="">Select a state</option>{locations.filter(p=>p.state!=="DC").map(p=><option key={p.state} value={p.state}>{p.state==="MD"?"Maryland & Washington, DC":stateNames[p.state]}</option>)}</select></div>
+    <div className="map-stage" ref={stageRef}>
       <svg className="usa-map" viewBox="0 0 960 600" role="group" aria-label="Coalition partners by state">
-        {shapes.map(shape=><path key={shape.id} d={shape.d} className={`state-shape ${shape.active?"state-has-partner":""}`} role={shape.active?"button":undefined} tabIndex={shape.active?0:undefined} aria-label={shape.active?`Show ${stateNames[shape.state!]} partners`:undefined} onMouseEnter={()=>{if(shape.active&&window.matchMedia("(hover: hover) and (min-width: 761px)").matches)activateState(shape.state!);}} onClick={()=>shape.active&&activateState(shape.state!)} onKeyDown={e=>{if(shape.active&&(e.key==="Enter"||e.key===" ")){e.preventDefault();activateState(shape.state!);}}}/>)}
+        {shapes.map(shape=><path key={shape.id} d={shape.d} className={`state-shape ${shape.active?"state-has-partner":""}`} role={shape.active?"button":undefined} tabIndex={shape.active?0:undefined} aria-label={shape.active?`Show ${stateNames[shape.state!]} partners`:undefined} onMouseEnter={()=>{if(shape.active&&window.matchMedia("(hover: hover) and (min-width: 761px)").matches)hoverState(shape.state!);}} onMouseLeave={closeLater} onClick={()=>shape.active&&activateState(shape.state!)} onKeyDown={e=>{if(shape.active&&(e.key==="Enter"||e.key===" ")){e.preventDefault();activateState(shape.state!);}}}/>)}
         {points.filter(point=>point.location.state!=="DC").map(point=>{const dc=point.location.state==="MD"?locations.find(p=>p.state==="DC"):null;return <g className="state-count-badge" key={point.location.state} transform={`translate(${point.x},${point.y})`} aria-hidden="true"><rect x="-18" y="-14" width="36" height="28" rx="14"/><text textAnchor="middle" dy=".35em">{point.location.partners.length+(dc?.partners.length||0)}</text></g>})}
       </svg>
       {!shapes.length&&<p className="map-loading">{failed?"Map unavailable. Use the state selector above.":"Loading partner map…"}</p>}
-      {active&&<aside className={`map-partner-panel ${active.location.state==="TX"?"map-panel-wide":""}`} aria-label={`${title} partners`} onKeyDown={e=>{if(e.key==="Escape")setActive(null);}}>
-        <div className="map-panel-heading"><h3>{title}</h3><button type="button" onClick={()=>setActive(null)} aria-label="Close partner panel">×</button></div>
+      {active&&<aside className={`map-partner-panel ${active.location.state==="TX"?"map-panel-wide":""}`} ref={panelRef} style={panelPosition} onMouseEnter={keepOpen} onMouseLeave={closeLater} onFocus={keepOpen} onBlur={e=>{if(!e.currentTarget.contains(e.relatedTarget))closeLater();}} aria-label={`${title} partners`} onKeyDown={e=>{if(e.key==="Escape")closePanel();}}>
+        <div className="map-panel-heading"><h3>{title}</h3><button type="button" onClick={closePanel} aria-label="Close partner panel">×</button></div>
         <div className={`map-panel-links ${active.location.state==="TX"?"map-panel-texas":""}`}>
           {selected.flatMap(p=>p.partners).map(partner=>{const logo=officialLogoUrl(partner);const content=<><span className="hover-logo">{logo?<img src={logo} alt="" onError={e=>{e.currentTarget.style.display="none"}}/>:<b>★</b>}</span><span>{partner}</span></>;return partnerLinks[partner]?<a className="hover-partner" key={partner} href={partnerLinks[partner]} target="_blank" rel="noreferrer">{content}</a>:<div className="hover-partner" key={partner}>{content}</div>;})}
         </div>

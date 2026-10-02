@@ -93,6 +93,6 @@ export default function Home() {
     </section>
 
     <section className="closing-section section" aria-labelledby="closing-title"><div className="closing-card"><span className="section-index">The coalition</span><h2 id="closing-title">See who is part of it.</h2><p>Browse the organizations and individuals behind the national effort.</p><a className="button" href="/partners">Explore coalition partners</a></div></section>
-    <footer><div className="wordmark footer-mark"><img className="coalition-logo" src="/assets/mdc-interlocking-seal.png" alt="Mass Deportation Coalition" /></div><p>Campaign portfolio · Information adapted from the official Mass Deportation Coalition website.</p><p>© 2026 Mass Deportation Coalition</p></footer>
+    <footer><div className="wordmark footer-mark"><img className="coalition-logo" src="/assets/mdc-interlocking-seal.png" alt="Mass Deportation Coalition" /></div><p>Mass Deportation Coalition</p><p>© 2026 Mass Deportation Coalition</p></footer>
   </main>;
 }

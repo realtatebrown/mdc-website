@@ -531,3 +531,9 @@ a:focus-visible,button:focus-visible,select:focus-visible { outline:3px solid va
 .scroll-reveal.is-revealed,.scroll-reveal:focus-within { opacity:1; transform:none; }
 @media(prefers-reduced-motion:reduce) { .scroll-reveal { opacity:1; transform:none; transition:none; } }
 @media print { .scroll-reveal { opacity:1; transform:none; } }
+
+/* Position each popup beside its state; JS clamps it inside the map. */
+.map-partner-panel { right:auto; }
+@media(max-width:760px) {
+ .map-partner-panel,.map-partner-panel.map-panel-wide { left:auto!important; top:auto!important; right:auto; }
+}
