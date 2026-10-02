@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
-const links=[{label:'Mission',href:'/#mission'},{label:'Priorities',href:'/#priorities'},{label:'Playbook',href:'/playbook'},{label:'Partners',href:'/partners'},{label:'News',href:'/news'}];
+const links=[{label:'Mission',href:'/#mission'},{label:'Priorities',href:'/#priorities'},{label:'Principles',href:'/principles'},{label:'Playbook',href:'/playbook'},{label:'Partners',href:'/partners'},{label:'News',href:'/news'}];
 export default function SiteHeader() {
  const pathname=usePathname(); const [open,setOpen]=useState(false); const toggle=useRef<HTMLButtonElement>(null);
  useEffect(()=>setOpen(false),[pathname]);

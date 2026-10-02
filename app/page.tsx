@@ -6,9 +6,10 @@ import { NewsGrid } from "./news-story";
 import PartnersMap, { type PartnerLocation } from "./partners-map";
 
 const priorities = [
-  { number:"01", title:"Worksite enforcement", copy:"Make employment enforcement a central part of interior immigration policy." },
-  { number:"02", title:"State participation", copy:"Build the capacity for states to work with federal authorities on enforcement." },
-  { number:"03", title:"Meaningful metrics", copy:"Track ICE interior removals clearly so the public can measure progress." },
+  { number:"01", title:"Worksite enforcement", copy:"Make employment enforcement a central part of interior immigration policy.", href:"/playbook#rec-1" },
+  { number:"02", title:"State participation", copy:"Build the capacity for states to work with federal authorities on enforcement.", href:"/playbook#rec-19" },
+  { number:"03", title:"Meaningful metrics", copy:"Track ICE interior removals clearly so the public can measure progress.", href:"/playbook#rec-20" },
+  { number:"04", title:"Debanking", copy:"The coalition calls for Treasury to require proof of lawful presence to open or maintain a U.S. bank account. Recommendation 3 also proposes revisiting federal lending guidance so creditors can consider immigration status when assessing repayment.", href:"/playbook#rec-3" },
 ];
 
 const partnerLocations: PartnerLocation[] = [
@@ -84,8 +85,8 @@ export default function Home() {
     </section>
 
     <section className="priorities-section section" id="priorities" aria-labelledby="priorities-title">
-      <div className="priorities-intro"><span className="section-index">02 / Focus</span><h2 id="priorities-title">Our Priorities</h2><p>The coalition’s policy framework sets out the work needed to expand interior enforcement and measure the outcome.</p></div>
-      <div className="priority-grid">{priorities.map(item=><article key={item.number}><span>{item.number}</span><h3>{item.title}</h3><p>{item.copy}</p></article>)}</div>
+      <div className="priorities-intro"><span className="section-index">02 / Focus</span><h2 id="priorities-title">Our Priorities</h2><p>The coalition’s policy framework sets out the work needed to expand interior enforcement and measure the outcome.</p><a className="priority-source" href="/principles">The five principles behind our work</a></div>
+      <div className="priority-grid">{priorities.map(item=><article key={item.number}><span>{item.number}</span><h3>{item.title}</h3><p>{item.copy}</p><a className="priority-source" href={item.href}>Read the recommendation</a></article>)}</div>
     </section>
 
     <section className="playbook-section section" id="playbook" aria-labelledby="playbook-title">
