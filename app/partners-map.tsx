@@ -59,7 +59,7 @@ export default function PartnersMap({ locations }:{ locations:PartnerLocation[] 
         {points.filter(point=>point.location.state!=="DC").map(point=>{const dc=point.location.state==="MD"?locations.find(p=>p.state==="DC"):null;return <g className="state-count-badge" key={point.location.state} transform={`translate(${point.x},${point.y})`} aria-hidden="true"><rect x="-18" y="-14" width="36" height="28" rx="14"/><text textAnchor="middle" dy=".35em">{point.location.partners.length+(dc?.partners.length||0)}</text></g>})}
       </svg>
       {!shapes.length&&<p className="map-loading">{failed?"Map unavailable. Use the state selector above.":"Loading partner map…"}</p>}
-      {active&&<aside className="map-partner-panel" aria-label={`${title} partners`} onKeyDown={e=>{if(e.key==="Escape")setActive(null);}}>
+      {active&&<aside className={`map-partner-panel ${active.location.state==="TX"?"map-panel-wide":""}`} aria-label={`${title} partners`} onKeyDown={e=>{if(e.key==="Escape")setActive(null);}}>
         <div className="map-panel-heading"><h3>{title}</h3><button type="button" onClick={()=>setActive(null)} aria-label="Close partner panel">×</button></div>
         <div className={`map-panel-links ${active.location.state==="TX"?"map-panel-texas":""}`}>
           {selected.flatMap(p=>p.partners).map(partner=>{const logo=officialLogoUrl(partner);const content=<><span className="hover-logo">{logo?<img src={logo} alt="" onError={e=>{e.currentTarget.style.display="none"}}/>:<b>★</b>}</span><span>{partner}</span></>;return partnerLinks[partner]?<a className="hover-partner" key={partner} href={partnerLinks[partner]} target="_blank" rel="noreferrer">{content}</a>:<div className="hover-partner" key={partner}>{content}</div>;})}
