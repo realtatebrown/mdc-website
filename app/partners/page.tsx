@@ -1,14 +1,11 @@
+import SiteHeader from "../site-header";
 import SiteFooter from "../site-footer";
 import PartnerDirectory from "./partner-directory";
 import { states, individuals } from "./data";
 export default function PartnersPage(){
   const organizationCount=states.reduce((total,[,partners])=>total+partners.length,0);
   return <main className="directory-page">
-    <header className="site-header">
-      <a className="wordmark" href="/" aria-label="Mass Deportation Coalition home"><img className="coalition-logo" src="/assets/mdc-architectural-badge.png" alt="" /><span className="brand-name">Mass Deportation<span>Coalition</span></span></a>
-      <nav aria-label="Primary navigation"><a href="/#mission">Mission</a><a href="/#priorities">Priorities</a><a href="/playbook">Playbook</a><a href="/partners">Partners</a><a href="/news">News</a></nav>
-      <a className="header-action" href="/">Home</a>
-    </header>
+    <SiteHeader />
     <section className="directory-hero">
       <p className="eyebrow">Coalition directory</p>
       <h1>Partners,<br /><em>state by state.</em></h1>

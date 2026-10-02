@@ -14,4 +14,4 @@ export function NewsStory({story = featuredStory, compact = false}: {story?:type
   <a className="news-read-link" href={story.url} target="_blank" rel="noopener noreferrer">Read {story.type === 'Coalition activity' ? 'the announcement' : 'the article'}</a>
  </article>;
 }
-export function NewsGrid() { return <div className="news-grid"><NewsStory /><div className="news-secondary">{stories.slice(1).map(story=><NewsStory key={story.url} story={story} compact />)}</div></div>; }
+export function NewsGrid() { return <div className="news-grid">{stories.map(story=><NewsStory key={story.url} story={story} compact />)}</div>; }
