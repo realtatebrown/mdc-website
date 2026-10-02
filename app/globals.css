@@ -847,7 +847,6 @@ img[src="/assets/mdc-architectural-badge.png"] { clip-path:ellipse(44.1% 43% at 
 .signup-email-row { display:grid; grid-template-columns:minmax(0,1fr) auto; gap:16px; align-items:end; }
 .signup-email-row button { min-height:50px; padding:12px 27px; background:white; color:#08243d; border:0; border-radius:3px; font:600 16px/1.4 'DM Sans Variable',Arial,sans-serif; }
 .signup-email-row button:disabled { cursor:not-allowed; opacity:.7; }
-.signup-form .signup-note { font-size:14px; line-height:1.6; color:#c3cfdb; margin:16px 0 0; }
 .signup-social { border-left:1px solid #ffffff30; padding-left:clamp(28px,4vw,52px); align-self:stretch; display:flex; flex-direction:column; justify-content:center; }
 .signup-social h3 { font:600 30px/1.2 'Newsreader Variable',Georgia,serif; margin:0 0 16px; }
 .signup-social a { display:flex; gap:14px; align-items:center; min-height:54px; border:1px solid #8395a7; border-radius:3px; padding:14px 18px; margin-bottom:12px; font-size:16px; font-weight:500; transition:background .18s,border-color .18s; }

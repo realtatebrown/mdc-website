@@ -9,7 +9,7 @@ export default function SignupBlock() {
         <span className="section-index">Stay connected</span>
         <h2 id="signup-title">Stay informed.</h2>
         <p>Coalition news, policy updates, and new research in your inbox.</p>
-        <form className="signup-form" onSubmit={event => event.preventDefault()} aria-describedby="signup-note">
+        <form className="signup-form" onSubmit={event => event.preventDefault()}>
           <div className="signup-names">
             <label htmlFor="signup-first">First name<input id="signup-first" name="firstName" autoComplete="given-name" maxLength={100} required /></label>
             <label htmlFor="signup-last">Last name<input id="signup-last" name="lastName" autoComplete="family-name" maxLength={100} required /></label>
@@ -18,7 +18,6 @@ export default function SignupBlock() {
             <label htmlFor="signup-email">Email address<input id="signup-email" name="email" type="email" autoComplete="email" maxLength={254} required /></label>
             <button type="submit" disabled>Sign up</button>
           </div>
-          <p id="signup-note" className="signup-note">Email signup is coming soon. This form is not accepting submissions yet.</p>
         </form>
       </div>
       <aside className="signup-social" aria-labelledby="signup-social-title">
