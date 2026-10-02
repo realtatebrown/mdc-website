@@ -1,3 +1,6 @@
+import SiteFooter from "./site-footer";
+import { officialLogoUrl } from "./official-logos";
+import { partnerLinks } from "./partner-links";
 import { NewsStory } from "./news-story";
 import PartnersMap, { type PartnerLocation } from "./partners-map";
 
@@ -74,7 +77,13 @@ export default function Home() {
 
     <section className="mission section" id="mission" aria-labelledby="mission-title">
       <div className="section-intro"><span className="section-index">01 / Purpose</span><h2 id="mission-title">A coalition built for the work ahead.</h2></div>
-      <div className="mission-body"><p>The Mass Deportation Coalition unites immigration law and policy specialists, former law enforcement leaders and officers, advocates, and organizations around a shared purpose: helping deliver President Trump’s commitment to a historic deportation program.</p><p>The coalition calls for a second phase of enforcement that extends beyond the most serious criminal cases. Its priorities include worksite enforcement, people with final removal orders, and visa overstays, supported by coordinated action across the federal government.</p><p>The goal is at least one million ICE interior removals in 2026, with the policy, staffing, and logistical capacity to expand in 2027 and 2028. The coalition also calls for regular public reporting and consistent measures of progress—counting interior removals separately from border turnbacks and voluntary departures.</p></div>
+      <div className="mission-body"><p>The coalition brings together immigration policy specialists, former enforcement leaders, and organizations working to deliver President Trump’s deportation commitment.</p></div>
+      <div className="purpose-facts">
+        <article><span>Our coalition</span><h3>Expertise into action.</h3><p>Law and policy specialists, former officers, and advocates working across federal and state policy.</p></article>
+        <article><span>Our 2026 goal</span><h3>1 million interior removals.</h3><p>The coalition’s target for ICE removals, reported separately from border turnbacks and voluntary departures.</p></article>
+        <article><span>Our framework</span><h3>21 recommendations.</h3><p>An executive-branch playbook covering enforcement, government coordination, and operational capacity.</p><a href="/playbook">Explore the Playbook</a></article>
+      </div>
+      <div className="partner-strip"><div className="partner-strip-heading"><span>Coalition partners</span><a href="/partners">Meet the full coalition</a></div><div className="partner-strip-logos">{["American Moment","The Heritage Foundation","Federation for American Immigration Reform","Immigration Accountability Project","Oversight Project","Tea Party Patriots Action"].map(name=><a key={name} href={partnerLinks[name]} target="_blank" rel="noopener noreferrer" title={name}><img src={officialLogoUrl(name)!} alt={name} loading="lazy" /></a>)}</div></div>
     </section>
 
     <section className="priorities-section section" id="priorities" aria-labelledby="priorities-title">
@@ -84,7 +93,7 @@ export default function Home() {
 
     <section className="playbook-section section" id="playbook" aria-labelledby="playbook-title">
       <div className="playbook-copy"><span className="section-index">03 / The Playbook</span><h2 id="playbook-title">The policy behind the mission.</h2><p>The coalition’s playbook lays out 21 executive-branch recommendations. Its stated 2026 target is one million ICE interior removals, counted separately from border turnbacks and other departures.</p><a className="button" href="/playbook">Read the full playbook</a></div>
-      <div className="playbook-figure"><span>2026 target</span><strong>1,000,000</strong><p>ICE interior removals</p></div>
+      <a className="publication-cover" href="/playbook" aria-label="Open the Mass Deportation Coalition Playbook"><span className="cover-publisher">Mass Deportation Coalition</span><img src="/assets/mdc-interlocking-seal.png" alt="" loading="lazy" /><strong>Mass Deportation<br />Coalition Playbook</strong><span className="cover-date">March 30, 2026</span><span className="cover-edition">21 executive-branch recommendations</span></a>
     </section>
 
     <section className="partners-section section" id="partners" aria-labelledby="partners-title">
@@ -98,6 +107,6 @@ export default function Home() {
       <NewsStory />
     </section>
 
-    <footer><div className="wordmark footer-mark"><img className="coalition-logo" src="/assets/mdc-interlocking-seal.png" alt="Mass Deportation Coalition" /></div><p>Mass Deportation Coalition</p><p>© 2026 Mass Deportation Coalition</p></footer>
+    <SiteFooter />
   </main>;
 }

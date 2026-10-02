@@ -11,7 +11,7 @@ export default function ScrollReveal() {
     const selector = [
       ".home-news-intro", ".news-story", ".news-page-intro > *", ".hero-statement", ".hero-seal", ".section-intro", ".mission-body",
       ".partners-heading", ".map-shell", ".section-link", ".partner-directory-button", ".priorities-intro",
-      ".priority-grid article", ".playbook-copy", ".playbook-figure",
+      ".priority-grid article", ".playbook-copy", ".playbook-figure", ".publication-cover", ".purpose-facts article", ".partner-strip",
       ".directory-hero > *", ".directory-intro", ".state-card",
       ".directory-individuals > *", ".directory-cta > *", "footer > *",
       ".playbook-document .book-section > *"

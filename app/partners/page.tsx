@@ -1,3 +1,4 @@
+import SiteFooter from "../site-footer";
 const states=[
   ["Arizona",["Arizona Freedom Caucus"]],
   ["Florida",["Muckraker"]],
@@ -64,6 +65,6 @@ export default function PartnersPage(){
       <div className="individual-list directory-people-list">{individuals.map(([name,role,image])=><article key={name}><img src={`${logoBase}${image}`} alt="" loading="lazy"/><div><h4>{name}</h4><p>{role}</p></div></article>)}</div>
     </section>
     <section className="directory-cta"><p className="eyebrow">Explore the coalition</p><h2>See the national footprint.</h2><div><a className="button" href="/#partners">Return to the map</a></div></section>
-    <footer><div className="wordmark footer-mark"><img className="coalition-logo" src="/assets/mdc-interlocking-seal.png" alt="Mass Deportation Coalition" /></div><p>Mass Deportation Coalition</p><p>© 2026 Mass Deportation Coalition</p></footer>
+    <SiteFooter />
   </main>;
 }
