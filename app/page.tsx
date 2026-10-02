@@ -73,13 +73,13 @@ export default function Home() {
 
     <section className="mission section" id="mission" aria-labelledby="mission-title">
       <div className="section-intro"><span className="section-index">01 / Purpose</span><h2 id="mission-title">A coalition built for the work ahead.</h2></div>
-      <div className="mission-body"><p>The Mass Deportation Coalition brings together immigration policy experts, former law enforcement officials, advocates, and organizations from across the country.</p><p>Its aim is to turn a campaign commitment into a durable program of interior enforcement, with clear policies and public measures of progress.</p></div>
+      <div className="mission-body"><p>The Mass Deportation Coalition unites immigration law and policy specialists, former law enforcement leaders and officers, advocates, and organizations around a shared purpose: helping deliver President Trump’s commitment to a historic deportation program.</p><p>The coalition calls for a second phase of enforcement that extends beyond the most serious criminal cases. Its priorities include worksite enforcement, people with final removal orders, and visa overstays, supported by coordinated action across the federal government.</p><p>The goal is at least one million ICE interior removals in 2026, with the policy, staffing, and logistical capacity to expand in 2027 and 2028. The coalition also calls for regular public reporting and consistent measures of progress—counting interior removals separately from border turnbacks and voluntary departures.</p></div>
     </section>
 
     <section className="partners-section section" id="partners" aria-labelledby="partners-title">
       <div className="partners-heading"><div><span className="section-index">02 / Coalition</span><h2 id="partners-title">Across the country.</h2></div><p>Select a state to see its coalition partners. Partner names with a website open the organization’s home page.</p></div>
       <PartnersMap locations={statePartnerLocations} />
-      <a className="section-link" href="/partners">Explore the full partner directory</a>
+      <a className="button partner-directory-button" href="/partners">Explore the full partner directory</a>
     </section>
 
     <section className="priorities-section section" id="priorities" aria-labelledby="priorities-title">
@@ -92,7 +92,6 @@ export default function Home() {
       <div className="playbook-figure"><span>2026 target</span><strong>1,000,000</strong><p>ICE interior removals</p></div>
     </section>
 
-    <section className="closing-section section" aria-labelledby="closing-title"><div className="closing-card"><span className="section-index">The coalition</span><h2 id="closing-title">See who is part of it.</h2><p>Browse the organizations and individuals behind the national effort.</p><a className="button" href="/partners">Explore coalition partners</a></div></section>
     <footer><div className="wordmark footer-mark"><img className="coalition-logo" src="/assets/mdc-interlocking-seal.png" alt="Mass Deportation Coalition" /></div><p>Mass Deportation Coalition</p><p>© 2026 Mass Deportation Coalition</p></footer>
   </main>;
 }

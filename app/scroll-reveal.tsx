@@ -10,8 +10,8 @@ export default function ScrollReveal() {
     if (motion.matches || !("IntersectionObserver" in window)) return;
     const selector = [
       ".hero-statement", ".hero-seal", ".section-intro", ".mission-body",
-      ".partners-heading", ".map-shell", ".section-link", ".priorities-intro",
-      ".priority-grid article", ".playbook-copy", ".playbook-figure", ".closing-card",
+      ".partners-heading", ".map-shell", ".section-link", ".partner-directory-button", ".priorities-intro",
+      ".priority-grid article", ".playbook-copy", ".playbook-figure",
       ".directory-hero > *", ".directory-intro", ".state-card",
       ".directory-individuals > *", ".directory-cta > *", "footer > *",
       ".playbook-document .book-section > *"
