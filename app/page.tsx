@@ -1,3 +1,4 @@
+import { DataFeature } from "./data-partnership";
 import EditorialQuote from "./editorial-quote";
 import SignupBlock from "./signup-block";
 import SiteHeader from "./site-header";
@@ -97,8 +98,10 @@ export default function Home() {
       <a className="publication-cover publication-cover-image" href="/playbook" aria-label="Open the Mass Deportation Coalition Playbook"><img src="/assets/playbook-cover.png" alt="Mass Deportation Coalition Playbook cover featuring the White House" width="1024" height="1305" loading="lazy" /></a>
     </section>
 
+    <DataFeature />
+
     <section className="partners-section section" id="partners" aria-labelledby="partners-title">
-      <div className="partners-heading"><div><span className="section-index">04 / Coalition</span><h2 id="partners-title">Coalition Partners</h2></div><p>Select a state to see its coalition partners. Partner names with a website open the organization’s home page.</p></div>
+      <div className="partners-heading"><div><span className="section-index">05 / Coalition</span><h2 id="partners-title">Coalition Partners</h2></div><p>Select a state to see its coalition partners. Partner names with a website open the organization’s home page.</p></div>
       <PartnersMap locations={statePartnerLocations} />
       <a className="button partner-directory-button" href="/partners">Explore the full partner directory</a>
     </section>

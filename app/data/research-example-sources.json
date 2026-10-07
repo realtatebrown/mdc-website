@@ -1,0 +1,88 @@
+{
+  "source": "https://datarepublican.com/migration-explorer/data/ngo.json",
+  "retrieved": "2026-10-07",
+  "records": [
+    {
+      "id": "e_b61f7d395cee",
+      "source": "orr",
+      "target": "bethany-christian",
+      "type": "federal_award",
+      "subtype": "prime_award",
+      "cfda": "93.676",
+      "amount": 4527692.59,
+      "amount_label": "at least $4,527,693 obligated on 2 prime award(s), FY2021-2023 (USASpending)",
+      "years": [
+        "2021",
+        "2022",
+        "2023"
+      ],
+      "via_state": false,
+      "evidence_ids": [
+        "ev_r_00700",
+        "ev_r_00701"
+      ]
+    },
+    {
+      "id": "e_69fee2c042fd",
+      "source": "prm",
+      "target": "bethany-christian",
+      "type": "federal_award",
+      "subtype": "prime_award",
+      "cfda": "19.510",
+      "amount": 13752347.0,
+      "amount_label": "at least $13,752,347 obligated on 5 prime award(s), FY2023-2025 (USASpending)",
+      "years": [
+        "2023",
+        "2024",
+        "2025"
+      ],
+      "via_state": false,
+      "evidence_ids": [
+        "ev_r_00854",
+        "ev_r_00855",
+        "ev_r_00856",
+        "ev_r_00857",
+        "ev_r_00858"
+      ]
+    },
+    {
+      "id": "e_03db89ee990b",
+      "source": "bethany-christian",
+      "target": "wedgwood-christian-services-inc",
+      "type": "federal_award",
+      "subtype": "ffata_subaward",
+      "cfda": "93.566",
+      "amount": 2866051.0,
+      "amount_label": "at least $2,866,051 in reported subawards (FFATA, prime-reported, known incomplete)",
+      "years": [
+        "2025"
+      ],
+      "via_state": false,
+      "via": null,
+      "evidence_ids": [
+        "ev_r_09005"
+      ]
+    },
+    {
+      "id": "fnd_237108776->bethany-christian:foundation_grant",
+      "source": "fnd_237108776",
+      "target": "bethany-christian",
+      "type": "foundation_grant",
+      "subtype": "schedule_i",
+      "funder_kind": "grantmaking_charity",
+      "amount": 387036,
+      "amount_label": "at least (IRS-filed grants, verified rows)",
+      "years": "TY2020-2024",
+      "n_grants": 7,
+      "evidence_ids": [
+        "ev_g_00663",
+        "ev_g_00920",
+        "ev_g_00921",
+        "ev_g_01120",
+        "ev_g_01121",
+        "ev_g_01340",
+        "ev_g_01837"
+      ]
+    }
+  ]
+}
