@@ -20,6 +20,7 @@ export type QuoteId = keyof typeof quotes;
 export default function EditorialQuote({id, compact=false}: {id:QuoteId; compact?:boolean}) {
   const quote=quotes[id];
   return <figure className={`editorial-quote${compact ? ' editorial-quote-compact' : ''}`}>
+    <p className="promise-label">Promises Made</p>
     <blockquote><p>{'dialogue' in quote ? quote.text : `“${quote.text}”`}</p></blockquote>
     <figcaption><strong>{quote.speaker}</strong>{quote.context && <span>{quote.context}</span>}</figcaption>
   </figure>;

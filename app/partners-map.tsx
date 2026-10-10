@@ -20,6 +20,8 @@ export default function PartnersMap({ locations }:{ locations:PartnerLocation[] 
   const closeTimer=useRef<ReturnType<typeof setTimeout>|null>(null);
   const switchTimer=useRef<ReturnType<typeof setTimeout>|null>(null);
   const pinned=useRef(false);
+  const panelTrigger=useRef<HTMLElement | SVGElement | null>(null);
+  const focusPanel=useRef(false);
   const exitTimer=useRef<ReturnType<typeof setTimeout>|null>(null);
   const [closing,setClosing]=useState(false);
   const [panelPosition,setPanelPosition]=useState({left:12,top:12});
@@ -29,14 +31,15 @@ export default function PartnersMap({ locations }:{ locations:PartnerLocation[] 
     if(exitTimer.current)clearTimeout(exitTimer.current);
     setClosing(false);
   };
-  const closePanel=()=>{
+  const closePanel=(restoreFocus=false)=>{
+    if(restoreFocus)panelTrigger.current?.focus();
     keepOpen();pinned.current=false;setClosing(true);
     exitTimer.current=setTimeout(()=>{setActive(null);setClosing(false);},140);
   };
   const closeLater=()=>{
     if(switchTimer.current)clearTimeout(switchTimer.current);
     if(closeTimer.current)clearTimeout(closeTimer.current);
-    if(!pinned.current)closeTimer.current=setTimeout(closePanel,450);
+    if(!pinned.current&&!panelRef.current?.contains(document.activeElement))closeTimer.current=setTimeout(()=>closePanel(),450);
   };
   useEffect(()=>()=>{[closeTimer,switchTimer,exitTimer].forEach(timer=>{if(timer.current)clearTimeout(timer.current);});},[]);
   useEffect(()=>{
@@ -53,6 +56,7 @@ export default function PartnersMap({ locations }:{ locations:PartnerLocation[] 
       setPanelPosition({left:Math.max(12,Math.min(width-panelWidth-12,preferred)),top:Math.max(12,Math.min(height-panelHeight-12,preferredTop))});
     };
     position();
+    if(focusPanel.current){panelRef.current.querySelector<HTMLButtonElement>("button")?.focus({preventScroll:true});focusPanel.current=false;}
     const observer=new ResizeObserver(position);
     observer.observe(stageRef.current);observer.observe(panelRef.current);
     return()=>observer.disconnect();
@@ -85,7 +89,7 @@ export default function PartnersMap({ locations }:{ locations:PartnerLocation[] 
         return Number.isFinite(p[0])&&Number.isFinite(p[1])?[{location:{city:"",state,lat:0,lon:0,partners},x:p[0],y:p[1]}]:[];
       }));
     }
-    loadMap().catch(()=>setFailed(true));
+    loadMap().catch(()=>{if(!cancelled)setFailed(true);});
     return()=>{cancelled=true};
   },[locations]);
 
@@ -94,7 +98,7 @@ export default function PartnersMap({ locations }:{ locations:PartnerLocation[] 
     setActive(points.find(point=>point.location.state===state)||null);
   };
   const hoverState=(state:string)=>{
-    if(pinned.current)return;
+    if(pinned.current||panelRef.current?.contains(document.activeElement))return;
     keepOpen();
     if(!active||active.location.state===state)activateState(state,false);
     else switchTimer.current=setTimeout(()=>activateState(state,false),220);
@@ -103,15 +107,15 @@ export default function PartnersMap({ locations }:{ locations:PartnerLocation[] 
   const selected=active?(combined?locations.filter(point=>["MD","DC"].includes(point.state)):locations.filter(point=>point.state===active.location.state)):[];
   const title=combined?"Maryland & Washington, DC":active?stateNames[active.location.state]:"";
   return <div className="map-shell responsive-partner-map">
-    <div className="map-controls"><label htmlFor="partner-state">Explore partners by state</label><select id="partner-state" value={active?.location.state||""} onChange={e=>{keepOpen();pinned.current=true;const state=e.target.value;setActive(points.find(p=>p.location.state===state)|| (state?{location:locations.find(p=>p.state===state)!,x:0,y:0}:null));}}><option value="">Select a state</option>{locations.filter(p=>p.state!=="DC").map(p=><option key={p.state} value={p.state}>{p.state==="MD"?"Maryland & Washington, DC":stateNames[p.state]}</option>)}</select></div>
+    <div className="map-controls"><label htmlFor="partner-state">Find partners by state</label><select id="partner-state" value={active?.location.state||""} aria-controls="map-partner-panel" onKeyDown={e=>{if(e.key==="Tab"&&!e.shiftKey&&active){e.preventDefault();panelTrigger.current=e.currentTarget;panelRef.current?.querySelector<HTMLButtonElement>("button")?.focus();}}} onChange={e=>{panelTrigger.current=e.currentTarget;keepOpen();pinned.current=!!e.target.value;const state=e.target.value;setActive(points.find(p=>p.location.state===state)|| (state?{location:locations.find(p=>p.state===state)!,x:0,y:0}:null));}}><option value="">Select a state</option>{locations.filter(p=>p.state!=="DC").map(p=><option key={p.state} value={p.state}>{p.state==="MD"?"Maryland & Washington, DC":stateNames[p.state]}</option>)}</select></div>
     <div className="map-stage" ref={stageRef}>
       <svg className="usa-map" viewBox="0 0 960 600" role="group" aria-label="Coalition partners by state">
-        {shapes.map(shape=><path key={shape.id} d={shape.d} className={`state-shape ${shape.active?"state-has-partner":""}`} role={shape.active?"button":undefined} tabIndex={shape.active?0:undefined} aria-label={shape.active?`Show ${stateNames[shape.state!]} partners`:undefined} onMouseEnter={()=>{if(shape.active&&window.matchMedia("(hover: hover) and (min-width: 761px)").matches)hoverState(shape.state!);}} onMouseLeave={closeLater} onClick={()=>shape.active&&activateState(shape.state!)} onKeyDown={e=>{if(shape.active&&(e.key==="Enter"||e.key===" ")){e.preventDefault();activateState(shape.state!);}}}/>)}
+        {shapes.map(shape=><path key={shape.id} d={shape.d} className={`state-shape ${shape.active?"state-has-partner":""}`} role={shape.active?"button":undefined} tabIndex={shape.active?0:undefined} aria-controls={shape.active?"map-partner-panel":undefined} aria-expanded={shape.active?active?.location.state===shape.state:undefined} aria-label={shape.active?`Show ${stateNames[shape.state!]} partners`:undefined} onMouseEnter={()=>{if(shape.active&&window.matchMedia("(hover: hover) and (min-width: 761px)").matches)hoverState(shape.state!);}} onMouseLeave={closeLater} onClick={e=>{if(shape.active){panelTrigger.current=e.currentTarget;activateState(shape.state!);}}} onKeyDown={e=>{if(shape.active&&(e.key==="Enter"||e.key===" ")){e.preventDefault();panelTrigger.current=e.currentTarget;focusPanel.current=true;activateState(shape.state!);if(active?.location.state===shape.state){panelRef.current?.querySelector<HTMLButtonElement>("button")?.focus();focusPanel.current=false;}}}}/>)}
         {points.filter(point=>point.location.state!=="DC").map(point=>{const dc=point.location.state==="MD"?locations.find(p=>p.state==="DC"):null;return <g className="state-count-badge" key={point.location.state} transform={`translate(${point.x},${point.y})`} aria-hidden="true"><rect x="-18" y="-14" width="36" height="28" rx="14"/><text textAnchor="middle" dy=".35em">{point.location.partners.length+(dc?.partners.length||0)}</text></g>})}
       </svg>
       {!shapes.length&&<p className="map-loading">{failed?"Map unavailable. Use the state selector above.":"Loading partner map…"}</p>}
-      {active&&<aside key={active.location.state} className={`map-partner-panel ${active.location.state==="TX"?"map-panel-wide":""} ${closing?"is-closing":""}`} ref={panelRef} style={panelPosition} onMouseEnter={keepOpen} onMouseLeave={closeLater} onFocus={keepOpen} onBlur={e=>{if(!e.currentTarget.contains(e.relatedTarget))closeLater();}} aria-label={`${title} partners`} onKeyDown={e=>{if(e.key==="Escape")closePanel();}}>
-        <div className="map-panel-heading"><h3>{title}</h3><button type="button" onClick={closePanel} aria-label="Close partner panel">×</button></div>
+      {active&&<aside id="map-partner-panel" key={active.location.state} className={`map-partner-panel ${active.location.state==="TX"?"map-panel-wide":""} ${closing?"is-closing":""}`} ref={panelRef} style={panelPosition} onMouseEnter={keepOpen} onMouseLeave={closeLater} onFocus={keepOpen} onBlur={e=>{if(!e.currentTarget.contains(e.relatedTarget))closeLater();}} aria-label={`${title} partners`} onKeyDown={e=>{if(e.key==="Escape"){e.stopPropagation();closePanel(true);}}}>
+        <div className="map-panel-heading"><h3>{title}</h3><button type="button" onClick={()=>closePanel(true)} aria-label="Close partner panel">×</button></div>
         <div className={`map-panel-links ${active.location.state==="TX"?"map-panel-texas":""}`}>
           {selected.flatMap(p=>p.partners).map(partner=>{const logo=officialLogoUrl(partner);const content=<><span className="hover-logo">{logo?<img src={logo} alt="" onError={e=>{e.currentTarget.style.display="none"}}/>:<b>★</b>}</span><span>{partner}</span></>;return partnerLinks[partner]?<a className="hover-partner" key={partner} href={partnerLinks[partner]} target="_blank" rel="noreferrer">{content}</a>:<div className="hover-partner" key={partner}>{content}</div>;})}
         </div>

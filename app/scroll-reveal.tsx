@@ -31,16 +31,18 @@ export default function ScrollReveal() {
       observer.observe(element);
     });
     const showFocused = (event: FocusEvent) => {
-      const element = (event.target as HTMLElement)?.closest<HTMLElement>(".scroll-reveal");
-      if (element) reveal(element);
+      let element = (event.target as HTMLElement)?.closest<HTMLElement>(".scroll-reveal");
+      while (element) { reveal(element); element = element.parentElement?.closest<HTMLElement>(".scroll-reveal") || null; }
     };
     const showAll = () => elements.forEach(element => reveal(element));
     document.addEventListener("focusin", showFocused);
     motion.addEventListener("change", showAll);
+    window.addEventListener("beforeprint", showAll);
     return () => {
       observer.disconnect();
       document.removeEventListener("focusin", showFocused);
       motion.removeEventListener("change", showAll);
+      window.removeEventListener("beforeprint", showAll);
       elements.forEach(element => element.classList.remove("scroll-reveal", "is-revealed"));
     };
   }, [pathname]);

@@ -26,9 +26,19 @@ export const states=[
 ] as const;
 
 export const individuals=[
-  ["Data Republican","Independent data researcher and online profile","DataRepublican.jpg"],
+  ["Data Republican","Independent data researcher","DataRepublican.jpg"],
+  ["Ed Martin","Former U.S. Pardon Attorney and interim U.S. Attorney for the District of Columbia","ed-martin.png"],
   ["Erik Prince","Entrepreneur and former U.S. Navy SEAL officer","erik-prince.jpg"],
   ["J. Michael Waller, PhD","Senior Analyst for Strategy, Center for Security Policy","jmw-portrait-02.jpg"],
+  ["Jason Killmeyer","Former Chief of Staff, U.S. Immigration and Customs Enforcement","jason-killmeyer.png"],
   ["Mark Morgan","Former head of ICE and U.S. Customs and Border Protection","mark-morgan.jpg"],
 ];
 
+
+export const individualProfiles: Record<string, {url:string; label:string}> = {
+ "Data Republican": {url:"https://x.com/DataRepublican",label:"@DataRepublican on X"},
+ "Ed Martin": {url:"https://x.com/EagleEdMartin",label:"@EagleEdMartin on X"},
+ "Erik Prince": {url:"https://x.com/realErikDPrince",label:"@realErikDPrince on X"},
+ "J. Michael Waller, PhD": {url:"https://x.com/JMichaelWaller",label:"@JMichaelWaller on X"},
+ "Jason Killmeyer": {url:"https://x.com/JasonKillmeyer",label:"@JasonKillmeyer on X"},
+};

@@ -1,3 +1,5 @@
+import DocumentaryFeature from "./documentary-feature";
+import VideoFeature from "./video-feature";
 import { DataFeature } from "./data-partnership";
 import EditorialQuote from "./editorial-quote";
 import SignupBlock from "./signup-block";
@@ -9,10 +11,10 @@ import { NewsGrid } from "./news-story";
 import PartnersMap, { type PartnerLocation } from "./partners-map";
 
 const priorities = [
-  { number:"01", title:"Worksite enforcement", copy:"Make employment enforcement a central part of interior immigration policy.", href:"/playbook#rec-1" },
-  { number:"02", title:"State participation", copy:"Build the capacity for states to work with federal authorities on enforcement.", href:"/playbook#rec-19" },
-  { number:"03", title:"Meaningful metrics", copy:"Track ICE interior removals clearly so the public can measure progress.", href:"/playbook#rec-20" },
-  { number:"04", title:"Debanking", copy:"The coalition calls for Treasury to require proof of lawful presence to open or maintain a U.S. bank account. Recommendation 3 also proposes revisiting federal lending guidance so creditors can consider immigration status when assessing repayment.", href:"/playbook#rec-3" },
+  { number:"01", title:"Worksite enforcement", copy:"The Playbook calls for more enforcement at workplaces that employ illegal aliens.", href:"/playbook#rec-1" },
+  { number:"02", title:"State participation", copy:"The Playbook proposes a larger role for states in federal immigration enforcement.", href:"/playbook#rec-19" },
+  { number:"03", title:"Meaningful metrics", copy:"Publish ICE interior removal numbers separately from other departure figures.", href:"/playbook#rec-20" },
+  { number:"04", title:"Debanking", copy:"Recommendation 3 calls for proof of lawful presence to open or keep a U.S. bank account. It also proposes changes to federal lending guidance on immigration status.", href:"/playbook#rec-3" },
 ];
 
 const partnerLocations: PartnerLocation[] = [
@@ -72,43 +74,46 @@ export default function Home() {
       <div className="hero-inner"><div className="hero-statement">
         <h1 id="hero-title">“Following the Eisenhower model, we will carry out the largest domestic deportation operation in American history.”</h1>
         <p className="hero-attribution">President Donald J. Trump<span className="hero-quote-context">Iowa and other rallies · 2023–2024</span></p>
-        <div className="hero-primary-actions"><a className="button" href="/playbook">Read the Playbook</a><a className="hero-link" href="#mission">Explore the coalition</a></div>
+        <a className="hero-featured-project" href="#featured-project"><span>New documentary</span> Steven Edginton’s latest film</a>
+        <div className="hero-primary-actions"><a className="button" href="/playbook">Read the Playbook</a><a className="hero-link" href="#mission">About the coalition</a></div>
       </div></div>
     </section>
+
+    <DocumentaryFeature />
 
     <section className="mission section" id="mission" aria-labelledby="mission-title">
       <div className="section-intro"><span className="section-index">01 / Purpose</span><h2 id="mission-title">Our Purpose</h2></div>
       <div className="mission-body"><p>President Trump can fulfill his signature campaign promise to “conduct the largest mass deportation operation in American history.” Last year’s efforts by the Department of Homeland Security to highlight the ‘Worst of the Worst’ raised the public profile of immigration enforcement.</p><p>Now it is time to move to the second phase: removing large numbers of deportable aliens from the country expeditiously.</p></div>
       <div className="mission-quote"><EditorialQuote id="platform" /></div>
       <div className="purpose-facts">
-        <article><span>Our coalition</span><h3>The Coalition</h3><p>Law and policy specialists, former officers, and advocates working across federal and state policy.</p></article>
-        <article><span>Our 2026 goal</span><h3>1 million interior removals.</h3><p>The coalition’s target for ICE removals, reported separately from border turnbacks and voluntary departures.</p></article>
-        <article><span>Our approach</span><h3>Federal and state action.</h3><p>Coordinated enforcement, expanded operational capacity, and regular public reporting.</p><a href="/playbook">Explore the Playbook</a></article>
+        <article><span>Our members</span><h3>The Coalition</h3><p>Immigration policy experts, former law enforcement officers, and groups from across the country.</p></article>
+        <article><span>Our 2026 goal</span><h3>1 million interior removals.</h3><p>Our target counts ICE interior removals, not border turnbacks or voluntary departures.</p></article>
+        <article><span>Our approach</span><h3>21 recommendations.</h3><p>The Playbook sets out what federal agencies and states can do to reach that target.</p><a href="/playbook">Read the Playbook</a></article>
       </div>
       <div className="partner-strip"><div className="partner-strip-heading"><span>Coalition partners</span><a href="/partners">Meet the full coalition</a></div><div className="partner-strip-logos">{["American Moment","The Heritage Foundation","Federation for American Immigration Reform","Immigration Accountability Project","Oversight Project","Tea Party Patriots Action"].map(name=><a key={name} href={partnerLinks[name]} target="_blank" rel="noopener noreferrer" title={name}><img src={officialLogoUrl(name)!} alt={name} loading="lazy" /></a>)}</div></div>
     </section>
 
     <section className="priorities-section section" id="priorities" aria-labelledby="priorities-title">
-      <div className="priorities-intro"><span className="section-index">02 / Focus</span><h2 id="priorities-title">Our Priorities</h2><p>The coalition’s policy framework sets out the work needed to expand interior enforcement and measure the outcome.</p><a className="priority-source" href="/principles">The five principles behind our work</a><EditorialQuote id="funding" compact /></div>
+      <div className="priorities-intro"><span className="section-index">02 / Focus</span><h2 id="priorities-title">Our Priorities</h2><p>Four recommendations from the Playbook.</p><a className="priority-source" href="/principles">Read our five principles</a><EditorialQuote id="funding" compact /></div>
       <div className="priority-grid">{priorities.map(item=><article key={item.number}><span>{item.number}</span><h3>{item.title}</h3><p>{item.copy}</p><a className="priority-source" href={item.href}>Read the recommendation</a></article>)}</div>
     </section>
 
     <section className="playbook-section section" id="playbook" aria-labelledby="playbook-title">
-      <div className="playbook-copy"><span className="section-index">03 / The Playbook</span><h2 id="playbook-title">The Playbook</h2><p>Read the coalition’s executive-branch recommendations on worksite enforcement, detention capacity, interagency coordination, and public accountability.</p><a className="button" href="/playbook">Read the full playbook</a><EditorialQuote id="promise" compact /></div>
+      <div className="playbook-copy"><span className="section-index">03 / The Playbook</span><h2 id="playbook-title">The Playbook</h2><p>Policies and Operational Strategies to Deport <strong>ALL</strong> Illegal Aliens from the United States</p><a className="button" href="/playbook">Read the full playbook</a><EditorialQuote id="promise" compact /></div>
       <a className="publication-cover publication-cover-image" href="/playbook" aria-label="Open the Mass Deportation Coalition Playbook"><img src="/assets/playbook-cover.png" alt="Mass Deportation Coalition Playbook cover featuring the White House" width="1024" height="1305" loading="lazy" /></a>
     </section>
 
     <DataFeature />
 
     <section className="partners-section section" id="partners" aria-labelledby="partners-title">
-      <div className="partners-heading"><div><span className="section-index">05 / Coalition</span><h2 id="partners-title">Coalition Partners</h2></div><p>Select a state to see its coalition partners. Partner names with a website open the organization’s home page.</p></div>
+      <div className="partners-heading"><div><span className="section-index">05 / Coalition</span><h2 id="partners-title">Coalition Partners</h2></div><p>Choose a state to see its members. Select a partner’s name to visit their website.</p></div>
       <PartnersMap locations={statePartnerLocations} />
-      <a className="button partner-directory-button" href="/partners">Explore the full partner directory</a>
+      <a className="button partner-directory-button" href="/partners">View the full partner directory</a>
     </section>
 
     <section className="home-news section" aria-labelledby="news-heading">
       <div className="home-news-intro"><span className="section-index">Latest / News</span><h2 id="news-heading">News & Commentary</h2><a className="button" href="/news">View all news</a></div>
-      <NewsGrid />
+      <NewsGrid /><VideoFeature />
       <div className="quote-pair"><EditorialQuote id="orders" compact /><EditorialQuote id="choice" compact /></div>
     </section>
 

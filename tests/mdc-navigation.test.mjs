@@ -4,7 +4,7 @@ import {readFile} from 'node:fs/promises';
 import React from 'react';
 import {renderToStaticMarkup} from 'react-dom/server';
 import {createServer} from 'vite';
-const vite=await createServer({configFile:false,appType:'custom',root:process.cwd(),esbuild:{jsx:'automatic',jsxImportSource:'react'},server:{middlewareMode:true}});
+const vite=await createServer({configFile:false,appType:'custom',root:process.cwd(),esbuild:{jsx:'automatic',jsxImportSource:'react'},server:{middlewareMode:true,hmr:false}});
 after(()=>vite.close());
 const {filterPartners}=await vite.ssrLoadModule('/app/partners/partner-directory.tsx');
 const {states,individuals}=await vite.ssrLoadModule('/app/partners/data.ts');
