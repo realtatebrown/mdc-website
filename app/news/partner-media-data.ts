@@ -3,7 +3,7 @@ export type MediaFormat='articles'|'films'|'interviews';
 export type PartnerMedia=NewsItem & {format:MediaFormat;partner:string;runtime?:string};
 export const formatLabels:Record<MediaFormat,string>={articles:'Articles',films:'Documentaries & Specials',interviews:'Interviews & Podcasts'};
 const legacyDetails:Record<string,{format:MediaFormat;partner:string;runtime?:string;image?:string}>={
- '-i-m-horrified-92-year-old-returns-to-london-after-50-years':{format:'films',partner:'Steven Edginton',runtime:'28 min',image:'https://i.ytimg.com/vi/EYHWpMswzOI/hqdefault.jpg'},
+ '-i-m-horrified-92-year-old-returns-to-london-after-50-years':{format:'films',partner:'Steven Edginton',image:'https://i.ytimg.com/vi/EYHWpMswzOI/hqdefault.jpg'},
  'the-promise-was-mass-deportation-the-policy-is-carve-outs':{format:'articles',partner:'Scott Mechkowski'},
  'a-playbook-for-mass-deportations':{format:'articles',partner:'Kyle Brosnan · Oversight Project'},
  'jason-killmeyer-tomi-lahren':{format:'interviews',partner:'Jason Killmeyer',image:'https://i.ytimg.com/vi/XpRlxJxgZ1k/hqdefault.jpg'},
@@ -21,4 +21,13 @@ export function partnerMedia(items:NewsItem[],partnerNames:string[]=[]):PartnerM
   if(!partner)return [];
   return [{...item,format,partner,runtime:legacy?.runtime,image:item.image||legacy?.image||''}];
  });
+}
+
+export function featuredFilm(items:NewsItem[],partnerNames:string[]=[]){return partnerMedia(items,partnerNames).find(item=>item.format==='films'&&item.featured);}
+export function videoEmbed(raw:string){
+ try{const u=new URL(raw);let id='';
+ if(u.hostname==='youtu.be')id=u.pathname.slice(1);
+ if(['youtube.com','www.youtube.com','m.youtube.com'].includes(u.hostname))id=u.pathname==='/watch'?u.searchParams.get('v')||'':/^\/(shorts|embed)\//.test(u.pathname)?u.pathname.split('/')[2]:'';
+ return /^[A-Za-z0-9_-]{11}$/.test(id)?'https://www.youtube-nocookie.com/embed/'+id:null;
+ }catch{return null;}
 }

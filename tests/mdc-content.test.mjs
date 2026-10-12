@@ -76,3 +76,14 @@ test('new sheet entries appear in partner cards without predefined IDs',async()=
  assert.equal(partnerMedia([updated])[0].partner,'Updated author');
  assert.equal(partnerMedia([updated])[0].image,'/assets/updated.jpg');
 });
+
+test('featured film uses editable fields and explicit selection, not a fixed video',async()=>{
+ const {featuredFilm,videoEmbed}=await vite.ssrLoadModule('/app/news/partner-media-data.ts');
+ const template={...seed.news[0],section:'press',category:'Documentaries & Specials',author:'New Filmmaker',featured:true,url:'https://youtu.be/abcdefghijk',title:'New film',summary:'New description',credit:'New production credit'};
+ const items=parseContent({...seed,news:[{...template,id:'older',date:'2026-10-01'},{...template,id:'newer',date:'2026-10-12'}]}).news;
+ const result=featuredFilm(items);assert.equal(result.id,'newer');assert.equal(result.title,'New film');assert.equal(result.credit,'New production credit');
+ assert.equal(featuredFilm(items.map(item=>({...item,featured:false}))),undefined);
+ assert.equal(videoEmbed(result.url),'https://www.youtube-nocookie.com/embed/abcdefghijk');
+ assert.equal(videoEmbed('https://youtube.com.evil.example/watch?v=abcdefghijk'),null);
+ assert.equal(videoEmbed('https://example.com/film'),null);
+});

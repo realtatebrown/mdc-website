@@ -1,16 +1,18 @@
 "use client";
 import {useEffect,useState} from 'react';
 import type {NewsItem} from '../content/model';
+import DocumentaryFeature from '../documentary-feature';
+import {featuredFilm} from './partner-media-data';
 import NewsArchive from './news-archive';
 import {partnerMedia,MediaCard,formatLabels,type MediaFormat} from './partner-media';
 export type NewsSection='all'|'updates'|'press';
 export default function NewsContent({items,partnerNames}:{items:NewsItem[];partnerNames:string[]}){
- const media=partnerMedia(items,partnerNames);const featured=media.find(item=>item.format==='films');
+ const media=partnerMedia(items,partnerNames);const featured=featuredFilm(items,partnerNames);
  const [format,setFormat]=useState<MediaFormat|'all'>('all');const [query,setQuery]=useState('');const [section,setSection]=useState<NewsSection>('all');
  useEffect(()=>{const sync=()=>{const p=new URLSearchParams(location.search);const f=p.get('format');setFormat(f==='articles'||f==='films'||f==='interviews'?f:'all');const s=p.get('section');setSection(s==='updates'||s==='press'?s:'all');};sync();addEventListener('popstate',sync);return()=>removeEventListener('popstate',sync);},[]);
  const matches=media.filter(item=>(format==='all'||item.format===format)&&`${item.title} ${item.partner} ${item.publisher} ${item.summary}`.toLowerCase().includes(query.trim().toLowerCase()));
  return <>
- {featured&&<section className="partner-news-feature" aria-labelledby="partner-feature-title"><div className="partner-feature-image"><iframe src="https://www.youtube-nocookie.com/embed/EYHWpMswzOI" title="Steven Edginton documentary: 92-year-old returns to London after 50 years" loading="lazy" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen referrerPolicy="strict-origin-when-cross-origin" /></div><div className="partner-feature-copy"><span className="section-index">Featured / Documentary</span><p className="partner-media-name">Steven Edginton</p><h2 id="partner-feature-title">“I’m horrified”<span>92-year-old returns to London after 50 years</span></h2><p>Steven Edginton joins Ron Clark on a return to his childhood streets in Tottenham, exploring how London has changed since he left.</p><a className="button" href={featured.url} target="_blank" rel="noopener noreferrer">Watch the documentary ↗</a><small>Supported by the Mass Deportation Coalition.</small></div></section>}
+ <DocumentaryFeature story={featured} news/>
  <section className="partner-media-library" aria-labelledby="partner-library-title"><div className="partner-library-heading"><div><h2 id="partner-library-title">From our partners</h2></div><label className="partner-media-search">Search partner work<input type="search" placeholder="Partner, title, or topic" value={query} onChange={e=>setQuery(e.target.value)}/></label></div>
  <div className="partner-format-tabs" aria-label="Filter partner work by format">{(['all','articles','films','interviews'] as const).map(value=><button key={value} aria-pressed={format===value} onClick={()=>{setFormat(value);const url=new URL(location.href);if(value==='all')url.searchParams.delete('format');else url.searchParams.set('format',value);history.pushState(null,'',url);}}>{value==='all'?'All':formatLabels[value]}<span>{media.filter(item=>value==='all'||item.format===value).length}</span></button>)}</div>
  <p className="partner-results" aria-live="polite">{matches.length} {matches.length===1?'piece':'pieces'}{query?' matching your search':''}</p><div className="partner-media-grid">{matches.map(item=><MediaCard key={item.id} item={item}/>)}</div>{matches.length===0&&<div className="partner-empty"><h3>No matching pieces</h3><p>Try another partner, title, or format.</p><button onClick={()=>{setQuery('');setFormat('all');const url=new URL(location.href);url.searchParams.delete('format');history.replaceState(null,'',url);}}>Clear filters</button></div>}

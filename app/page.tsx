@@ -1,6 +1,7 @@
 
 import {loadContent} from "./content/load";
 import {partnerViews} from "./content/model";
+import {featuredFilm} from './news/partner-media-data';
 import DocumentaryFeature from "./documentary-feature";
 import { DataFeature } from "./data-partnership";
 import EditorialQuote from "./editorial-quote";
@@ -34,7 +35,7 @@ export default async function Home() {
       </div></div>
     </section>
 
-    <DocumentaryFeature />
+    <DocumentaryFeature story={featuredFilm(content.news,content.partners.map(partner=>partner.name))} />
 
     <section className="mission section" id="mission" aria-labelledby="mission-title">
       <div className="section-intro"><span className="section-index">01 / Purpose</span><h2 id="mission-title">Our Purpose</h2></div>
