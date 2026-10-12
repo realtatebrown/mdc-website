@@ -1,23 +1,20 @@
 "use client";
-import { useEffect, useState } from 'react';
-import { NewsGrid } from '../news-story';
-import {featuredNews,type NewsItem} from '../content/model';
-import VideoFeature from '../video-feature';
+import {useEffect,useState} from 'react';
+import type {NewsItem} from '../content/model';
 import NewsArchive from './news-archive';
-export type NewsSection = 'all' | 'updates' | 'press';
-const sections = [{id:'all',label:'All news'},{id:'updates',label:'Coalition updates'},{id:'press',label:'Press coverage'}] as const;
-export default function NewsContent({items}:{items:NewsItem[]}) {
- const featured=featuredNews(items);
- const interview=items.find(n=>n.id==="jason-killmeyer-tomi-lahren");
- const [section,setSection]=useState<NewsSection>('all');
- useEffect(()=>{
-  const sync=()=>{const value=new URLSearchParams(window.location.search).get('section');setSection(value==='updates'||value==='press'?value:'all');};
-  sync();window.addEventListener('popstate',sync);return()=>window.removeEventListener('popstate',sync);
- },[]);
+import {partnerMedia,MediaCard,formatLabels,type MediaFormat} from './partner-media';
+export type NewsSection='all'|'updates'|'press';
+export default function NewsContent({items}:{items:NewsItem[]}){
+ const media=partnerMedia(items);const featured=media.find(item=>item.format==='films');
+ const [format,setFormat]=useState<MediaFormat|'all'>('all');const [query,setQuery]=useState('');const [section,setSection]=useState<NewsSection>('all');
+ useEffect(()=>{const sync=()=>{const p=new URLSearchParams(location.search);const f=p.get('format');setFormat(f==='articles'||f==='films'||f==='interviews'?f:'all');const s=p.get('section');setSection(s==='updates'||s==='press'?s:'all');};sync();addEventListener('popstate',sync);return()=>removeEventListener('popstate',sync);},[]);
+ const matches=media.filter(item=>(format==='all'||item.format===format)&&`${item.title} ${item.partner} ${item.publisher} ${item.summary}`.toLowerCase().includes(query.trim().toLowerCase()));
  return <>
-  <div className="news-section-tabs" aria-label="News categories">{sections.map(item=><button type="button" key={item.id} aria-pressed={section===item.id} onClick={()=>{setSection(item.id);const url=new URL(window.location.href);if(item.id==='all')url.searchParams.delete('section');else url.searchParams.set('section',item.id);window.history.pushState(null,'',url);}}>{item.label}</button>)}</div>
-  {section==='all' && <section className="news-page-stories" aria-label="Featured articles"><NewsGrid items={featured}/></section>}
-  {section!=="updates"&&interview&&<section className="news-page-stories" aria-label="Featured interview"><VideoFeature story={interview}/></section>}
-  <NewsArchive key={section} section={section} items={items} featuredUrls={[...featured.map(n=>n.url),...(interview?[interview.url]:[])]} />
+ {featured&&<section className="partner-news-feature" aria-labelledby="partner-feature-title"><div className="partner-feature-image"><iframe src="https://www.youtube-nocookie.com/embed/EYHWpMswzOI" title="Steven Edginton documentary: 92-year-old returns to London after 50 years" loading="lazy" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen referrerPolicy="strict-origin-when-cross-origin" /></div><div className="partner-feature-copy"><span className="section-index">Featured / Documentary</span><p className="partner-media-name">Steven Edginton</p><h2 id="partner-feature-title">“I’m horrified”<span>92-year-old returns to London after 50 years</span></h2><p>Steven Edginton joins Ron Clark on a return to his childhood streets in Tottenham, exploring how London has changed since he left.</p><a className="button" href={featured.url} target="_blank" rel="noopener noreferrer">Watch the documentary ↗</a><small>Supported by the Mass Deportation Coalition.</small></div></section>}
+ <section className="partner-media-library" aria-labelledby="partner-library-title"><div className="partner-library-heading"><div><h2 id="partner-library-title">From our partners</h2></div><label className="partner-media-search">Search partner work<input type="search" placeholder="Partner, title, or topic" value={query} onChange={e=>setQuery(e.target.value)}/></label></div>
+ <div className="partner-format-tabs" aria-label="Filter partner work by format">{(['all','articles','films','interviews'] as const).map(value=><button key={value} aria-pressed={format===value} onClick={()=>{setFormat(value);const url=new URL(location.href);if(value==='all')url.searchParams.delete('format');else url.searchParams.set('format',value);history.pushState(null,'',url);}}>{value==='all'?'All':formatLabels[value]}<span>{media.filter(item=>value==='all'||item.format===value).length}</span></button>)}</div>
+ <p className="partner-results" aria-live="polite">{matches.length} {matches.length===1?'piece':'pieces'}{query?' matching your search':''}</p><div className="partner-media-grid">{matches.map(item=><MediaCard key={item.id} item={item}/>)}</div>{matches.length===0&&<div className="partner-empty"><h3>No matching pieces</h3><p>Try another partner, title, or format.</p><button onClick={()=>{setQuery('');setFormat('all');const url=new URL(location.href);url.searchParams.delete('format');history.replaceState(null,'',url);}}>Clear filters</button></div>}
+ </section>
+ <section className="coalition-news-secondary" aria-labelledby="coalition-secondary-title"><div className="coalition-secondary-heading"><span className="section-index">More from MDC</span><h2 id="coalition-secondary-title">Coalition updates &amp; press</h2><p>Announcements from the coalition and coverage of our work.</p></div><div className="news-section-tabs">{(['all','updates','press'] as const).map(value=><button key={value} aria-pressed={section===value} onClick={()=>{setSection(value);const url=new URL(location.href);if(value==='all')url.searchParams.delete('section');else url.searchParams.set('section',value);history.pushState(null,'',url);}}>{value==='all'?'All':value==='updates'?'Coalition updates':'Press coverage'}</button>)}</div><NewsArchive key={section} section={section} items={items.filter(item=>!media.some(piece=>piece.id===item.id))}/></section>
  </>;
 }

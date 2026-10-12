@@ -1,13 +1,13 @@
-import VideoFeature from "./video-feature";
+
 import {loadContent} from "./content/load";
-import {partnerViews,featuredNews} from "./content/model";
+import {partnerViews} from "./content/model";
 import DocumentaryFeature from "./documentary-feature";
 import { DataFeature } from "./data-partnership";
 import EditorialQuote from "./editorial-quote";
 import SignupBlock from "./signup-block";
 import SiteHeader from "./site-header";
 import SiteFooter from "./site-footer";
-import { NewsGrid } from "./news-story";
+import { HomePartnerNews } from "./news/partner-media";
 import PartnersMap, { type PartnerLocation } from "./partners-map";
 
 const priorities = [
@@ -19,7 +19,7 @@ const priorities = [
 
 export default async function Home() {
   const content=await loadContent();
-  const interview=content.news.find(n=>n.id==="jason-killmeyer-tomi-lahren");
+
   const {locations:statePartnerLocations,links:partnerLinks,images}=partnerViews(content);
   const featuredPartners=content.partners.filter(p=>p.kind==="Organization"&&p.featured&&p.image);
   return <main>
@@ -67,8 +67,8 @@ export default async function Home() {
     </section>
 
     <section className="home-news section" aria-labelledby="news-heading">
-      <div className="home-news-intro"><span className="section-index">Latest / News</span><h2 id="news-heading">News & Commentary</h2><a className="button" href="/news">View all news</a></div>
-      <NewsGrid items={featuredNews(content.news)} />{interview&&<VideoFeature story={interview}/>}
+      <div className="home-news-intro"><span className="section-index">Latest / Partner work</span><h2 id="news-heading">Latest from our partners</h2><a className="button" href="/news">Explore all partner work</a></div>
+      <HomePartnerNews items={content.news} />
       <div className="quote-pair"><EditorialQuote id="orders" compact /><EditorialQuote id="choice" compact /></div>
     </section>
 
