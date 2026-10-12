@@ -6,24 +6,17 @@ export default function DataPartnership({ compact = false }: { compact?: boolean
   </div>;
 }
 
-function ResearchGraphic() {
-  return <figure className="explorer-photo-preview">
-    <a href="/data?view=graph" aria-label="Open the interactive Migration Explorer network">
-      <div className="explorer-photo-heading"><span>Migration Explorer</span><span>Network</span></div>
-      <img src="/assets/explorer-real-preview.jpg" alt="DataRepublican’s network view showing organizations and their funding connections" width="1101" height="846" loading="lazy" />
-      <div className="explorer-photo-action"><span>Open Migration Explorer</span><span aria-hidden="true">↗</span></div>
-    </a>
-    <figcaption>DataRepublican’s Migration Explorer · Captured October 7, 2026</figcaption>
-  </figure>;
+export function StrongBordersPartnership() {
+ return <div className="strong-borders-partnership" aria-label="Strong Borders in collaboration with Mass Deportation Coalition"><img className="strong-borders-mark" src="/assets/strong-borders-logo.png" alt="Texans for Strong Borders"/><span aria-hidden="true">×</span><img className="strong-mdc-mark" src="/assets/mdc-map-logo-transparent.png" alt="MDC"/></div>;
 }
-
 export function DataFeature() {
-  return <section className="data-feature section" id="data" aria-labelledby="data-feature-title"><div className="data-feature-inner">
-    <div className="data-feature-top"><span className="section-index">04 / Research</span><span className="data-collaboration-label">In collaboration with DataRepublican</span></div>
-    <DataPartnership />
-    <div className="data-feature-content">
-      <div className="data-feature-copy"><h2 id="data-feature-title">Who funds migration organizations?</h2><p>DataRepublican’s Migration Explorer brings together funding records and connections between organizations. Search by organization or browse the map.</p><div className="data-compact-actions"><a className="button data-explore-button" href="/data">Open Migration Explorer</a><div className="data-view-links" aria-label="Explorer starting views"><a href="/data?view=cards">Cards</a><span aria-hidden="true">/</span><a href="/data?view=map">Map</a><span aria-hidden="true">/</span><a href="/data?view=graph">Network</a></div></div></div>
-      <ResearchGraphic />
-    </div>
-  </div></section>;
+ return <section className="data-feature section research-feature" id="data" aria-labelledby="data-feature-title"><div className="data-feature-inner">
+  <div className="data-feature-top"><span className="section-index">04 / Research</span><a className="research-all-link" href="/data">All research tools <span aria-hidden="true">↗</span></a></div>
+  <div className="research-feature-heading"><h2 id="data-feature-title">Explore the data.</h2><p>Migration funding and local immigration enforcement, through two tools from our partners.</p></div>
+  <div className="research-feature-grid">
+   <article className="research-feature-card"><div className="research-card-brand"><DataPartnership compact/></div><a className="research-card-preview research-card-network" href="/data?tool=migration&amp;view=graph" aria-label="Explore DataRepublican’s Migration Explorer"><img src="/assets/explorer-real-preview.jpg" alt="A view of organizations and funding connections in DataRepublican’s Migration Explorer" width="1101" height="846" loading="lazy"/><span>Organizations & funding</span></a><div className="research-card-copy"><h3>Migration Explorer</h3><p>Follow funding records and connections between organizations.</p><a href="/data?tool=migration">Explore the network <span aria-hidden="true">→</span></a></div></article>
+   <article className="research-feature-card"><div className="research-card-brand"><StrongBordersPartnership/></div><a className="research-card-preview research-card-texas" href="/data?tool=287g" aria-label="Explore Strong Borders’ Texas 287(g) Tracker"><img src="/assets/strong-borders-tracker-preview.jpg" alt="Texas counties colored by ICE 287(g) participation and agreement model" width="1363" height="936" loading="lazy"/><span>Texas · Counties & cities</span></a><div className="research-card-copy"><h3>Texas 287(g) Tracker</h3><p>See which Texas agencies participate in ICE’s 287(g) program.</p><a href="/data?tool=287g">Explore the tracker <span aria-hidden="true">→</span></a></div></article>
+  </div>
+  <p className="research-preview-credit">Tool previews: DataRepublican, October 7, 2026 · Strong Borders, October 12, 2026.</p>
+ </div></section>;
 }
