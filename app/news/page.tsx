@@ -8,7 +8,7 @@ export default async function NewsPage() {
  return <main className="news-page">
   <SiteHeader />
   <section className="news-page-intro"><span className="section-index">From the coalition</span><h1>From the Coalition.</h1><p>Articles, films, and conversations from our partners.</p><a className="priority-source" href="#partner-library-title">Explore partner work</a></section>
-  <NewsContent items={content.news} />
+  <NewsContent items={content.news} partnerNames={content.partners.map(partner=>partner.name)} />
   <SiteFooter />
  </main>;
 }

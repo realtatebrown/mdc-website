@@ -7,7 +7,7 @@ const image=text.refine(s=>!s||isHttps(s)||/^\/assets\/[^\s]+$/.test(s),'Use HTT
 const base={id:z.string().trim().min(1).max(200),status:z.literal('Published')};
 const partner=z.object({...base,name:z.string().trim().min(1),kind:z.enum(['Organization','Individual']),state:text,city:text,url,bio:text,image,featured:z.boolean()}).refine(p=>p.kind==='Individual'||Object.values(stateNames).includes(p.state),'Organization needs a US state');
 const date=text.refine(s=>!s||(/^\d{4}-(0[1-9]|1[0-2])(-(?:0[1-9]|[12]\d|3[01]))?$/.test(s)&&(s.length===7||new Date(s+'T12:00:00Z').toISOString().slice(0,10)===s)),'Use YYYY-MM-DD or YYYY-MM');
-const news=z.object({...base,section:z.enum(['updates','press']),title:z.string().trim().min(1),date,publisher:text,author:text,category:z.enum(['Reporting','Interviews','Opinion & analysis','Coalition updates']),summary:text,url:url.refine(Boolean),image,alt:text,credit:text,featured:z.boolean()});
+const news=z.object({...base,section:z.enum(['updates','press']),title:z.string().trim().min(1),date,publisher:text,author:text,category:z.enum(['Reporting','Interviews','Opinion & analysis','Coalition updates','Articles','Documentaries & Specials','Interviews & Podcasts']),summary:text,url:url.refine(Boolean),image,alt:text,credit:text,featured:z.boolean()});
 const schema=z.object({schemaVersion:z.literal(1),partners:z.array(partner).max(3000),news:z.array(news).max(5000)});
 export type Content=z.infer<typeof schema>;
 export type NewsItem=Content['news'][number];

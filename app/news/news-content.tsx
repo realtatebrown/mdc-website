@@ -4,8 +4,8 @@ import type {NewsItem} from '../content/model';
 import NewsArchive from './news-archive';
 import {partnerMedia,MediaCard,formatLabels,type MediaFormat} from './partner-media';
 export type NewsSection='all'|'updates'|'press';
-export default function NewsContent({items}:{items:NewsItem[]}){
- const media=partnerMedia(items);const featured=media.find(item=>item.format==='films');
+export default function NewsContent({items,partnerNames}:{items:NewsItem[];partnerNames:string[]}){
+ const media=partnerMedia(items,partnerNames);const featured=media.find(item=>item.format==='films');
  const [format,setFormat]=useState<MediaFormat|'all'>('all');const [query,setQuery]=useState('');const [section,setSection]=useState<NewsSection>('all');
  useEffect(()=>{const sync=()=>{const p=new URLSearchParams(location.search);const f=p.get('format');setFormat(f==='articles'||f==='films'||f==='interviews'?f:'all');const s=p.get('section');setSection(s==='updates'||s==='press'?s:'all');};sync();addEventListener('popstate',sync);return()=>removeEventListener('popstate',sync);},[]);
  const matches=media.filter(item=>(format==='all'||item.format===format)&&`${item.title} ${item.partner} ${item.publisher} ${item.summary}`.toLowerCase().includes(query.trim().toLowerCase()));
