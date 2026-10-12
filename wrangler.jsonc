@@ -3,11 +3,18 @@
   "name": "mdc-website",
   "main": "./worker/index.ts",
   "compatibility_date": "2026-05-15",
-  "compatibility_flags": ["nodejs_compat"],
+  "compatibility_flags": [
+    "nodejs_compat"
+  ],
   "assets": {
     "directory": "./public",
     "binding": "ASSETS"
   },
   "workers_dev": true,
-  "observability": { "enabled": true }
+  "observability": {
+    "enabled": true
+  },
+  "vars": {
+    "MDC_CONTENT_FEED_URL": "https://script.google.com/macros/s/AKfycbzOQxH4jiHrYkAX1-h0QSl-1j083Yh3vsK4WtTbutDpEHPqnI35_yMkNvjf0zdA2dY/exec"
+  }
 }

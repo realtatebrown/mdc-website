@@ -2,6 +2,7 @@
 import { useState } from 'react';
 import coverage from './coverage.json';
 import { stories } from '../news-story';
+import {sortedNews,type NewsItem} from '../content/model';
 import type { NewsSection } from './news-content';
 
 export const archiveStories = [...coverage, ...stories.map(story => ({
@@ -9,22 +10,23 @@ export const archiveStories = [...coverage, ...stories.map(story => ({
 }))].sort((a,b) => b.date.localeCompare(a.date) || a.publisher.localeCompare(b.publisher));
 const categories = ['Reporting', 'Interviews', 'Opinion & analysis', 'Coalition updates'];
 
-export function filterCoverage(query: string, category: string, publisher: string) {
+export function filterCoverage(query: string, category: string, publisher: string, items:typeof archiveStories=archiveStories) {
   const words=query.trim().toLowerCase().split(/\s+/).filter(Boolean);
-  return archiveStories.filter(story => (!category || story.category===category) && (!publisher || story.publisher===publisher) && words.every(word=>`${story.title} ${story.publisher} ${story.summary}`.toLowerCase().includes(word)));
+  return items.filter(story => (!category || story.category===category) && (!publisher || story.publisher===publisher) && words.every(word=>`${story.title} ${story.publisher} ${story.summary}`.toLowerCase().includes(word)));
 }
 export function coverageDate(date: string) {
   if (!date) return "Date not listed";
   return new Date(`${date.length===7?date+'-01':date}T12:00:00Z`).toLocaleDateString('en-US',{year:'numeric',month:'long',...(date.length===10?{day:'numeric'}:{}),timeZone:'UTC'});
 }
-export default function NewsArchive({section='all'}: {section?:NewsSection}) {
+export default function NewsArchive({section='all',items,featuredUrls:featured=[]}: {section?:NewsSection;items:NewsItem[];featuredUrls?:string[]}) {
+  const archiveStories=sortedNews(items);
   const [query,setQuery]=useState(''); const [category,setCategory]=useState(section==='updates'?'Coalition updates':''); const [publisher,setPublisher]=useState('');
   const sectionStories = archiveStories.filter(story => section === 'updates' ? story.category === 'Coalition updates' : section === 'press' ? story.category !== 'Coalition updates' : true);
   const publishers = [...new Set(sectionStories.map(story => story.publisher))].sort();
   const hasFilters = !!query.trim() || !!publisher || (section !== 'updates' && !!category);
-  const featuredUrls = new Set(stories.map(story => story.url));
+  const featuredUrls = new Set(featured);
   const searching = section!=='all' || !!query.trim() || !!category || !!publisher;
-  const matches=filterCoverage(query,category,publisher).filter(story => (section!=='press' || story.category!=='Coalition updates') && (searching || !featuredUrls.has(story.url)));
+  const matches=filterCoverage(query,category,publisher,archiveStories).filter(story => (section!=='press' || story.category!=='Coalition updates') && (searching || !featuredUrls.has(story.url)));
   const months=[...new Set(matches.map(story=>story.date.slice(0,7)))];
   return <section className="coverage-archive" aria-labelledby="coverage-title">
     <div className="coverage-heading"><div><span className="section-index">In the news</span><h2 id="coverage-title">{section==='updates'?'Coalition updates':section==='press'?'Press coverage':'Coverage archive'}</h2></div></div>

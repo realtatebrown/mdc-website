@@ -10,7 +10,7 @@ const routes=['/','/partners','/playbook','/data','/news','/principles'];
 const pages=new Map();
 for(const route of routes){
  const {default:Page}=await vite.ssrLoadModule(`/app${route==='/'?'':route}/page.tsx`);
- pages.set(route,renderToStaticMarkup(React.createElement(Page)));
+ pages.set(route,renderToStaticMarkup(await Page()));
 }
 const ids=html=>[...html.matchAll(/\bid="([^"]+)"/g)].map(m=>m[1]);
 test('all six pages have a heading and a working keyboard skip destination',()=>{
@@ -42,7 +42,7 @@ test('member cards leave Mark unlinked and keep the other five profiles',async()
 test('news category defaults have no redundant reset and relevant outlets only',async()=>{
  const {default:Archive,archiveStories,filterCoverage}=await vite.ssrLoadModule('/app/news/news-archive.tsx');
  for(const section of ['all','updates','press']){
-  const html=renderToStaticMarkup(React.createElement(Archive,{section}));
+  const html=renderToStaticMarkup(React.createElement(Archive,{section,items:JSON.parse(await readFile('app/content/snapshot.json','utf8')).news}));
   assert.ok(!html.includes('Clear filters'),section);
   if(section==='updates'){
    assert.match(html,/Watch documentary/);

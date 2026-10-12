@@ -28,6 +28,8 @@ test('reader retains every chapter and all 21 recommendation controls',async()=>
 test('news includes three verified dated stories and local images',async()=>{
  const {stories,NewsGrid}=await vite.ssrLoadModule('/app/news-story.tsx');
  assert.equal(stories.length,3);
- const html=renderToStaticMarkup(React.createElement(NewsGrid));
+ const {parseContent,featuredNews}=await vite.ssrLoadModule('/app/content/model.ts');
+ const content=parseContent(JSON.parse(await readFile('app/content/snapshot.json','utf8')));
+ const html=renderToStaticMarkup(React.createElement(NewsGrid,{items:featuredNews(content.news)}));
  for(const s of stories) { assert.ok(html.includes(s.url)); await readFile(`public${s.image}`); }
 });
