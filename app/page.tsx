@@ -74,7 +74,6 @@ export default function Home() {
       <div className="hero-inner"><div className="hero-statement">
         <h1 id="hero-title">“Following the Eisenhower model, we will carry out the largest domestic deportation operation in American history.”</h1>
         <p className="hero-attribution">President Donald J. Trump<span className="hero-quote-context">Iowa and other rallies · 2023–2024</span></p>
-        <a className="hero-featured-project" href="#featured-project"><span>New documentary</span> Steven Edginton’s latest film</a>
         <div className="hero-primary-actions"><a className="button" href="/playbook">Read the Playbook</a><a className="hero-link" href="#mission">About the coalition</a></div>
       </div></div>
     </section>
