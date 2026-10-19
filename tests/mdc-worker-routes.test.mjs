@@ -23,3 +23,13 @@ test('research deep links select Strong Borders without a blocked iframe',async(
  assert.match(html,/href="\/data\?tool=migration"/);
  assert.match(html,/aria-current="true"/);
 });
+
+test('partner feed links render the selected contributor before hydration',async()=>{
+ const response=await worker.fetch(new Request('https://example.com/news?partner=Jason%20Killmeyer&format=articles',{headers:{accept:'text/html'}}),{ASSETS:{fetch:async()=>new Response('Not found',{status:404})}},{waitUntil(){},passThroughOnException(){}});
+ assert.equal(response.status,200);const html=await response.text();
+ assert.match(html,/id="partner-library-title">Jason Killmeyer/);
+ assert.ok(!html.includes('class="partner-news-feature"'));
+ assert.match(html,/How to Solve the ICE Manpower Problem/);
+ assert.ok(!html.includes('class="coalition-news-secondary"'));
+ assert.match(html,/media-portrait/);
+});

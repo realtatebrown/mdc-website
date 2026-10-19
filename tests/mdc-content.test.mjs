@@ -7,18 +7,18 @@ const vite=await createServer({configFile:false,appType:'custom',root:process.cw
 after(()=>vite.close());
 const {parseContent,partnerViews,featuredNews}=await vite.ssrLoadModule('/app/content/model.ts');
 const seed=JSON.parse(await readFile('app/content/snapshot.json','utf8'));
-test('migration preserves 66 members and 39 deduplicated stories',()=>{
+test('migration preserves 66 members and 41 deduplicated stories',()=>{
  const content=parseContent(seed),views=partnerViews(content);
- assert.equal(content.partners.length,66);assert.equal(content.news.length,39);
+ assert.equal(content.partners.length,66);assert.equal(content.news.length,41);
  assert.equal(views.locations.reduce((n,p)=>n+p.partners.length,0),60);
  assert.equal(views.individuals.length,6);assert.equal(views.links['Mark Morgan'],'');
- assert.equal(new Set(content.news.map(n=>n.url)).size,39);
+ assert.equal(new Set(content.news.map(n=>n.url)).size,41);
 });
 test('draft and archived content is excluded from every derived view',()=>{
  const copy=structuredClone(seed);copy.partners[0].status='Draft';copy.news[0].status='Archived';
  copy.partners.push({status:'Draft',secret:'private note'});
  const content=parseContent(copy),views=partnerViews(content);
- assert.equal(content.partners.length,65);assert.equal(content.news.length,38);
+ assert.equal(content.partners.length,65);assert.equal(content.news.length,40);
  assert.ok(!JSON.stringify(views).includes(seed.partners[0].name));
  assert.ok(!JSON.stringify(content).includes('private note'));
 });
@@ -36,8 +36,8 @@ test('unsafe URLs, duplicate IDs, and malformed published data are rejected',()=
 test('featured cards prioritize selected entries and separate categories',()=>{
  const content=parseContent(seed),cards=featuredNews(content.news);
  assert.equal(cards.length,3);assert.ok(cards.every(s=>s.featured));
- assert.equal(content.news.filter(s=>s.section==='updates').length,6);
- assert.equal(content.news.filter(s=>s.section==='press').length,33);
+ assert.equal(content.news.filter(s=>s.section==='updates').length,5);
+ assert.equal(content.news.filter(s=>s.section==='press').length,36);
 });
 test('publisher exports only Published rows and explicit website columns',async()=>{
  const code=await readFile('scripts/content/Code.gs','utf8');
@@ -63,7 +63,7 @@ test('runtime rejects broken refresh and retains its last valid feed',async()=>{
 
 test('new sheet entries appear in partner cards without predefined IDs',async()=>{
  const {partnerMedia}=await vite.ssrLoadModule('/app/news/partner-media-data.ts');
- const row={...seed.news[0],id:'new-partner-article',date:'2026-10-09',author:'Jason Killmeyer',category:'Opinion & analysis'};
+ const row={...seed.news[0],id:'new-partner-article',section:'press',date:'2026-10-09',author:'Jason Killmeyer',category:'Opinion & analysis'};
  let content=parseContent({...seed,news:[row]});
  assert.equal(partnerMedia(content.news,['Jason Killmeyer'])[0].format,'articles');
  assert.equal(partnerMedia(content.news,['Another Partner']).length,0);
@@ -86,4 +86,23 @@ test('featured film uses editable fields and explicit selection, not a fixed vid
  assert.equal(videoEmbed(result.url),'https://www.youtube-nocookie.com/embed/abcdefghijk');
  assert.equal(videoEmbed('https://youtube.com.evil.example/watch?v=abcdefghijk'),null);
  assert.equal(videoEmbed('https://example.com/film'),null);
+});
+
+test('partner feeds include only that author or explicitly affiliated work',async()=>{
+ const {partnerMedia,belongsToPartner,feedPartners,partnerFeedUrl}=await vite.ssrLoadModule('/app/news/partner-media-data.ts');
+ const template={...seed.news[0],section:'press',category:'Articles'};
+ const media=partnerMedia([{...template,id:'kyle',author:'Kyle Brosnan'},{...template,id:'mike',author:'Mike Howell'},{...template,id:'jason',author:'Jason Killmeyer'},{...template,id:'draft',author:'Kyle Brosnan',status:'Draft'}]);
+ assert.deepEqual(media.filter(item=>belongsToPartner(item,'Oversight Project')).map(item=>item.id).sort(),['kyle','mike']);
+ assert.equal(media.filter(item=>belongsToPartner(item,'Jason Killmeyer')).length,1);
+ assert.equal(media.filter(item=>belongsToPartner(item,'Unknown')).length,0);
+ assert.ok(feedPartners(media,['Oversight Project']).includes('Oversight Project'));
+ assert.equal(partnerFeedUrl('A & B'),'/news?partner=A%20%26%20B');
+});
+test('article artwork wins over a portrait; missing art uses a portrait without wide cropping',async()=>{
+ const {partnerMedia}=await vite.ssrLoadModule('/app/news/partner-media-data.ts');
+ const template={...seed.news[0],section:'press',category:'Articles',author:'Jason Killmeyer',image:'/assets/article.jpg'};
+ const portraits={'Jason Killmeyer':'/assets/partners/jason-killmeyer.png'};
+ const photo=partnerMedia([template],[],portraits)[0];assert.equal(photo.image,'/assets/article.jpg');assert.equal(photo.imageKind,'photo');assert.equal(photo.portrait,portraits['Jason Killmeyer']);
+ const portrait=partnerMedia([{...template,image:''}],[],portraits)[0];assert.equal(portrait.image,portraits['Jason Killmeyer']);assert.equal(portrait.imageKind,'portrait');
+ const missing=partnerMedia([{...template,image:'',author:'Missing Portrait'}],[],portraits)[0];assert.equal(missing.image,'');assert.equal(missing.portrait,'');
 });

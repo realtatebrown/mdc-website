@@ -1,3 +1,4 @@
+import {partnerMedia,belongsToPartner} from '../news/partner-media-data';
 import EditorialQuote from "../editorial-quote";
 import SiteHeader from "../site-header";
 import SiteFooter from "../site-footer";
@@ -5,7 +6,10 @@ import PartnerDirectory from "./partner-directory";
 import {loadContent} from "../content/load";
 import {partnerViews} from "../content/model";
 export default async function PartnersPage(){
-  const {states,individuals,links,images,profiles}=partnerViews(await loadContent());
+  const content=await loadContent();
+  const {states,individuals,links,images,profiles}=partnerViews(content);
+  const media=partnerMedia(content.news,content.partners.map(p=>p.name));
+  const contentCounts=Object.fromEntries(content.partners.map(p=>[p.name,media.filter(item=>belongsToPartner(item,p.name)).length]));
   const organizationCount=states.reduce((total,[,partners])=>total+partners.length,0);
   return <main className="directory-page">
     <SiteHeader />
@@ -14,7 +18,7 @@ export default async function PartnersPage(){
       <h1>Coalition<br /><em>Partners</em></h1>
       <div className="directory-stats"><div><strong>{organizationCount}</strong><span>Organizations</span></div><div><strong>{states.length}</strong><span>States &amp; DC</span></div><div><strong>{individuals.length}</strong><span>Individuals</span></div></div>
     </section>
-    <PartnerDirectory states={states} individuals={individuals} links={links} images={images} profiles={profiles} />
+    <PartnerDirectory contentCounts={contentCounts} states={states} individuals={individuals} links={links} images={images} profiles={profiles} />
     <section className="directory-cta"><p className="eyebrow">Partners by state</p><div><a className="button" href="/#partners">Return to the map</a></div></section>
     <div className="quote-interlude"><EditorialQuote id="table" /></div>
     <SiteFooter />

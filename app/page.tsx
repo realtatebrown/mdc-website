@@ -69,7 +69,7 @@ export default async function Home() {
 
     <section className="home-news section" aria-labelledby="news-heading">
       <div className="home-news-intro"><span className="section-index">Latest / Partner work</span><h2 id="news-heading">Latest from our partners</h2><a className="button" href="/news">Explore all partner work</a></div>
-      <HomePartnerNews items={content.news} partnerNames={content.partners.map(partner=>partner.name)} />
+      <HomePartnerNews portraits={Object.fromEntries(content.partners.filter(p=>p.kind==='Individual').map(p=>[p.name,p.image]))} items={content.news} partnerNames={content.partners.map(partner=>partner.name)} />
       <div className="quote-pair"><EditorialQuote id="orders" compact /><EditorialQuote id="choice" compact /></div>
     </section>
 
