@@ -1497,3 +1497,6 @@ a:focus-visible,button:focus-visible,select:focus-visible { outline:3px solid va
 
 .partner-media-name a {display:inline-flex;align-items:center;gap:9px;min-height:36px;}
 .partner-media-name .media-author-portrait {width:32px;height:32px;border-radius:50%;object-fit:cover;object-position:center 25%;}
+
+/* Preserve contrast for Center for Baptist Leadership’s transparent white wordmark. */
+img[src*="/CBL-Header-Logo-Large-v1.0"] { background-color:#283b7a; padding:4px; box-sizing:border-box; }
