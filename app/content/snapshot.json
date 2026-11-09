@@ -110,18 +110,6 @@
       "featured": false
     },
     {
-      "id": "save-heritage-indiana",
-      "status": "Published",
-      "name": "Save Heritage Indiana",
-      "kind": "Organization",
-      "state": "Indiana",
-      "city": "Indianapolis",
-      "url": "https://www.saveheritageindiana.org/",
-      "bio": "",
-      "image": "/assets/partners/image0.jpeg",
-      "featured": false
-    },
-    {
       "id": "citizens-for-a-new-louisiana",
       "status": "Published",
       "name": "Citizens for a New Louisiana",
